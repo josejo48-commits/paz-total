@@ -1,4 +1,4 @@
-const CACHE = 'paz-total-v17';
+const CACHE = 'paz-total-v19';
 const BASE = '/paz-total/';
 
 self.addEventListener('install', e => {

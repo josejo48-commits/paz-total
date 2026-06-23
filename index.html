@@ -838,10 +838,21 @@ const SKY_OBJECTS = [
   { type:'heli',  x:-0.1, y:0.22, speed:0.0003, scale:0.8, dir:1, nextAt: 120 + Math.random()*100 },
   // Hot air balloon
   { type:'balloon', x:0.15, y:0.25, speed:0.00008, scale:1, dir:1, nextAt: 50 + Math.random()*120 },
-  // Shooting star (night only)
-  { type:'star', x:0.9, y:0.05, speed:0.002, scale:1, dir:1, nextAt: 40 + Math.random()*60 },
+
   // Bird flock (V formation)
   { type:'flock', x:-0.05, y:0.18, speed:0.0004, scale:1, dir:1, nextAt: 20 + Math.random()*40 },
+  // Shooting stars (multiple)
+  { type:'star', x:0.8, y:0.08, speed:0.0025, scale:1,    dir:1, nextAt: 25 + Math.random()*40 },
+  { type:'star', x:0.5, y:0.12, speed:0.003,  scale:0.8,  dir:1, nextAt: 60 + Math.random()*60 },
+  { type:'star', x:0.9, y:0.05, speed:0.002,  scale:1.2,  dir:-1,nextAt: 80 + Math.random()*80 },
+  // Satellites
+  { type:'satellite', x:-0.05, y:0.08, speed:0.00035, scale:1,   dir:1,  nextAt: 30 + Math.random()*60 },
+  { type:'satellite', x:1.05,  y:0.18, speed:0.0003,  scale:0.8, dir:-1, nextAt: 90 + Math.random()*90 },
+  // UFO / OVNI
+  { type:'ufo', x:-0.1, y:0.15, speed:0.00025, scale:1, dir:1, nextAt: 120 + Math.random()*180, wobble:0 },
+  { type:'ufo', x:1.1,  y:0.28, speed:0.0003,  scale:0.7, dir:-1, nextAt: 200 + Math.random()*200, wobble:0 },
+  // Space shuttle / rocket
+  { type:'rocket', x:-0.05, y:0.35, speed:0.0005, scale:1, dir:1, nextAt: 150 + Math.random()*200 },
 ];
 
 let objT = 0;
@@ -867,7 +878,8 @@ function drawSkyObjects(W, H, pal) {
       obj.y = 0.05 + Math.random() * 0.28;
       // wait before next pass
       const waits = {plane:90+Math.random()*120, heli:150+Math.random()*150,
-                     balloon:180+Math.random()*120, star:60+Math.random()*80, flock:30+Math.random()*50};
+                     balloon:180+Math.random()*120, star:15+Math.random()*30, flock:30+Math.random()*50,
+                     satellite:60+Math.random()*90, ufo:180+Math.random()*240, rocket:200+Math.random()*250};
       obj.nextAt = waits[obj.type] || 60;
       return;
     }
@@ -896,6 +908,16 @@ function drawSkyObjects(W, H, pal) {
       drawShootingStar(x, y, W);
     } else if (obj.type === 'flock') {
       drawFlock(x, y, sc, W, objT, pal);
+    } else if (obj.type === 'satellite') {
+      if (!isNight) { ctx2d.restore(); return; }
+      drawSatellite(x, y, sc, W, objT);
+    } else if (obj.type === 'ufo') {
+      if (!isNight) { ctx2d.restore(); return; }
+      obj.wobble = (obj.wobble || 0) + 0.04;
+      drawUFO(x, y + Math.sin(obj.wobble)*8, sc, W, objT);
+    } else if (obj.type === 'rocket') {
+      if (!isNight) { ctx2d.restore(); return; }
+      drawRocket(x, y, sc, W, objT);
     }
 
     ctx2d.restore();
@@ -1081,6 +1103,133 @@ function drawShootingStar(x, y, W) {
   ctx2d.fillStyle = hg; ctx2d.fill();
 }
 
+function drawSatellite(x, y, sc, W, t) {
+  const s = W * 0.016 * sc;
+  // Body
+  ctx2d.beginPath();
+  ctx2d.rect(x - s*0.4, y - s*0.2, s*0.8, s*0.4);
+  ctx2d.fillStyle = 'rgba(210,220,240,0.9)'; ctx2d.fill();
+  // Solar panels left
+  ctx2d.beginPath();
+  ctx2d.rect(x - s*1.6, y - s*0.12, s*1.1, s*0.24);
+  ctx2d.fillStyle = 'rgba(50,100,200,0.85)'; ctx2d.fill();
+  ctx2d.strokeStyle = 'rgba(100,150,255,0.6)'; ctx2d.lineWidth = 0.5;
+  for(let i=1;i<4;i++){
+    ctx2d.beginPath(); ctx2d.moveTo(x-s*1.6+i*s*0.27, y-s*0.12);
+    ctx2d.lineTo(x-s*1.6+i*s*0.27, y+s*0.12); ctx2d.stroke();
+  }
+  // Solar panels right
+  ctx2d.beginPath();
+  ctx2d.rect(x + s*0.5, y - s*0.12, s*1.1, s*0.24);
+  ctx2d.fillStyle = 'rgba(50,100,200,0.85)'; ctx2d.fill();
+  for(let i=1;i<4;i++){
+    ctx2d.beginPath(); ctx2d.moveTo(x+s*0.5+i*s*0.27, y-s*0.12);
+    ctx2d.lineTo(x+s*0.5+i*s*0.27, y+s*0.12); ctx2d.stroke();
+  }
+  // Antenna
+  ctx2d.beginPath();
+  ctx2d.moveTo(x, y-s*0.2); ctx2d.lineTo(x, y-s*0.7);
+  ctx2d.strokeStyle = 'rgba(200,210,230,0.8)'; ctx2d.lineWidth = 1; ctx2d.stroke();
+  ctx2d.beginPath(); ctx2d.arc(x, y-s*0.7, s*0.08, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(255,220,80,0.9)'; ctx2d.fill();
+  // Blinking light
+  const blink = Math.sin(t*4) > 0;
+  if (blink) {
+    ctx2d.beginPath(); ctx2d.arc(x+s*0.35, y, s*0.1, 0, Math.PI*2);
+    ctx2d.fillStyle = 'rgba(255,80,80,0.95)'; ctx2d.fill();
+  }
+  // Trail
+  const tg = ctx2d.createLinearGradient(x-s*4, y, x, y);
+  tg.addColorStop(0,'rgba(180,200,255,0)');
+  tg.addColorStop(1,'rgba(180,200,255,0.25)');
+  ctx2d.beginPath(); ctx2d.moveTo(x-s*4, y); ctx2d.lineTo(x, y);
+  ctx2d.strokeStyle=tg; ctx2d.lineWidth=1.5; ctx2d.stroke();
+}
+
+function drawUFO(x, y, sc, W, t) {
+  const s = W * 0.025 * sc;
+  // Green beam below
+  const beam = ctx2d.createLinearGradient(x, y+s*0.3, x, y+s*1.8);
+  beam.addColorStop(0,'rgba(100,255,120,0.35)');
+  beam.addColorStop(1,'rgba(100,255,120,0)');
+  ctx2d.beginPath();
+  ctx2d.moveTo(x-s*0.3, y+s*0.3);
+  ctx2d.lineTo(x-s*0.9, y+s*1.8);
+  ctx2d.lineTo(x+s*0.9, y+s*1.8);
+  ctx2d.lineTo(x+s*0.3, y+s*0.3);
+  ctx2d.fillStyle = beam; ctx2d.fill();
+  // Bottom saucer
+  ctx2d.beginPath();
+  ctx2d.ellipse(x, y+s*0.15, s*1.0, s*0.28, 0, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(160,200,160,0.92)'; ctx2d.fill();
+  // Dome
+  ctx2d.beginPath();
+  ctx2d.ellipse(x, y-s*0.1, s*0.52, s*0.42, 0, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(180,240,200,0.88)'; ctx2d.fill();
+  // Dome glass highlight
+  ctx2d.beginPath();
+  ctx2d.ellipse(x-s*0.15, y-s*0.2, s*0.2, s*0.18, -0.4, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(255,255,255,0.4)'; ctx2d.fill();
+  // Rotating lights around rim
+  for(let i=0;i<8;i++){
+    const la = (i/8)*Math.PI*2 + t*2;
+    const lx = x + Math.cos(la)*s*0.78;
+    const ly = y + s*0.15 + Math.sin(la)*s*0.15;
+    const colors=['rgba(255,80,80,0.9)','rgba(255,220,50,0.9)','rgba(80,255,120,0.9)','rgba(80,180,255,0.9)'];
+    ctx2d.beginPath(); ctx2d.arc(lx,ly,s*0.1,0,Math.PI*2);
+    ctx2d.fillStyle = colors[i%4]; ctx2d.fill();
+  }
+  // Glow
+  const glow = ctx2d.createRadialGradient(x,y,0,x,y,s*1.5);
+  glow.addColorStop(0,'rgba(100,255,120,0.12)');
+  glow.addColorStop(1,'rgba(100,255,120,0)');
+  ctx2d.beginPath(); ctx2d.arc(x,y,s*1.5,0,Math.PI*2);
+  ctx2d.fillStyle=glow; ctx2d.fill();
+}
+
+function drawRocket(x, y, sc, W, t) {
+  const s = W * 0.018 * sc;
+  // Flame/exhaust
+  const flameH = s*(1.2 + Math.sin(t*15)*0.3);
+  const fg = ctx2d.createLinearGradient(x, y+s*0.5, x, y+s*0.5+flameH);
+  fg.addColorStop(0,'rgba(255,200,50,0.9)');
+  fg.addColorStop(0.4,'rgba(255,100,20,0.7)');
+  fg.addColorStop(1,'rgba(255,50,0,0)');
+  ctx2d.beginPath();
+  ctx2d.moveTo(x-s*0.2, y+s*0.5);
+  ctx2d.quadraticCurveTo(x-s*0.4, y+s*0.5+flameH*0.5, x, y+s*0.5+flameH);
+  ctx2d.quadraticCurveTo(x+s*0.4, y+s*0.5+flameH*0.5, x+s*0.2, y+s*0.5);
+  ctx2d.fillStyle=fg; ctx2d.fill();
+  // Body
+  ctx2d.beginPath();
+  ctx2d.roundRect(x-s*0.28, y-s*1.1, s*0.56, s*1.6, s*0.1);
+  ctx2d.fillStyle='rgba(220,230,245,0.95)'; ctx2d.fill();
+  // Nose cone
+  ctx2d.beginPath();
+  ctx2d.moveTo(x-s*0.28, y-s*1.1);
+  ctx2d.quadraticCurveTo(x-s*0.28, y-s*1.8, x, y-s*2.0);
+  ctx2d.quadraticCurveTo(x+s*0.28, y-s*1.8, x+s*0.28, y-s*1.1);
+  ctx2d.fillStyle='rgba(255,80,80,0.9)'; ctx2d.fill();
+  // Window
+  ctx2d.beginPath(); ctx2d.arc(x, y-s*0.6, s*0.18, 0, Math.PI*2);
+  ctx2d.fillStyle='rgba(150,220,255,0.85)'; ctx2d.fill();
+  ctx2d.strokeStyle='rgba(180,200,230,0.7)'; ctx2d.lineWidth=s*0.06; ctx2d.stroke();
+  // Fins
+  [[-1,1],[1,1]].forEach(([dx]) => {
+    ctx2d.beginPath();
+    ctx2d.moveTo(x+dx*s*0.28, y+s*0.3);
+    ctx2d.lineTo(x+dx*s*0.7,  y+s*0.8);
+    ctx2d.lineTo(x+dx*s*0.28, y+s*0.5);
+    ctx2d.fillStyle='rgba(200,210,235,0.9)'; ctx2d.fill();
+  });
+  // Trail
+  const trg = ctx2d.createLinearGradient(x, y-s*2, x, y-s*6);
+  trg.addColorStop(0,'rgba(255,255,255,0.2)');
+  trg.addColorStop(1,'rgba(255,255,255,0)');
+  ctx2d.beginPath(); ctx2d.moveTo(x-s*0.1,y-s*2); ctx2d.lineTo(x,y-s*6); ctx2d.lineTo(x+s*0.1,y-s*2);
+  ctx2d.fillStyle=trg; ctx2d.fill();
+}
+
 function drawFlock(x, y, sc, W, t, pal) {
   const op = pal.starOp < 0.8 ? 0.6 : 0;
   if (op < 0.01) return;
@@ -1140,8 +1289,8 @@ function rgba(c,a){return `rgba(${c[0]},${c[1]},${c[2]},${a})`}
 const PAL = {
   'deep-night':{ top:[5,4,22],   bot:[12,8,45],    starOp:1,   cloudOp:0.04, sunOp:0, moonOp:1,   sunY:1.3, moonY:0.22, rain:0 },
   'dawn':      { top:[200,130,50],  bot:[255,200,100], starOp:0.1, cloudOp:0.6,  sunOp:0.8,moonOp:0.05,sunY:0.22,moonY:-0.1,rain:0 },
-  'morning':   { top:[25,100,230],  bot:[80,170,255],  starOp:0,   cloudOp:0.9,  sunOp:1,  moonOp:0,   sunY:0.13,moonY:-0.3,rain:0 },
-  'day':       { top:[15,95,220],   bot:[70,165,255],  starOp:0,   cloudOp:1,    sunOp:1,  moonOp:0,   sunY:0.12,moonY:-0.3,rain:0 },
+  'morning':   { top:[80,175,255],  bot:[180,225,255], starOp:0,   cloudOp:0.9,  sunOp:1,  moonOp:0,   sunY:0.13,moonY:-0.3,rain:0 },
+  'day':       { top:[65,165,250],  bot:[160,215,255], starOp:0,   cloudOp:1,    sunOp:1,  moonOp:0,   sunY:0.12,moonY:-0.3,rain:0 },
   'golden':    { top:[255,90,10], bot:[255,175,70],  starOp:0.1, cloudOp:1,    sunOp:0.9,moonOp:0.1,sunY:0.52,moonY:0.1,rain:0 },
   'dusk':      { top:[25,8,65],   bot:[170,50,35],   starOp:0.5, cloudOp:0.55, sunOp:0.25,moonOp:0.5,sunY:0.78,moonY:0.28,rain:0 },
   'evening':   { top:[8,4,35],    bot:[60,15,75],    starOp:0.85,cloudOp:0.12, sunOp:0, moonOp:0.9, sunY:1.3, moonY:0.2,rain:0 },
