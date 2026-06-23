@@ -1,27 +1,27 @@
 {
   "name": "Paz Total",
-  "short_name": "Vida",
+  "short_name": "Paz Total",
   "description": "Tu espacio de paz, fe y propósito con Dios",
-  "start_url": "/",
+  "start_url": "/paz-total/index.html",
+  "scope": "/paz-total/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f0c29",
   "theme_color": "#0f0c29",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "/paz-total/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "/paz-total/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
   "categories": ["lifestyle", "productivity", "health"],
   "lang": "es"
 }
