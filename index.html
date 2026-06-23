@@ -219,6 +219,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .task-card:active{transform:scale(.98)}
 .task-card.done-card{opacity:.5}
 @keyframes popIn{from{transform:translateY(6px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 .chk{
   width:26px;height:26px;border-radius:50%;
   border:2px solid #d1d5db;display:flex;align-items:center;
@@ -501,10 +503,6 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
           <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase motivacional
         </button>
 
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px;background:linear-gradient(90deg,#2d1b69,#11998e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
-          Recordatorios de bienestar
-        </div>
-        <div id="wellness-list"></div>
       </div>
 
       <!-- EMPRESA -->
@@ -702,6 +700,42 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
     </div><!-- end .scroll -->
   </div><!-- end .panel -->
 
+  <!-- WELLNESS POPUP -->
+  <div id="wellness-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:50;animation:slideUp .35s ease">
+    <div id="wellness-popup-inner" style="background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="wp-icon" style="font-size:32px;flex-shrink:0">💧</div>
+        <div style="flex:1">
+          <div id="wp-name" style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px">Toma agua</div>
+          <div id="wp-sub" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.4">Tus riñones te lo agradecerán</div>
+        </div>
+        <button onclick="dismissWellness()" style="background:rgba(255,255,255,.2);border:none;border-radius:99px;width:28px;height:28px;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="doneWellness()" style="flex:1;background:rgba(255,255,255,.95);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#2d1b69;cursor:pointer">✓ Hecho</button>
+        <button onclick="snoozeWellnessPopup()" style="flex:1;background:rgba(255,255,255,.2);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:500;color:#fff;cursor:pointer">⏰ En 10 min</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WELLNESS POPUP FLOTANTE -->
+  <div id="wellness-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:50;animation:slideUp .35s ease">
+    <div style="background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px 18px;box-shadow:0 8px 32px rgba(45,27,105,.45)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="wp-icon" style="font-size:32px;flex-shrink:0">💧</div>
+        <div style="flex:1">
+          <div id="wp-name" style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px">Toma agua</div>
+          <div id="wp-sub" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.4">Tus riñones te lo agradecerán</div>
+        </div>
+        <button onclick="dismissWellness()" style="background:rgba(255,255,255,.2);border:none;border-radius:10px;color:#fff;width:32px;height:32px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="doneWellness()" style="flex:1;background:#fff;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#2d1b69;cursor:pointer">✓ ¡Listo!</button>
+        <button onclick="snoozeWellnessPopup()" style="flex:1;background:rgba(255,255,255,.2);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#fff;cursor:pointer">⏰ En 10 min</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ALARM OVERLAY -->
   <div class="alarm-overlay" id="alarm-overlay">
     <div class="alarm-box">
@@ -836,28 +870,28 @@ const BIRDS = Array.from({length:12}, () => ({
 // ── SKY OBJECTS ────────────────────────────────────────────
 const SKY_OBJECTS = [
   // Airplane 1
-  { type:'plane', x:-0.1, y:0.12, speed:0.0006, scale:1, dir:1, nextAt: 30 + Math.random()*60 },
+  { type:'plane', x:-0.1, y:0.12, speed:0.0012, scale:1, dir:1, nextAt: 8 + Math.random()*15 },
   // Airplane 2 (opposite direction, higher)
-  { type:'plane', x:1.1,  y:0.08, speed:0.0005, scale:0.75, dir:-1, nextAt: 80 + Math.random()*80 },
+  { type:'plane', x:1.1,  y:0.08, speed:0.001,  scale:0.75, dir:-1, nextAt: 20 + Math.random()*20 },
   // Helicopter
-  { type:'heli',  x:-0.1, y:0.22, speed:0.0003, scale:0.8, dir:1, nextAt: 120 + Math.random()*100 },
+  { type:'heli',  x:-0.1, y:0.22, speed:0.0007, scale:0.8, dir:1, nextAt: 15 + Math.random()*20 },
   // Hot air balloon
-  { type:'balloon', x:0.15, y:0.25, speed:0.00008, scale:1, dir:1, nextAt: 50 + Math.random()*120 },
+  { type:'balloon', x:0.15, y:0.25, speed:0.00018, scale:1, dir:1, nextAt: 10 + Math.random()*25 },
 
   // Bird flock (V formation)
-  { type:'flock', x:-0.05, y:0.18, speed:0.0004, scale:1, dir:1, nextAt: 20 + Math.random()*40 },
+  { type:'flock', x:-0.05, y:0.18, speed:0.0008, scale:1, dir:1, nextAt: 5 + Math.random()*10 },
   // Shooting stars (multiple)
   { type:'star', x:0.8, y:0.08, speed:0.0025, scale:1,    dir:1, nextAt: 25 + Math.random()*40 },
   { type:'star', x:0.5, y:0.12, speed:0.003,  scale:0.8,  dir:1, nextAt: 60 + Math.random()*60 },
   { type:'star', x:0.9, y:0.05, speed:0.002,  scale:1.2,  dir:-1,nextAt: 80 + Math.random()*80 },
   // Satellites
-  { type:'satellite', x:-0.05, y:0.08, speed:0.00035, scale:1,   dir:1,  nextAt: 30 + Math.random()*60 },
-  { type:'satellite', x:1.05,  y:0.18, speed:0.0003,  scale:0.8, dir:-1, nextAt: 90 + Math.random()*90 },
+  { type:'satellite', x:-0.05, y:0.08, speed:0.0007, scale:1,   dir:1,  nextAt: 8 + Math.random()*15 },
+  { type:'satellite', x:1.05,  y:0.18, speed:0.0006,  scale:0.8, dir:-1, nextAt: 25 + Math.random()*25 },
   // UFO / OVNI
-  { type:'ufo', x:-0.1, y:0.15, speed:0.00025, scale:1, dir:1, nextAt: 120 + Math.random()*180, wobble:0 },
-  { type:'ufo', x:1.1,  y:0.28, speed:0.0003,  scale:0.7, dir:-1, nextAt: 200 + Math.random()*200, wobble:0 },
+  { type:'ufo', x:-0.1, y:0.15, speed:0.0006,  scale:1, dir:1, nextAt: 20 + Math.random()*30,  wobble:0 },
+  { type:'ufo', x:1.1,  y:0.28, speed:0.0006,  scale:0.7, dir:-1, nextAt: 40 + Math.random()*40, wobble:0 },
   // Space shuttle / rocket
-  { type:'rocket', x:-0.05, y:0.35, speed:0.0005, scale:1, dir:1, nextAt: 150 + Math.random()*200 },
+  { type:'rocket', x:-0.05, y:0.35, speed:0.0012, scale:1, dir:1, nextAt: 30 + Math.random()*40 },
 ];
 
 let objT = 0;
@@ -882,9 +916,9 @@ function drawSkyObjects(W, H, pal) {
       obj.x = obj.dir === 1 ? -0.15 : 1.15;
       obj.y = 0.05 + Math.random() * 0.28;
       // wait before next pass
-      const waits = {plane:90+Math.random()*120, heli:150+Math.random()*150,
-                     balloon:180+Math.random()*120, star:15+Math.random()*30, flock:30+Math.random()*50,
-                     satellite:60+Math.random()*90, ufo:180+Math.random()*240, rocket:200+Math.random()*250};
+      const waits = {plane:8+Math.random()*12, heli:12+Math.random()*15,
+                     balloon:10+Math.random()*15, star:8+Math.random()*12, flock:5+Math.random()*8,
+                     satellite:15+Math.random()*20, ufo:20+Math.random()*25, rocket:25+Math.random()*30};
       obj.nextAt = waits[obj.type] || 60;
       return;
     }
