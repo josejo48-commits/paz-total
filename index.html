@@ -107,9 +107,14 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .wav:nth-child(4){height:12px;animation-delay:.1s}
 .wav:nth-child(5){height:5px;animation-delay:.25s}
 @keyframes wav{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
-/* Spotify */
-.spotify-btn{display:flex;align-items:center;gap:8px;text-decoration:none;padding:5px 12px;border-radius:99px;border:1px solid rgba(30,215,96,.35);background:rgba(30,215,96,.1);color:rgba(255,255,255,.8);font-size:11px;font-family:'Inter',sans-serif;font-weight:500;flex-shrink:0;transition:all .2s}
-.spotify-btn i{font-size:13px;color:#1ed760}
+/* Spotify in player */
+.mp-spotify{display:flex;align-items:center;gap:5px;text-decoration:none;
+  padding:5px 12px;border-radius:99px;flex-shrink:0;
+  border:1px solid rgba(30,215,96,.4);background:rgba(30,215,96,.12);
+  color:rgba(255,255,255,.85);font-size:11px;font-family:'Inter',sans-serif;font-weight:600;
+  transition:all .2s;white-space:nowrap}
+.mp-spotify i{font-size:14px;color:#1ed760}
+.mp-spotify:active{background:rgba(30,215,96,.25)}
 
 /* ===================== MAIN PANEL ===================== */
 .panel{
@@ -151,15 +156,15 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* ===================== COMPONENTS ===================== */
 
 /* PROGRESS RING */
-.ring-wrap{display:flex;justify-content:center;padding:4px 0 8px}
-.ring-outer{position:relative;width:88px;height:88px}
+.ring-wrap{display:flex;justify-content:center;padding:2px 0 6px}
+.ring-outer{position:relative;width:110px;height:110px}
 .ring-outer svg{transform:rotate(-90deg)}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-pct{font-size:20px;font-weight:700;color:#2d1b69}
+.ring-pct{font-size:26px;font-weight:800;color:#2d1b69;letter-spacing:-.5px}
 .ring-sub{font-size:11px;color:#9ca3af;margin-top:1px}
 
 /* STATS GRID */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
 .stat-box{border-radius:14px;padding:10px 12px;position:relative;overflow:hidden}
 .stat-box.purple{background:#f5f3ff}
 .stat-box.green{background:#f0fdf4}
@@ -170,8 +175,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .stat-ic.green{color:#059669}
 .stat-ic.amber{color:#d97706}
 .stat-ic.blue{color:#2563eb}
-.stat-val{font-size:18px;font-weight:700;color:#111827;margin-bottom:1px}
-.stat-lbl{font-size:11px;color:#6b7280;font-weight:500}
+.stat-val{font-size:22px;font-weight:800;color:#111827;margin-bottom:1px}
+.stat-lbl{font-size:12px;color:#6b7280;font-weight:600}
 .stat-ring{position:absolute;right:-10px;bottom:-10px;width:60px;height:60px;border-radius:50%;opacity:.12}
 
 /* SECTION LABEL */
@@ -208,7 +213,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
 /* TASK CARD */
 .task-card{
-  background:#fff;border-radius:12px;padding:9px 12px;
+  background:#fff;border-radius:14px;padding:11px 14px;
   margin-bottom:8px;display:flex;align-items:center;gap:11px;
   cursor:pointer;transition:all .15s;
   border:1.5px solid #f3f4f6;
@@ -225,9 +230,9 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .chk.done{background:#2d1b69;border-color:#2d1b69}
 .chk.done i{color:#fff;font-size:13px}
 .task-body{flex:1;min-width:0}
-.task-name{font-size:13px;font-weight:500;color:#111827;margin-bottom:2px}
+.task-name{font-size:14px;font-weight:600;color:#111827;margin-bottom:3px}
 .task-name.done{text-decoration:line-through;color:#9ca3af}
-.task-hint{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px}
+.task-hint{font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:4px}
 .task-hint i{font-size:11px}
 .badge{font-size:10px;padding:3px 8px;border-radius:99px;font-weight:600;flex-shrink:0}
 .ba{background:#fee2e2;color:#b91c1c}
@@ -426,28 +431,13 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <button class="mp-track on" onclick="selectTrack(0,this)"><i class="ti ti-guitar-pick" aria-hidden="true"></i> Instrumental</button>
       <button class="mp-track" onclick="selectTrack(1,this)"><i class="ti ti-moon" aria-hidden="true"></i> Cuna del alma</button>
       <button class="mp-track" onclick="selectTrack(2,this)"><i class="ti ti-star" aria-hidden="true"></i> Nana suave</button>
+      <a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank" rel="noopener" class="mp-spotify" aria-label="Abrir Spotify">
+        <i class="ti ti-brand-spotify" aria-hidden="true"></i> Spotify
+      </a>
     </div>
   </div>
 
-  <!-- AMBIENT + SPOTIFY -->
-  <div class="amb-bar">
-    <button class="snd-btn" id="s-rain" onclick="toggleSnd('rain')" aria-label="Lluvia">
-      <i class="ti ti-cloud-rain" aria-hidden="true"></i> Lluvia
-    </button>
-    <button class="snd-btn" id="s-forest" onclick="toggleSnd('forest')" aria-label="Bosque">
-      <i class="ti ti-tree" aria-hidden="true"></i> Bosque
-    </button>
-    <button class="snd-btn" id="s-calm" onclick="toggleSnd('calm')" aria-label="Calma">
-      <i class="ti ti-wave-sine" aria-hidden="true"></i> Binaural
-    </button>
-    <div class="waves" id="wave-vis">
-      <div class="wav"></div><div class="wav"></div><div class="wav"></div>
-      <div class="wav"></div><div class="wav"></div>
-    </div>
-    <a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank" rel="noopener" class="spotify-btn" aria-label="Abrir Spotify">
-      <i class="ti ti-brand-spotify" aria-hidden="true"></i> Spotify
-    </a>
-  </div>
+
 
   <!-- MAIN PANEL -->
   <div class="panel">
@@ -748,13 +738,33 @@ const MOTIV = [
   {t:"Cada mañana que amanece es una nueva oportunidad que Dios te regala para escribir un capítulo mejor.",a:"— Lamentaciones 3:23"}
 ];
 
-let rutina = [];
+/* ============================================================
+   PERSISTENCIA LOCAL — localStorage
+============================================================ */
+function saveData() {
+  try {
+    localStorage.setItem('pt_rutina',    JSON.stringify(rutina));
+    localStorage.setItem('pt_empTasks',  JSON.stringify(empTasks));
+    localStorage.setItem('pt_proyectos', JSON.stringify(proyectos));
+    localStorage.setItem('pt_prayers',   JSON.stringify(prayers));
+    localStorage.setItem('pt_reminders', JSON.stringify(reminders));
+  } catch(e) { console.warn('saveData:', e); }
+}
 
-let empTasks = [];
+function loadData() {
+  try {
+    rutina     = JSON.parse(localStorage.getItem('pt_rutina'))    || [];
+    empTasks   = JSON.parse(localStorage.getItem('pt_empTasks'))  || [];
+    proyectos  = JSON.parse(localStorage.getItem('pt_proyectos')) || [];
+    prayers    = JSON.parse(localStorage.getItem('pt_prayers'))   || [];
+    reminders  = JSON.parse(localStorage.getItem('pt_reminders')) || [];
+  } catch(e) { console.warn('loadData:', e); }
+}
 
-let proyectos = [];
-
-let prayers = [];
+let rutina     = [];
+let empTasks   = [];
+let proyectos  = [];
+let prayers    = [];
 let vcat = 'paz';
 let motI = 0;
 let audioCtx = null;
@@ -1342,6 +1352,7 @@ function renderEmp() {
 function toggleEmp(i) {
   empTasks[i].done = !empTasks[i].done;
   empTasks[i].status = empTasks[i].done ? 'done' : 'pend';
+  saveData();
   renderEmp();
 }
 
@@ -1352,6 +1363,7 @@ function addEmp() {
   const pri = document.getElementById('emp-pri').value;
   empTasks.unshift({n, cat:'General', pri, status:'pend', done:false});
   inp.value = '';
+  saveData();
   renderEmp();
 }
 
@@ -1361,6 +1373,7 @@ function addProj() {
   if (!n) return;
   proyectos.push({n, tasks:1, done:0});
   inp.value = '';
+  saveData();
   renderEmp();
 }
 
@@ -1388,6 +1401,7 @@ function renderRut() {
 
 function toggleRut(i) {
   rutina[i].done = !rutina[i].done;
+  saveData();
   renderRut();
   if (rutina.filter(t=>t.done).length === rutina.length) {
     setTimeout(() => alert('¡Completaste toda tu rutina! 🎉 Dios es fiel.'), 200);
@@ -1400,6 +1414,7 @@ function addRut() {
   if (!n) return;
   rutina.push({n, t:'—', ic:'ti-star', done:false});
   inp.value = '';
+  saveData();
   renderRut();
 }
 
@@ -1446,6 +1461,7 @@ function savePray() {
   const d = new Date().toLocaleDateString('es-CO', {day:'numeric', month:'short', year:'numeric'});
   prayers.unshift({t, d});
   inp.value = '';
+  saveData();
   renderFe();
 }
 
@@ -1494,12 +1510,14 @@ function addReminder() {
   reminders.push({id: Date.now(), n, t, fired: false});
   nameInp.value = '';
   timeInp.value = '';
+  saveData();
   renderReminders();
   startAlarmCheck();
 }
 
 function deleteReminder(id) {
   reminders = reminders.filter(r => r.id !== id);
+  saveData();
   renderReminders();
 }
 
@@ -1534,6 +1552,7 @@ function checkAlarms() {
   reminders.forEach(r => {
     if (!r.fired && r.t === hhmm) {
       r.fired = true;
+      saveData();
       triggerAlarm(r.n, r.t);
       renderReminders();
     }
@@ -1583,10 +1602,7 @@ function dismissAlarm() {
   document.getElementById('alarm-overlay').classList.remove('show');
 }
 
-// Init reminders on load
-renderReminders();
-startAlarmCheck();
-
+// (reminders init handled in main init)
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -1595,9 +1611,12 @@ if ('serviceWorker' in navigator) {
 /* ============================================================
    INIT
 ============================================================ */
+loadData();
 initHero();
 renderHoy();
 renderBiblia();
+renderReminders();
+startAlarmCheck();
 </script>
 </body>
 </html>
