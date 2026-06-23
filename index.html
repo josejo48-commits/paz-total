@@ -1010,29 +1010,46 @@ function initHero() {
 /* ============================================================
    MUSIC PLAYER ENGINE
 ============================================================ */
+const BASE = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
 const TRACKS = [
-  {file:'music/instrumental.mp3', title:'Instrumental de paz',    artist:'Orangiro Musik'},
-  {file:'music/cradle.mp3',       title:'Cuna del alma',          artist:'Lemon Music Studio'},
-  {file:'music/lullaby.mp3',      title:'Nana suave',             artist:'Alex Morgan'}
+  {file: BASE + 'music/instrumental.mp3', title:'Instrumental de paz',  artist:'Orangiro Musik'},
+  {file: BASE + 'music/cradle.mp3',       title:'Cuna del alma',        artist:'Lemon Music Studio'},
+  {file: BASE + 'music/lullaby.mp3',      title:'Nana suave',           artist:'Alex Morgan'}
 ];
 
 let trackIdx = 0;
 let mpAudio = new Audio();
 let mpPlaying = false;
 
-mpAudio.src = TRACKS[0].file;
-mpAudio.preload = 'metadata';
+function mpSetStatus(msg) {
+  document.getElementById('mp-artist').textContent = msg;
+}
+
+mpAudio.crossOrigin = 'anonymous';
+mpAudio.preload = 'none';
 
 mpAudio.addEventListener('timeupdate', () => {
   if (!mpAudio.duration) return;
   const pct = (mpAudio.currentTime / mpAudio.duration) * 100;
-  document.getElementById('mp-fill').style.width = pct + '%';
+  document.getElementById('mp-fill').style.width = pct.toFixed(1) + '%';
   document.getElementById('mp-cur').textContent = fmtTime(mpAudio.currentTime);
 });
 mpAudio.addEventListener('loadedmetadata', () => {
   document.getElementById('mp-dur').textContent = fmtTime(mpAudio.duration);
+  mpSetStatus(TRACKS[trackIdx].artist);
+});
+mpAudio.addEventListener('waiting', () => mpSetStatus('Cargando...'));
+mpAudio.addEventListener('playing', () => mpSetStatus(TRACKS[trackIdx].artist));
+mpAudio.addEventListener('error', (e) => {
+  mpPlaying = false;
+  document.getElementById('mp-play-icon').className = 'ti ti-player-play';
+  mpSetStatus('Error al cargar — verifica la carpeta music/');
+  console.error('Audio error:', mpAudio.error);
 });
 mpAudio.addEventListener('ended', () => { nextTrack(); });
+
+// Load first track src
+mpAudio.src = TRACKS[0].file;
 
 function fmtTime(s) {
   if (!s || isNaN(s)) return '0:00';
@@ -1046,9 +1063,21 @@ function togglePlay() {
     mpPlaying = false;
     document.getElementById('mp-play-icon').className = 'ti ti-player-play';
   } else {
-    mpAudio.play().catch(()=>{});
-    mpPlaying = true;
-    document.getElementById('mp-play-icon').className = 'ti ti-player-pause';
+    if (!mpAudio.src || mpAudio.src === window.location.href) {
+      mpAudio.src = TRACKS[trackIdx].file;
+    }
+    mpSetStatus('Cargando...');
+    const p = mpAudio.play();
+    if (p !== undefined) {
+      p.then(() => {
+        mpPlaying = true;
+        document.getElementById('mp-play-icon').className = 'ti ti-player-pause';
+      }).catch(err => {
+        mpSetStatus('Toca de nuevo para reproducir');
+        mpPlaying = false;
+        console.error('Play error:', err);
+      });
+    }
   }
 }
 
@@ -1056,37 +1085,38 @@ function selectTrack(idx, el) {
   trackIdx = idx;
   const wasPlaying = mpPlaying;
   mpAudio.pause();
+  mpPlaying = false;
+  document.getElementById('mp-play-icon').className = 'ti ti-player-play';
   mpAudio.src = TRACKS[idx].file;
   mpAudio.load();
   document.getElementById('mp-title').textContent = TRACKS[idx].title;
-  document.getElementById('mp-artist').textContent = TRACKS[idx].artist;
+  mpSetStatus(TRACKS[idx].artist);
   document.getElementById('mp-fill').style.width = '0%';
   document.getElementById('mp-cur').textContent = '0:00';
+  document.getElementById('mp-dur').textContent = '0:00';
   document.querySelectorAll('.mp-track').forEach(b => b.classList.remove('on'));
   el.classList.add('on');
-  if (wasPlaying) {
-    mpAudio.play().catch(()=>{});
-    mpPlaying = true;
-    document.getElementById('mp-play-icon').className = 'ti ti-player-pause';
-  }
+  if (wasPlaying) setTimeout(() => togglePlay(), 300);
 }
 
 function nextTrack() {
   const next = (trackIdx + 1) % TRACKS.length;
   selectTrack(next, document.querySelectorAll('.mp-track')[next]);
-  if (!mpPlaying) togglePlay();
+  setTimeout(() => togglePlay(), 300);
 }
 
 function prevTrack() {
   if (mpAudio.currentTime > 3) { mpAudio.currentTime = 0; return; }
   const prev = (trackIdx - 1 + TRACKS.length) % TRACKS.length;
   selectTrack(prev, document.querySelectorAll('.mp-track')[prev]);
-  if (!mpPlaying) togglePlay();
+  setTimeout(() => togglePlay(), 300);
 }
 
 function seekTo(e) {
+  if (!mpAudio.duration) return;
   const bar = e.currentTarget;
-  const pct = e.offsetX / bar.offsetWidth;
+  const rect = bar.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
   mpAudio.currentTime = pct * mpAudio.duration;
 }
 
