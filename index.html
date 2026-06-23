@@ -1272,10 +1272,10 @@ const RAINDROPS = Array.from({length:40}, () => ({
 function getSkyPhase(h, m) {
   const t = h + m / 60;
   if (t < 5)    return {phase:'deep-night', p:0};
-  if (t < 7)    return {phase:'dawn',       p:(t-5)/2};
-  if (t < 9)    return {phase:'morning',    p:(t-7)/2};
-  if (t < 17)   return {phase:'day',        p:1};
-  if (t < 19)   return {phase:'golden',     p:(t-17)/2};
+  if (t < 6.5)  return {phase:'dawn',       p:(t-5)/1.5};
+  if (t < 8)    return {phase:'morning',    p:(t-6.5)/1.5};
+  if (t < 17.5) return {phase:'day',        p:1};
+  if (t < 19)   return {phase:'golden',     p:(t-17.5)/1.5};
   if (t < 20.5) return {phase:'dusk',       p:(t-19)/1.5};
   if (t < 22)   return {phase:'evening',    p:(t-20.5)/1.5};
   return {phase:'night', p:0};
