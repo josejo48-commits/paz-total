@@ -123,7 +123,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
 /* NAV PILLS */
 .nav-pills{
-  display:flex;gap:6px;padding:16px 16px 10px;
+  display:flex;gap:6px;padding:10px 14px 8px;
   overflow-x:auto;scrollbar-width:none;flex-shrink:0;
 }
 .nav-pills::-webkit-scrollbar{display:none}
@@ -151,36 +151,36 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* ===================== COMPONENTS ===================== */
 
 /* PROGRESS RING */
-.ring-wrap{display:flex;justify-content:center;padding:8px 0 16px}
-.ring-outer{position:relative;width:120px;height:120px}
+.ring-wrap{display:flex;justify-content:center;padding:4px 0 8px}
+.ring-outer{position:relative;width:88px;height:88px}
 .ring-outer svg{transform:rotate(-90deg)}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-pct{font-size:28px;font-weight:700;color:#2d1b69}
+.ring-pct{font-size:20px;font-weight:700;color:#2d1b69}
 .ring-sub{font-size:11px;color:#9ca3af;margin-top:1px}
 
 /* STATS GRID */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
-.stat-box{border-radius:16px;padding:13px 14px;position:relative;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.stat-box{border-radius:14px;padding:10px 12px;position:relative;overflow:hidden}
 .stat-box.purple{background:#f5f3ff}
 .stat-box.green{background:#f0fdf4}
 .stat-box.amber{background:#fffbeb}
 .stat-box.blue{background:#eff6ff}
-.stat-ic{font-size:22px;margin-bottom:5px}
+.stat-ic{font-size:18px;margin-bottom:3px}
 .stat-ic.purple{color:#7c3aed}
 .stat-ic.green{color:#059669}
 .stat-ic.amber{color:#d97706}
 .stat-ic.blue{color:#2563eb}
-.stat-val{font-size:22px;font-weight:700;color:#111827;margin-bottom:1px}
+.stat-val{font-size:18px;font-weight:700;color:#111827;margin-bottom:1px}
 .stat-lbl{font-size:11px;color:#6b7280;font-weight:500}
 .stat-ring{position:absolute;right:-10px;bottom:-10px;width:60px;height:60px;border-radius:50%;opacity:.12}
 
 /* SECTION LABEL */
-.slbl{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 8px}
+.slbl{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 6px}
 
 /* MOTIV CARD */
 .motiv-card{
   background:linear-gradient(135deg,#2d1b69 0%,#11998e 100%);
-  border-radius:20px;padding:18px;margin-bottom:14px;
+  border-radius:16px;padding:12px 14px;margin-bottom:10px;
   position:relative;overflow:hidden;
 }
 .motiv-card::before{
@@ -193,7 +193,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   width:50px;height:50px;border-radius:50%;
   background:rgba(255,255,255,.04);
 }
-.motiv-txt{font-size:14px;color:#fff;line-height:1.65;margin-bottom:7px;position:relative;z-index:1}
+.motiv-txt{font-size:13px;color:#fff;line-height:1.5;margin-bottom:5px;position:relative;z-index:1}
 .motiv-auth{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
 
 /* REST BANNER */
@@ -208,7 +208,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
 /* TASK CARD */
 .task-card{
-  background:#fff;border-radius:14px;padding:12px 14px;
+  background:#fff;border-radius:12px;padding:9px 12px;
   margin-bottom:8px;display:flex;align-items:center;gap:11px;
   cursor:pointer;transition:all .15s;
   border:1.5px solid #f3f4f6;
@@ -748,24 +748,9 @@ const MOTIV = [
   {t:"Cada mañana que amanece es una nueva oportunidad que Dios te regala para escribir un capítulo mejor.",a:"— Lamentaciones 3:23"}
 ];
 
-let rutina = [
-  {n:"Oración matutina",t:"7:00 am",ic:"ti-heart",done:false},
-  {n:"Lectura bíblica 15 min",t:"7:20 am",ic:"ti-book",done:false},
-  {n:"Ejercicio o caminata",t:"8:00 am",ic:"ti-run",done:false},
-  {n:"Pausa activa",t:"10:00 am",ic:"ti-coffee",done:false},
-  {n:"Momento de gratitud",t:"12:00 pm",ic:"ti-sun",done:false},
-  {n:"Revisión de metas",t:"6:00 pm",ic:"ti-target",done:false},
-  {n:"Oración de cierre",t:"9:00 pm",ic:"ti-moon-stars",done:false}
-];
+let rutina = [];
 
-let empTasks = [
-  {n:"Revisar propuesta cliente A",cat:"Ventas",pri:"alta",status:"pend",done:false},
-  {n:"Reunión equipo 10am",cat:"Gestión",pri:"alta",status:"prog",done:false},
-  {n:"Informe financiero semana",cat:"Finanzas",pri:"media",status:"rev",done:false},
-  {n:"Publicar en redes sociales",cat:"Marketing",pri:"baja",status:"pend",done:false},
-  {n:"Cotización proveedor B",cat:"Compras",pri:"media",status:"prog",done:false},
-  {n:"Actualizar CRM",cat:"Ventas",pri:"baja",status:"done",done:true}
-];
+let empTasks = [];
 
 let proyectos = [];
 
@@ -1291,15 +1276,17 @@ function renderHoy() {
     ...empTasks.filter(t=>!t.done).slice(0,2),
     ...rutina.filter(t=>!t.done).slice(0,2)
   ];
-  document.getElementById('hoy-list').innerHTML = upcoming.map(t => `
-    <div class="task-card">
-      <div class="chk"><i class="ti ti-clock" style="color:#d1d5db;font-size:12px" aria-hidden="true"></i></div>
-      <div class="task-body">
-        <div class="task-name">${t.n}</div>
-        <div class="task-hint"><i class="ti ti-tag" aria-hidden="true"></i>${t.cat||'Rutina'} ${t.t?'· '+t.t:''}</div>
-      </div>
-      <span class="badge ${t.pri?'b'+t.pri[0]:'br'}">${t.pri||'hábito'}</span>
-    </div>`).join('') || '<div class="empty">¡Todo al día! Dios te ha bendecido hoy 🎉</div>';
+  document.getElementById('hoy-list').innerHTML = upcoming.length
+    ? upcoming.map(t => `
+        <div class="task-card">
+          <div class="chk"><i class="ti ti-clock" style="color:#d1d5db;font-size:12px" aria-hidden="true"></i></div>
+          <div class="task-body">
+            <div class="task-name">${t.n}</div>
+            <div class="task-hint"><i class="ti ti-tag" aria-hidden="true"></i>${t.cat||'Rutina'} ${t.t?'· '+t.t:''}</div>
+          </div>
+          <span class="badge ${t.pri?'b'+t.pri[0]:'br'}">${t.pri||'hábito'}</span>
+        </div>`).join('')
+    : '<div class="empty" style="padding:16px 0"><i class="ti ti-sparkles" style="font-size:28px;display:block;margin-bottom:8px;color:#a78bfa"></i>Agrega tareas en <strong>Empresa</strong> y hábitos en <strong>Rutina</strong> para verlos aquí</div>';
 
   renderMotiv();
 }
@@ -1386,15 +1373,17 @@ function renderRut() {
   document.getElementById('rut-num').textContent = pct + '%';
   setRing('rut-circle', pct);
 
-  document.getElementById('rut-list').innerHTML = rutina.map((t, i) => `
-    <div class="task-card ${t.done?'done-card':''}" onclick="toggleRut(${i})">
-      <div class="chk ${t.done?'done':''}">${t.done?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
-      <div class="task-body">
-        <div class="task-name ${t.done?'done':''}">${t.n}</div>
-        <div class="task-hint"><i class="ti ti-clock" aria-hidden="true"></i>${t.t}</div>
-      </div>
-      <i class="ti ${t.ic}" style="color:#d1d5db;font-size:20px" aria-hidden="true"></i>
-    </div>`).join('');
+  document.getElementById('rut-list').innerHTML = rutina.length
+    ? rutina.map((t, i) => `
+        <div class="task-card ${t.done?'done-card':''}" onclick="toggleRut(${i})">
+          <div class="chk ${t.done?'done':''}">${t.done?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+          <div class="task-body">
+            <div class="task-name ${t.done?'done':''}">${t.n}</div>
+            <div class="task-hint"><i class="ti ti-clock" aria-hidden="true"></i>${t.t}</div>
+          </div>
+          <i class="ti ${t.ic}" style="color:#d1d5db;font-size:20px" aria-hidden="true"></i>
+        </div>`).join('')
+    : '<div class="empty"><i class="ti ti-plus-circle" style="font-size:28px;display:block;margin-bottom:8px;color:#a78bfa"></i>Aún no tienes hábitos.<br>Agrega el primero abajo.</div>';
 }
 
 function toggleRut(i) {
