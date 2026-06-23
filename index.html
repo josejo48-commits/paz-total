@@ -64,24 +64,41 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .verse-txt{font-size:13px;color:rgba(255,255,255,.92);line-height:1.65;font-style:italic;margin-bottom:4px}
 .verse-ref{font-size:11px;color:#a78bfa;font-weight:600;letter-spacing:.04em}
 
-/* SOUND BAR */
-.sound-bar{
+/* MUSIC PLAYER */
+.music-player{
   position:relative;z-index:2;
-  display:flex;gap:7px;padding:0 16px 10px;
-  flex-shrink:0;align-items:center;
-}
-.snd-btn{
-  display:flex;align-items:center;gap:5px;
-  padding:6px 12px;border-radius:99px;
+  margin:0 16px 10px;
+  background:rgba(255,255,255,.1);
   border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  cursor:pointer;color:rgba(255,255,255,.75);
-  font-size:12px;font-family:'Inter',sans-serif;
-  transition:all .25s;flex-shrink:0;
+  border-radius:18px;padding:12px 14px;
+  flex-shrink:0;
 }
-.snd-btn i{font-size:14px}
-.snd-btn.on{background:rgba(167,139,250,.3);border-color:#a78bfa;color:#ddd6fe}
-.waves{display:none;gap:2px;align-items:center;height:14px;margin-left:4px}
+.mp-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mp-icon{width:40px;height:40px;border-radius:10px;background:rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mp-icon i{font-size:20px;color:#ddd6fe}
+.mp-info{flex:1;min-width:0}
+.mp-title{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-artist{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px}
+.mp-controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.mp-ctrl{background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,.75);padding:4px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mp-ctrl i{font-size:22px}
+.mp-ctrl.play-btn{width:38px;height:38px;border-radius:50%;background:rgba(167,139,250,.4);border:1px solid rgba(167,139,250,.5)}
+.mp-ctrl.play-btn i{font-size:18px;color:#fff}
+.mp-ctrl:active{transform:scale(.92)}
+.mp-progress{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.mp-time{font-size:10px;color:rgba(255,255,255,.5);min-width:28px}
+.mp-bar{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:99px;cursor:pointer;position:relative}
+.mp-bar-fill{height:100%;background:#a78bfa;border-radius:99px;transition:width .5s linear;pointer-events:none}
+.mp-tracks{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.mp-tracks::-webkit-scrollbar{display:none}
+.mp-track{flex-shrink:0;padding:5px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:transparent;cursor:pointer;color:rgba(255,255,255,.65);font-size:11px;font-family:'Inter',sans-serif;font-weight:500;transition:all .2s;white-space:nowrap}
+.mp-track.on{background:rgba(167,139,250,.35);border-color:#a78bfa;color:#fff}
+/* Ambient sounds row */
+.amb-bar{display:flex;gap:7px;padding:0 16px 10px;flex-shrink:0;align-items:center;position:relative;z-index:2}
+.snd-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,.6);font-size:11px;font-family:'Inter',sans-serif;transition:all .25s;flex-shrink:0}
+.snd-btn i{font-size:13px}
+.snd-btn.on{background:rgba(167,139,250,.25);border-color:#a78bfa;color:#ddd6fe}
+.waves{display:none;gap:2px;align-items:center;height:14px;margin-left:2px}
 .waves.on{display:flex}
 .wav{width:3px;border-radius:99px;background:#a78bfa;animation:wav 1s ease-in-out infinite}
 .wav:nth-child(1){height:4px;animation-delay:0s}
@@ -90,6 +107,9 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .wav:nth-child(4){height:12px;animation-delay:.1s}
 .wav:nth-child(5){height:5px;animation-delay:.25s}
 @keyframes wav{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+/* Spotify */
+.spotify-btn{display:flex;align-items:center;gap:8px;text-decoration:none;padding:5px 12px;border-radius:99px;border:1px solid rgba(30,215,96,.35);background:rgba(30,215,96,.1);color:rgba(255,255,255,.8);font-size:11px;font-family:'Inter',sans-serif;font-weight:500;flex-shrink:0;transition:all .2s}
+.spotify-btn i{font-size:13px;color:#1ed760}
 
 /* ===================== MAIN PANEL ===================== */
 .panel{
@@ -272,6 +292,44 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* EMPTY STATE */
 .empty{text-align:center;padding:24px 0;color:#9ca3af;font-size:13px}
 
+/* JW.ORG BUTTONS */
+.jw-btn{
+  display:block;text-decoration:none;
+  background:linear-gradient(135deg,#e8f5ee,#d1fae5);
+  border:2px solid #6ee7b7;border-radius:16px;
+  padding:14px 16px;margin-bottom:10px;
+  transition:all .2s;
+}
+.jw-btn:active{transform:scale(.98)}
+.jw-btn-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.jw-btn-left{display:flex;align-items:center;gap:12px}
+.jw-btn-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(135deg,#059669,#0a7a4b);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.jw-btn-icon i{font-size:22px;color:#fff}
+.jw-btn-title{font-size:14px;font-weight:700;color:#065f46;margin-bottom:2px}
+.jw-btn-sub{font-size:11px;color:#059669}
+.jw-links{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.jw-link{
+  text-decoration:none;padding:6px 13px;border-radius:99px;
+  background:#fff;border:1.5px solid #6ee7b7;
+  font-size:12px;font-weight:500;color:#065f46;
+  transition:all .15s;
+}
+.jw-link:active{background:#d1fae5}
+.jw-app-card{
+  display:flex;align-items:center;gap:12px;text-decoration:none;
+  background:#fff;border:1.5px solid #e5e7eb;
+  border-radius:16px;padding:14px;margin-bottom:14px;
+  transition:all .2s;
+}
+.jw-app-card:active{background:#f9fafb}
+.jw-app-title{font-size:13px;font-weight:700;color:#111827;margin-bottom:3px}
+.jw-app-sub{font-size:11px;color:#6b7280;line-height:1.4}
+
 /* SEG CONTROL */
 .seg{display:flex;background:#f3f4f6;border-radius:10px;padding:3px;margin-bottom:12px}
 .seg-btn{flex:1;padding:6px;border:none;background:transparent;border-radius:8px;font-size:12px;cursor:pointer;color:#6b7280;font-family:'Inter',sans-serif;font-weight:500;transition:all .2s}
@@ -322,8 +380,38 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
     <div class="verse-ref" id="v-ref"></div>
   </div>
 
-  <!-- SOUND BAR -->
-  <div class="sound-bar">
+  <!-- MUSIC PLAYER -->
+  <div class="music-player">
+    <div class="mp-top">
+      <div class="mp-icon"><i class="ti ti-music" aria-hidden="true"></i></div>
+      <div class="mp-info">
+        <div class="mp-title" id="mp-title">Instrumental de paz</div>
+        <div class="mp-artist" id="mp-artist">Música relajante</div>
+      </div>
+      <div class="mp-controls">
+        <button class="mp-ctrl" onclick="prevTrack()" aria-label="Anterior"><i class="ti ti-player-skip-back" aria-hidden="true"></i></button>
+        <button class="mp-ctrl play-btn" id="mp-play" onclick="togglePlay()" aria-label="Reproducir">
+          <i class="ti ti-player-play" id="mp-play-icon" aria-hidden="true"></i>
+        </button>
+        <button class="mp-ctrl" onclick="nextTrack()" aria-label="Siguiente"><i class="ti ti-player-skip-forward" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <div class="mp-progress">
+      <span class="mp-time" id="mp-cur">0:00</span>
+      <div class="mp-bar" onclick="seekTo(event)" aria-label="Progreso">
+        <div class="mp-bar-fill" id="mp-fill" style="width:0%"></div>
+      </div>
+      <span class="mp-time" id="mp-dur">0:00</span>
+    </div>
+    <div class="mp-tracks">
+      <button class="mp-track on" onclick="selectTrack(0,this)"><i class="ti ti-guitar-pick" aria-hidden="true"></i> Instrumental</button>
+      <button class="mp-track" onclick="selectTrack(1,this)"><i class="ti ti-moon" aria-hidden="true"></i> Cuna del alma</button>
+      <button class="mp-track" onclick="selectTrack(2,this)"><i class="ti ti-star" aria-hidden="true"></i> Nana suave</button>
+    </div>
+  </div>
+
+  <!-- AMBIENT + SPOTIFY -->
+  <div class="amb-bar">
     <button class="snd-btn" id="s-rain" onclick="toggleSnd('rain')" aria-label="Lluvia">
       <i class="ti ti-cloud-rain" aria-hidden="true"></i> Lluvia
     </button>
@@ -331,12 +419,15 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <i class="ti ti-tree" aria-hidden="true"></i> Bosque
     </button>
     <button class="snd-btn" id="s-calm" onclick="toggleSnd('calm')" aria-label="Calma">
-      <i class="ti ti-wave-sine" aria-hidden="true"></i> Calma
+      <i class="ti ti-wave-sine" aria-hidden="true"></i> Binaural
     </button>
     <div class="waves" id="wave-vis">
       <div class="wav"></div><div class="wav"></div><div class="wav"></div>
       <div class="wav"></div><div class="wav"></div>
     </div>
+    <a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank" rel="noopener" class="spotify-btn" aria-label="Abrir Spotify">
+      <i class="ti ti-brand-spotify" aria-hidden="true"></i> Spotify
+    </a>
   </div>
 
   <!-- MAIN PANEL -->
@@ -496,6 +587,46 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
       <!-- BIBLIA -->
       <div id="s-biblia" class="sec" role="tabpanel">
+
+        <!-- JW.ORG BIBLE BUTTON -->
+        <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/" target="_blank" rel="noopener" class="jw-btn" aria-label="Abrir Biblia en jw.org">
+          <div class="jw-btn-inner">
+            <div class="jw-btn-left">
+              <div class="jw-btn-icon"><i class="ti ti-book-2" aria-hidden="true"></i></div>
+              <div>
+                <div class="jw-btn-title">Traducción del Nuevo Mundo</div>
+                <div class="jw-btn-sub">Abrir Biblia completa en jw.org</div>
+              </div>
+            </div>
+            <i class="ti ti-external-link" style="font-size:18px;color:#0a7a4b;flex-shrink:0" aria-hidden="true"></i>
+          </div>
+        </a>
+
+        <!-- QUICK LINKS -->
+        <div class="slbl">Acceso rápido</div>
+        <div class="jw-links">
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/genesis/" target="_blank" rel="noopener" class="jw-link">Génesis</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/salmos/" target="_blank" rel="noopener" class="jw-link">Salmos</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/proverbios/" target="_blank" rel="noopener" class="jw-link">Proverbios</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/isaias/" target="_blank" rel="noopener" class="jw-link">Isaías</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/mateo/" target="_blank" rel="noopener" class="jw-link">Mateo</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/juan/" target="_blank" rel="noopener" class="jw-link">Juan</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/romanos/" target="_blank" rel="noopener" class="jw-link">Romanos</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/filipenses/" target="_blank" rel="noopener" class="jw-link">Filipenses</a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/apocalipsis/" target="_blank" rel="noopener" class="jw-link">Apocalipsis</a>
+        </div>
+
+        <!-- JW LIBRARY APP -->
+        <a href="https://www.jw.org/es/jehovahs-witnesses/apps/" target="_blank" rel="noopener" class="jw-app-card" aria-label="Descargar JW Library">
+          <i class="ti ti-device-mobile" style="font-size:26px;color:#0a7a4b;flex-shrink:0" aria-hidden="true"></i>
+          <div>
+            <div class="jw-app-title">JW Library</div>
+            <div class="jw-app-sub">Descarga la app oficial con la Biblia completa, publicaciones y más — sin internet</div>
+          </div>
+          <i class="ti ti-chevron-right" style="font-size:18px;color:#9ca3af;flex-shrink:0" aria-hidden="true"></i>
+        </a>
+
+        <div class="slbl">Versículos de paz</div>
         <div class="vcat-wrap" id="vcat-wrap"></div>
         <div id="v-list"></div>
 
@@ -877,7 +1008,90 @@ function initHero() {
 }
 
 /* ============================================================
-   SOUND ENGINE
+   MUSIC PLAYER ENGINE
+============================================================ */
+const TRACKS = [
+  {file:'music/instrumental.mp3', title:'Instrumental de paz',    artist:'Orangiro Musik'},
+  {file:'music/cradle.mp3',       title:'Cuna del alma',          artist:'Lemon Music Studio'},
+  {file:'music/lullaby.mp3',      title:'Nana suave',             artist:'Alex Morgan'}
+];
+
+let trackIdx = 0;
+let mpAudio = new Audio();
+let mpPlaying = false;
+
+mpAudio.src = TRACKS[0].file;
+mpAudio.preload = 'metadata';
+
+mpAudio.addEventListener('timeupdate', () => {
+  if (!mpAudio.duration) return;
+  const pct = (mpAudio.currentTime / mpAudio.duration) * 100;
+  document.getElementById('mp-fill').style.width = pct + '%';
+  document.getElementById('mp-cur').textContent = fmtTime(mpAudio.currentTime);
+});
+mpAudio.addEventListener('loadedmetadata', () => {
+  document.getElementById('mp-dur').textContent = fmtTime(mpAudio.duration);
+});
+mpAudio.addEventListener('ended', () => { nextTrack(); });
+
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  const m = Math.floor(s/60), sec = Math.floor(s%60);
+  return m + ':' + String(sec).padStart(2,'0');
+}
+
+function togglePlay() {
+  if (mpPlaying) {
+    mpAudio.pause();
+    mpPlaying = false;
+    document.getElementById('mp-play-icon').className = 'ti ti-player-play';
+  } else {
+    mpAudio.play().catch(()=>{});
+    mpPlaying = true;
+    document.getElementById('mp-play-icon').className = 'ti ti-player-pause';
+  }
+}
+
+function selectTrack(idx, el) {
+  trackIdx = idx;
+  const wasPlaying = mpPlaying;
+  mpAudio.pause();
+  mpAudio.src = TRACKS[idx].file;
+  mpAudio.load();
+  document.getElementById('mp-title').textContent = TRACKS[idx].title;
+  document.getElementById('mp-artist').textContent = TRACKS[idx].artist;
+  document.getElementById('mp-fill').style.width = '0%';
+  document.getElementById('mp-cur').textContent = '0:00';
+  document.querySelectorAll('.mp-track').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  if (wasPlaying) {
+    mpAudio.play().catch(()=>{});
+    mpPlaying = true;
+    document.getElementById('mp-play-icon').className = 'ti ti-player-pause';
+  }
+}
+
+function nextTrack() {
+  const next = (trackIdx + 1) % TRACKS.length;
+  selectTrack(next, document.querySelectorAll('.mp-track')[next]);
+  if (!mpPlaying) togglePlay();
+}
+
+function prevTrack() {
+  if (mpAudio.currentTime > 3) { mpAudio.currentTime = 0; return; }
+  const prev = (trackIdx - 1 + TRACKS.length) % TRACKS.length;
+  selectTrack(prev, document.querySelectorAll('.mp-track')[prev]);
+  if (!mpPlaying) togglePlay();
+}
+
+function seekTo(e) {
+  const bar = e.currentTarget;
+  const pct = e.offsetX / bar.offsetWidth;
+  mpAudio.currentTime = pct * mpAudio.duration;
+}
+
+/* ============================================================
+   AMBIENT SOUND ENGINE
 ============================================================ */
 function getAC() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();

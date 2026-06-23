@@ -1,8 +1,11 @@
-const CACHE = 'paz-total-v1';
+const CACHE = 'paz-total-v2';
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/music/instrumental.mp3',
+  '/music/cradle.mp3',
+  '/music/lullaby.mp3',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
   'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css'
 ];
