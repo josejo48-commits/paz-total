@@ -500,6 +500,11 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         <button onclick="refreshMotiv()" style="width:100%;background:transparent;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px">
           <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase motivacional
         </button>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px;background:linear-gradient(90deg,#2d1b69,#11998e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+          Recordatorios de bienestar
+        </div>
+        <div id="wellness-list"></div>
       </div>
 
       <!-- EMPRESA -->
@@ -1887,12 +1892,19 @@ function refreshMotiv() {
 function renderEmp() {
   // Projects
   document.getElementById('proj-list').innerHTML = proyectos.length
-    ? proyectos.map(p => {
-        const pct = Math.round((p.done / p.tasks) * 100);
+    ? proyectos.map((p,i) => {
+        const pct = p.tasks > 0 ? Math.round((p.done / p.tasks) * 100) : 0;
         return `<div class="proj">
-          <div class="proj-top"><span class="proj-name">${p.n}</span><span class="proj-pct">${pct}%</span></div>
+          <div class="proj-top">
+            <span class="proj-name">${p.n}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="proj-pct">${pct}%</span>
+              <button onclick="projDone(${i})" style="background:linear-gradient(135deg,#2d1b69,#11998e);border:none;border-radius:6px;color:#fff;font-size:11px;padding:3px 8px;cursor:pointer">+1</button>
+              <button onclick="deleteProj(${i})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:16px"><i class="ti ti-trash"></i></button>
+            </div>
+          </div>
           <div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div>
-          <div class="proj-sub">${p.done} de ${p.tasks} tareas completadas</div>
+          <div class="proj-sub">${p.done} de ${p.tasks} tareas · toca +1 al completar una</div>
         </div>`;
       }).join('')
     : '<div class="empty"><i class="ti ti-folder" style="font-size:24px;display:block;margin-bottom:6px"></i>Aún no tienes proyectos. Agrega uno abajo.</div>';
@@ -1940,8 +1952,22 @@ function addProj() {
   const inp = document.getElementById('proj-inp');
   const n = inp.value.trim();
   if (!n) return;
-  proyectos.push({n, tasks:1, done:0});
+  proyectos.push({n, tasks:0, done:0});
   inp.value = '';
+  saveData();
+  renderEmp();
+}
+
+function projDone(i) {
+  proyectos[i].tasks = (proyectos[i].tasks||0) + 1;
+  proyectos[i].done  = (proyectos[i].done||0)  + 1;
+  saveData();
+  renderEmp();
+}
+
+function deleteProj(i) {
+  if (!confirm('¿Eliminar este proyecto?')) return;
+  proyectos.splice(i, 1);
   saveData();
   renderEmp();
 }
@@ -2183,6 +2209,7 @@ if ('serviceWorker' in navigator) {
 loadData();
 initHero();
 renderHoy();
+startWellnessCheck();
 renderBiblia();
 renderReminders();
 startAlarmCheck();
