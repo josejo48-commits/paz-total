@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f0c29">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Paz Total">
+<meta name="description" content="Tu espacio de paz, fe y propósito con Dios">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Paz Total 🕊️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" rel="stylesheet">
+<style>
+/* ===================== RESET & BASE ===================== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;font-size:14px}
+body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-start}
+:root{
+  --sky-top:#0f0c29;--sky-bot:#2d1b69;
+  --cloud-op:0.08;--star-op:1;
+  --sun-y:-100px;--moon-y:-100px;
+}
+
+/* ===================== PHONE FRAME ===================== */
+.phone{
+  width:100%;max-width:390px;height:100svh;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  background:#0f0c29;
+}
+
+/* ===================== SKY CANVAS ===================== */
+#sky-canvas{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ===================== TOP HERO ===================== */
+.hero{
+  position:relative;z-index:2;
+  padding:48px 20px 16px;
+  flex-shrink:0;
+}
+.hero-time{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.hero-greeting{font-size:27px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.5}
+
+/* VERSE FLOAT */
+.verse-float{
+  position:relative;z-index:2;
+  margin:0 16px 10px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:20px;padding:14px 16px;
+  transition:background .8s;
+  flex-shrink:0;
+}
+.verse-float i{font-size:20px;color:#a78bfa;margin-bottom:5px;display:block}
+.verse-txt{font-size:13px;color:rgba(255,255,255,.92);line-height:1.65;font-style:italic;margin-bottom:4px}
+.verse-ref{font-size:11px;color:#a78bfa;font-weight:600;letter-spacing:.04em}
+
+/* SOUND BAR */
+.sound-bar{
+  position:relative;z-index:2;
+  display:flex;gap:7px;padding:0 16px 10px;
+  flex-shrink:0;align-items:center;
+}
+.snd-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:99px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  cursor:pointer;color:rgba(255,255,255,.75);
+  font-size:12px;font-family:'Inter',sans-serif;
+  transition:all .25s;flex-shrink:0;
+}
+.snd-btn i{font-size:14px}
+.snd-btn.on{background:rgba(167,139,250,.3);border-color:#a78bfa;color:#ddd6fe}
+.waves{display:none;gap:2px;align-items:center;height:14px;margin-left:4px}
+.waves.on{display:flex}
+.wav{width:3px;border-radius:99px;background:#a78bfa;animation:wav 1s ease-in-out infinite}
+.wav:nth-child(1){height:4px;animation-delay:0s}
+.wav:nth-child(2){height:10px;animation-delay:.15s}
+.wav:nth-child(3){height:6px;animation-delay:.3s}
+.wav:nth-child(4){height:12px;animation-delay:.1s}
+.wav:nth-child(5){height:5px;animation-delay:.25s}
+@keyframes wav{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+
+/* ===================== MAIN PANEL ===================== */
+.panel{
+  position:relative;z-index:2;
+  background:#f8f7ff;
+  border-radius:28px 28px 0 0;
+  flex:1;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 -4px 32px rgba(0,0,0,.25);
+}
+
+/* NAV PILLS */
+.nav-pills{
+  display:flex;gap:6px;padding:16px 16px 10px;
+  overflow-x:auto;scrollbar-width:none;flex-shrink:0;
+}
+.nav-pills::-webkit-scrollbar{display:none}
+.pill{
+  flex-shrink:0;padding:8px 15px;border-radius:99px;
+  border:1.5px solid #e5e7eb;background:#fff;
+  font-size:12px;font-weight:500;color:#6b7280;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;gap:5px;
+  transition:all .2s;white-space:nowrap;
+}
+.pill i{font-size:14px}
+.pill.on{background:#2d1b69;border-color:#2d1b69;color:#fff}
+
+/* SCROLL AREA */
+.scroll{flex:1;overflow-y:auto;padding:4px 16px 20px;scrollbar-width:thin;scrollbar-color:#e5e7eb transparent}
+.scroll::-webkit-scrollbar{width:4px}
+.scroll::-webkit-scrollbar-track{background:transparent}
+.scroll::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:99px}
+
+/* SECTIONS */
+.sec{display:none}
+.sec.on{display:block}
+
+/* ===================== COMPONENTS ===================== */
+
+/* PROGRESS RING */
+.ring-wrap{display:flex;justify-content:center;padding:8px 0 16px}
+.ring-outer{position:relative;width:120px;height:120px}
+.ring-outer svg{transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:28px;font-weight:700;color:#2d1b69}
+.ring-sub{font-size:11px;color:#9ca3af;margin-top:1px}
+
+/* STATS GRID */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.stat-box{border-radius:16px;padding:13px 14px;position:relative;overflow:hidden}
+.stat-box.purple{background:#f5f3ff}
+.stat-box.green{background:#f0fdf4}
+.stat-box.amber{background:#fffbeb}
+.stat-box.blue{background:#eff6ff}
+.stat-ic{font-size:22px;margin-bottom:5px}
+.stat-ic.purple{color:#7c3aed}
+.stat-ic.green{color:#059669}
+.stat-ic.amber{color:#d97706}
+.stat-ic.blue{color:#2563eb}
+.stat-val{font-size:22px;font-weight:700;color:#111827;margin-bottom:1px}
+.stat-lbl{font-size:11px;color:#6b7280;font-weight:500}
+.stat-ring{position:absolute;right:-10px;bottom:-10px;width:60px;height:60px;border-radius:50%;opacity:.12}
+
+/* SECTION LABEL */
+.slbl{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 8px}
+
+/* MOTIV CARD */
+.motiv-card{
+  background:linear-gradient(135deg,#2d1b69 0%,#11998e 100%);
+  border-radius:20px;padding:18px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.motiv-card::before{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+.motiv-card::after{
+  content:'';position:absolute;bottom:-15px;left:20px;
+  width:50px;height:50px;border-radius:50%;
+  background:rgba(255,255,255,.04);
+}
+.motiv-txt{font-size:14px;color:#fff;line-height:1.65;margin-bottom:7px;position:relative;z-index:1}
+.motiv-auth{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
+
+/* REST BANNER */
+.rest-banner{
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  border-radius:16px;padding:12px 14px;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.rest-banner i{font-size:24px;color:#78350f;flex-shrink:0}
+.rest-title{font-size:13px;font-weight:700;color:#78350f}
+.rest-sub{font-size:12px;color:#92400e;line-height:1.4;margin-top:2px}
+
+/* TASK CARD */
+.task-card{
+  background:#fff;border-radius:14px;padding:12px 14px;
+  margin-bottom:8px;display:flex;align-items:center;gap:11px;
+  cursor:pointer;transition:all .15s;
+  border:1.5px solid #f3f4f6;
+  animation:popIn .2s ease both;
+}
+.task-card:active{transform:scale(.98)}
+.task-card.done-card{opacity:.5}
+@keyframes popIn{from{transform:translateY(6px);opacity:0}to{transform:translateY(0);opacity:1}}
+.chk{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid #d1d5db;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;transition:all .2s;
+}
+.chk.done{background:#2d1b69;border-color:#2d1b69}
+.chk.done i{color:#fff;font-size:13px}
+.task-body{flex:1;min-width:0}
+.task-name{font-size:13px;font-weight:500;color:#111827;margin-bottom:2px}
+.task-name.done{text-decoration:line-through;color:#9ca3af}
+.task-hint{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px}
+.task-hint i{font-size:11px}
+.badge{font-size:10px;padding:3px 8px;border-radius:99px;font-weight:600;flex-shrink:0}
+.ba{background:#fee2e2;color:#b91c1c}
+.bm{background:#fef3c7;color:#b45309}
+.bb{background:#d1fae5;color:#065f46}
+.br{background:#ede9fe;color:#5b21b6}
+
+/* PROJECTS */
+.proj{
+  background:#fff;border:1.5px solid #f3f4f6;
+  border-radius:14px;padding:13px;margin-bottom:8px;
+}
+.proj-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.proj-name{font-size:13px;font-weight:600;color:#111827}
+.proj-pct{font-size:13px;font-weight:700;color:#2d1b69}
+.proj-bar{height:6px;background:#f3f4f6;border-radius:99px;overflow:hidden;margin-bottom:5px}
+.proj-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#7c3aed,#11998e);transition:width .6s ease}
+.proj-sub{font-size:11px;color:#9ca3af}
+
+/* KANBAN */
+.kb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
+.kb-col{background:#f9fafb;border-radius:12px;padding:10px}
+.kb-hd{font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.kb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.kb-item{background:#fff;border-radius:9px;padding:8px 9px;margin-bottom:5px;border:1px solid #f3f4f6}
+.kb-item-n{font-size:12px;font-weight:500;color:#374151;margin-bottom:4px;line-height:1.3}
+
+/* VERSE CARDS */
+.vcat-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.vcat-btn{padding:5px 12px;border-radius:99px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:all .15s}
+.vcat-btn.on{background:#2d1b69;border-color:#2d1b69;color:#fff}
+.verse-card{background:#f5f3ff;border-radius:14px;padding:14px;margin-bottom:8px}
+.vc-txt{font-size:13px;color:#3730a3;line-height:1.65;font-style:italic;margin-bottom:5px}
+.vc-ref{font-size:11px;font-weight:700;color:#7c3aed}
+
+/* READING PLAN */
+.plan-card{background:linear-gradient(135deg,#ede9fe,#d1fae5);border-radius:14px;padding:14px;margin-bottom:8px}
+.plan-title{font-size:12px;font-weight:700;color:#2d1b69;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.plan-title i{font-size:16px}
+.plan-days{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+.plan-day{background:rgba(255,255,255,.7);border-radius:8px;padding:6px 9px;font-size:11px;color:#3730a3}
+.plan-day strong{display:block;font-size:10px;color:#6b7280;font-weight:500;margin-bottom:1px}
+
+/* PRAYER */
+.pray-area{width:100%;min-height:80px;resize:none;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px 12px;font-size:13px;font-family:'Inter',sans-serif;color:#111827;background:#fff;outline:none;margin-top:6px;transition:border .2s}
+.pray-area:focus{border-color:#7c3aed}
+.pray-btn{width:100%;background:linear-gradient(90deg,#2d1b69,#11998e);color:#fff;border:none;border-radius:12px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s}
+.pray-btn:active{opacity:.85}
+.pray-item{padding:10px 0;border-bottom:1px solid #f3f4f6}
+.pray-item:last-child{border-bottom:none}
+.pray-txt{font-size:13px;color:#374151;line-height:1.5}
+.pray-dt{font-size:11px;color:#9ca3af;margin-top:3px}
+
+/* ADD INPUT */
+.add-wrap{display:flex;gap:7px;margin-top:10px}
+.add-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:10px;padding:8px 11px;font-size:13px;font-family:'Inter',sans-serif;color:#111827;background:#fff;outline:none;min-width:0}
+.add-inp:focus{border-color:#7c3aed}
+.add-sel{border:1.5px solid #e5e7eb;border-radius:10px;padding:8px 7px;font-size:12px;font-family:'Inter',sans-serif;color:#374151;background:#fff;outline:none;max-width:75px}
+.add-go{width:38px;height:38px;border-radius:10px;background:#2d1b69;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.add-go i{color:#fff;font-size:18px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:24px 0;color:#9ca3af;font-size:13px}
+
+/* SEG CONTROL */
+.seg{display:flex;background:#f3f4f6;border-radius:10px;padding:3px;margin-bottom:12px}
+.seg-btn{flex:1;padding:6px;border:none;background:transparent;border-radius:8px;font-size:12px;cursor:pointer;color:#6b7280;font-family:'Inter',sans-serif;font-weight:500;transition:all .2s}
+.seg-btn.on{background:#fff;color:#111827;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* ===================== INSTALL BANNER ===================== */
+.install-banner{
+  position:relative;z-index:5;
+  margin:0 16px 8px;
+  background:rgba(45,27,105,.85);
+  border:1px solid rgba(167,139,250,.4);
+  border-radius:16px;padding:11px 14px;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.install-txt{flex:1;font-size:12px;color:#ddd6fe;line-height:1.4}
+.install-btn{background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;flex-shrink:0}
+.install-close{background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:18px;padding:2px;line-height:1}
+
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- SKY CANVAS -->
+  <canvas id="sky-canvas"></canvas>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-time" id="h-time"></div>
+    <div class="hero-greeting" id="h-greet"></div>
+    <div class="hero-sub" id="h-sub">Que la paz de Dios guíe tu día</div>
+  </div>
+
+  <!-- INSTALL BANNER -->
+  <div class="install-banner" id="install-banner" style="display:none">
+    <i class="ti ti-download" style="font-size:20px;color:#a78bfa;flex-shrink:0" aria-hidden="true"></i>
+    <div class="install-txt">Instala esta app en tu celular para usarla sin internet</div>
+    <button class="install-btn" id="install-btn">Instalar</button>
+    <button class="install-close" onclick="document.getElementById('install-banner').style.display='none'">×</button>
+  </div>
+
+  <!-- VERSE FLOAT -->
+  <div class="verse-float">
+    <i class="ti ti-book" aria-hidden="true"></i>
+    <div class="verse-txt" id="v-txt"></div>
+    <div class="verse-ref" id="v-ref"></div>
+  </div>
+
+  <!-- SOUND BAR -->
+  <div class="sound-bar">
+    <button class="snd-btn" id="s-rain" onclick="toggleSnd('rain')" aria-label="Lluvia">
+      <i class="ti ti-cloud-rain" aria-hidden="true"></i> Lluvia
+    </button>
+    <button class="snd-btn" id="s-forest" onclick="toggleSnd('forest')" aria-label="Bosque">
+      <i class="ti ti-tree" aria-hidden="true"></i> Bosque
+    </button>
+    <button class="snd-btn" id="s-calm" onclick="toggleSnd('calm')" aria-label="Calma">
+      <i class="ti ti-wave-sine" aria-hidden="true"></i> Calma
+    </button>
+    <div class="waves" id="wave-vis">
+      <div class="wav"></div><div class="wav"></div><div class="wav"></div>
+      <div class="wav"></div><div class="wav"></div>
+    </div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="panel">
+    <div class="nav-pills" role="tablist">
+      <button class="pill on" onclick="go('hoy',0)" role="tab"><i class="ti ti-home" aria-hidden="true"></i>Hoy</button>
+      <button class="pill" onclick="go('empresa',1)" role="tab"><i class="ti ti-building" aria-hidden="true"></i>Empresa</button>
+      <button class="pill" onclick="go('rutina',2)" role="tab"><i class="ti ti-checklist" aria-hidden="true"></i>Rutina</button>
+      <button class="pill" onclick="go('biblia',3)" role="tab"><i class="ti ti-book" aria-hidden="true"></i>Biblia</button>
+      <button class="pill" onclick="go('fe',4)" role="tab"><i class="ti ti-heart" aria-hidden="true"></i>Oración</button>
+    </div>
+
+    <div class="scroll">
+
+      <!-- HOY -->
+      <div id="s-hoy" class="sec on" role="tabpanel">
+        <div class="ring-wrap">
+          <div class="ring-outer" aria-label="Progreso del día">
+            <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#f3f4f6" stroke-width="9"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg1)" stroke-width="9"
+                stroke-linecap="round" stroke-dasharray="314.2" id="ring-circle"
+                style="stroke-dashoffset:314.2;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+              <defs>
+                <linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#7c3aed"/>
+                  <stop offset="100%" stop-color="#11998e"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-pct" id="ring-num">0%</div>
+              <div class="ring-sub">completado</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-box purple">
+            <div class="stat-ic purple"><i class="ti ti-building" aria-hidden="true"></i></div>
+            <div class="stat-val" id="s-emp">0/6</div>
+            <div class="stat-lbl">Empresa</div>
+            <div class="stat-ring" style="background:#7c3aed"></div>
+          </div>
+          <div class="stat-box green">
+            <div class="stat-ic green"><i class="ti ti-run" aria-hidden="true"></i></div>
+            <div class="stat-val" id="s-rut">0/7</div>
+            <div class="stat-lbl">Rutina</div>
+            <div class="stat-ring" style="background:#059669"></div>
+          </div>
+        </div>
+
+        <div id="rest-hoy-wrap"></div>
+
+        <div class="motiv-card">
+          <div class="motiv-txt" id="mot-txt"></div>
+          <div class="motiv-auth" id="mot-auth"></div>
+        </div>
+
+        <div class="slbl">Próximas tareas</div>
+        <div id="hoy-list"></div>
+
+        <button onclick="refreshMotiv()" style="width:100%;background:transparent;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px">
+          <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase motivacional
+        </button>
+      </div>
+
+      <!-- EMPRESA -->
+      <div id="s-empresa" class="sec" role="tabpanel">
+        <div class="slbl">Proyectos activos</div>
+        <div id="proj-list"></div>
+
+        <div class="slbl">Tablero kanban</div>
+        <div class="kb-grid">
+          <div class="kb-col">
+            <div class="kb-hd"><div class="kb-dot" style="background:#f59e0b"></div>Pendiente</div>
+            <div id="kb-pend"></div>
+          </div>
+          <div class="kb-col">
+            <div class="kb-hd"><div class="kb-dot" style="background:#3b82f6"></div>En curso</div>
+            <div id="kb-prog"></div>
+          </div>
+        </div>
+        <div class="kb-grid">
+          <div class="kb-col">
+            <div class="kb-hd"><div class="kb-dot" style="background:#8b5cf6"></div>Revisión</div>
+            <div id="kb-rev"></div>
+          </div>
+          <div class="kb-col">
+            <div class="kb-hd"><div class="kb-dot" style="background:#10b981"></div>Listo</div>
+            <div id="kb-done"></div>
+          </div>
+        </div>
+
+        <div class="slbl">Lista de tareas</div>
+        <div id="emp-list"></div>
+        <div class="add-wrap">
+          <input class="add-inp" id="emp-inp" placeholder="Nueva tarea de empresa…">
+          <select class="add-sel" id="emp-pri">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Media</option>
+            <option value="baja">Baja</option>
+          </select>
+          <button class="add-go" onclick="addEmp()" aria-label="Agregar tarea">
+            <i class="ti ti-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="slbl">Nuevo proyecto</div>
+        <div class="add-wrap">
+          <input class="add-inp" id="proj-inp" placeholder="Nombre del proyecto…">
+          <button class="add-go" onclick="addProj()" aria-label="Agregar proyecto">
+            <i class="ti ti-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- RUTINA -->
+      <div id="s-rutina" class="sec" role="tabpanel">
+        <div class="ring-wrap">
+          <div class="ring-outer" aria-label="Progreso de rutina">
+            <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#f3f4f6" stroke-width="9"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg2)" stroke-width="9"
+                stroke-linecap="round" stroke-dasharray="314.2" id="rut-circle"
+                style="stroke-dashoffset:314.2;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+              <defs>
+                <linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#7c3aed"/>
+                  <stop offset="100%" stop-color="#11998e"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-pct" id="rut-num">0%</div>
+              <div class="ring-sub">de tu rutina</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rest-banner">
+          <i class="ti ti-coffee" aria-hidden="true"></i>
+          <div>
+            <div class="rest-title">Pausa activa cada 60 min</div>
+            <div class="rest-sub">«Estad quietos y conoced que yo soy Dios» — Salmos 46:10</div>
+          </div>
+        </div>
+
+        <div id="rut-list"></div>
+        <div class="add-wrap">
+          <input class="add-inp" id="rut-inp" placeholder="Nuevo hábito…">
+          <button class="add-go" onclick="addRut()" aria-label="Agregar hábito">
+            <i class="ti ti-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- BIBLIA -->
+      <div id="s-biblia" class="sec" role="tabpanel">
+        <div class="vcat-wrap" id="vcat-wrap"></div>
+        <div id="v-list"></div>
+
+        <div class="plan-card">
+          <div class="plan-title"><i class="ti ti-calendar" aria-hidden="true"></i> Plan de lectura semanal</div>
+          <div class="plan-days">
+            <div class="plan-day"><strong>Lunes</strong>Salmos 23</div>
+            <div class="plan-day"><strong>Martes</strong>Filipenses 4</div>
+            <div class="plan-day"><strong>Miércoles</strong>Romanos 8</div>
+            <div class="plan-day"><strong>Jueves</strong>Mateo 5–7</div>
+            <div class="plan-day"><strong>Viernes</strong>Juan 15</div>
+            <div class="plan-day"><strong>Sábado</strong>Isaías 40</div>
+            <div class="plan-day"><strong>Domingo</strong>Salmos 91</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FE / ORACIÓN -->
+      <div id="s-fe" class="sec" role="tabpanel">
+        <div class="motiv-card">
+          <div class="motiv-txt">«No os afanéis por nada; sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias»</div>
+          <div class="motiv-auth">— Filipenses 4:6</div>
+        </div>
+
+        <div class="slbl">Mi diario de oración</div>
+        <textarea class="pray-area" id="pray-inp" placeholder="Escribe tu petición, gratitud o lo que sientes en tu corazón hoy…" rows="4"></textarea>
+        <button class="pray-btn" onclick="savePray()">
+          <i class="ti ti-heart" aria-hidden="true"></i> Guardar oración
+        </button>
+
+        <div class="slbl">Oraciones guardadas</div>
+        <div id="pray-list">
+          <div class="empty">Tus oraciones aparecerán aquí 🙏</div>
+        </div>
+      </div>
+
+    </div><!-- end .scroll -->
+  </div><!-- end .panel -->
+
+</div><!-- end .phone -->
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const VERSES = {
+  paz:[
+    {t:"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da.",r:"Juan 14:27"},
+    {t:"Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.",r:"Filipenses 4:7"},
+    {t:"En paz me acostaré y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado.",r:"Salmos 4:8"}
+  ],
+  fuerza:[
+    {t:"Todo lo puedo en Cristo que me fortalece.",r:"Filipenses 4:13"},
+    {t:"Él da esfuerzo al cansado y multiplica las fuerzas al que no tiene ninguna.",r:"Isaías 40:29"},
+    {t:"Esfuérzate y sé valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo.",r:"Josué 1:9"}
+  ],
+  fe:[
+    {t:"La fe es la certeza de lo que se espera, la convicción de lo que no se ve.",r:"Hebreos 11:1"},
+    {t:"Si tuviereis fe como un grano de mostaza, nada os será imposible.",r:"Mateo 17:20"},
+    {t:"Mas el justo por la fe vivirá.",r:"Romanos 1:17"}
+  ],
+  propósito:[
+    {t:"Sé los pensamientos que tengo acerca de vosotros: de paz y no de mal, para daros porvenir y esperanza.",r:"Jeremías 29:11"},
+    {t:"A los que aman a Dios, todas las cosas les ayudan a bien.",r:"Romanos 8:28"},
+    {t:"Fíate de Jehová de todo tu corazón y no te apoyes en tu propia prudencia.",r:"Proverbios 3:5"}
+  ],
+  descanso:[
+    {t:"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",r:"Mateo 11:28"},
+    {t:"Me hace descansar en lugares de delicados pastos; junto a aguas de reposo me pastoreará.",r:"Salmos 23:2"},
+    {t:"Seis días trabajarás, y el séptimo descansarás.",r:"Éxodo 34:21"}
+  ]
+};
+
+const MOTIV = [
+  {t:"El mismo Dios que pintó el amanecer de hoy tiene un plan hermoso y poderoso para tu vida.",a:"— Reflexión diaria"},
+  {t:"No importa qué tan lento avances; con Dios cada paso tiene un propósito eterno.",a:"— Proverbio cristiano"},
+  {t:"Eres más fuerte de lo que crees, más amado de lo que imaginas y más capaz de lo que sientes.",a:"— Palabras de vida"},
+  {t:"Cuando ores, no le digas a Dios cuán grande es tu tormenta. Dile a tu tormenta cuán grande es tu Dios.",a:"— Autor desconocido"},
+  {t:"Descansa cuando lo necesites. El descanso no es rendición, es renovación de tu espíritu.",a:"— Génesis 2:3"},
+  {t:"Cada mañana que amanece es una nueva oportunidad que Dios te regala para escribir un capítulo mejor.",a:"— Lamentaciones 3:23"}
+];
+
+let rutina = [
+  {n:"Oración matutina",t:"7:00 am",ic:"ti-heart",done:false},
+  {n:"Lectura bíblica 15 min",t:"7:20 am",ic:"ti-book",done:false},
+  {n:"Ejercicio o caminata",t:"8:00 am",ic:"ti-run",done:false},
+  {n:"Pausa activa",t:"10:00 am",ic:"ti-coffee",done:false},
+  {n:"Momento de gratitud",t:"12:00 pm",ic:"ti-sun",done:false},
+  {n:"Revisión de metas",t:"6:00 pm",ic:"ti-target",done:false},
+  {n:"Oración de cierre",t:"9:00 pm",ic:"ti-moon-stars",done:false}
+];
+
+let empTasks = [
+  {n:"Revisar propuesta cliente A",cat:"Ventas",pri:"alta",status:"pend",done:false},
+  {n:"Reunión equipo 10am",cat:"Gestión",pri:"alta",status:"prog",done:false},
+  {n:"Informe financiero semana",cat:"Finanzas",pri:"media",status:"rev",done:false},
+  {n:"Publicar en redes sociales",cat:"Marketing",pri:"baja",status:"pend",done:false},
+  {n:"Cotización proveedor B",cat:"Compras",pri:"media",status:"prog",done:false},
+  {n:"Actualizar CRM",cat:"Ventas",pri:"baja",status:"done",done:true}
+];
+
+let proyectos = [
+  {n:"Lanzamiento producto Q3",tasks:8,done:5},
+  {n:"Rediseño sitio web",tasks:12,done:9},
+  {n:"Expansión regional",tasks:6,done:2}
+];
+
+let prayers = [];
+let vcat = 'paz';
+let motI = 0;
+let audioCtx = null;
+let activeSnd = null;
+let sndNodes = {};
+
+/* ============================================================
+   SKY CANVAS — DYNAMIC DAY/NIGHT CYCLE
+============================================================ */
+const canvas = document.getElementById('sky-canvas');
+const ctx2d = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+// STARS
+const STARS = Array.from({length:80}, () => ({
+  x: Math.random(),
+  y: Math.random() * 0.6,
+  r: Math.random() * 1.4 + 0.4,
+  speed: Math.random() * 0.00008 + 0.00003,
+  phase: Math.random() * Math.PI * 2,
+  twinkle: Math.random() * Math.PI * 2
+}));
+
+// CLOUDS
+const CLOUDS = Array.from({length:7}, (_, i) => ({
+  x: Math.random(),
+  y: 0.1 + Math.random() * 0.35,
+  w: 0.15 + Math.random() * 0.2,
+  h: 0.04 + Math.random() * 0.05,
+  speed: 0.00003 + Math.random() * 0.00004,
+  opacity: 0.5 + Math.random() * 0.4,
+  layer: i % 3
+}));
+
+// SUN PARTICLES (rays)
+let sunAngle = 0;
+
+function getSkyPhase(h, m) {
+  // returns 0=night, 1=dawn, 2=morning, 3=day, 4=dusk, 5=evening, 6=deep night
+  const t = h + m / 60;
+  if (t < 4.5) return {phase:'deep-night', p:0};
+  if (t < 6.5) return {phase:'dawn', p:(t-4.5)/2};
+  if (t < 8.5) return {phase:'morning', p:(t-6.5)/2};
+  if (t < 16)  return {phase:'day', p:1};
+  if (t < 18.5)return {phase:'golden', p:(t-16)/2.5};
+  if (t < 20)  return {phase:'dusk', p:(t-18.5)/1.5};
+  if (t < 21.5)return {phase:'evening', p:(t-20)/1.5};
+  return {phase:'night', p:0};
+}
+
+function lerp(a, b, t) { return a + (b-a)*t; }
+
+function lerpColor(c1, c2, t) {
+  return [
+    Math.round(lerp(c1[0],c2[0],t)),
+    Math.round(lerp(c1[1],c2[1],t)),
+    Math.round(lerp(c1[2],c2[2],t))
+  ];
+}
+
+function rgb(c) { return `rgb(${c[0]},${c[1]},${c[2]})`; }
+function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+
+const SKY_PALETTES = {
+  'deep-night': { top:[8,6,30], bot:[15,10,50], starOp:1, cloudOp:0.05, sunOp:0, moonOp:1, sunY:1.2, moonY:0.25 },
+  'dawn':       { top:[60,20,80], bot:[200,80,50], starOp:0.3, cloudOp:0.4, sunOp:0.3, moonOp:0.2, sunY:0.6, moonY:-0.1 },
+  'morning':    { top:[255,140,50], bot:[255,210,120], starOp:0, cloudOp:0.7, sunOp:0.9, moonOp:0, sunY:0.4, moonY:-0.2 },
+  'day':        { top:[40,120,255], bot:[120,200,255], starOp:0, cloudOp:0.85, sunOp:1, moonOp:0, sunY:0.15, moonY:-0.2 },
+  'golden':     { top:[255,100,20], bot:[255,180,80], starOp:0.1, cloudOp:0.9, sunOp:0.85, moonOp:0.1, sunY:0.55, moonY:0.1 },
+  'dusk':       { top:[30,10,70], bot:[180,60,40], starOp:0.5, cloudOp:0.5, sunOp:0.3, moonOp:0.5, sunY:0.75, moonY:0.3 },
+  'evening':    { top:[10,5,40], bot:[80,20,80], starOp:0.8, cloudOp:0.15, sunOp:0, moonOp:0.9, sunY:1.2, moonY:0.22 },
+  'night':      { top:[8,6,30], bot:[20,12,60], starOp:1, cloudOp:0.06, sunOp:0, moonOp:1, sunY:1.2, moonY:0.2 }
+};
+
+function getPalette() {
+  const now = new Date();
+  const {phase, p} = getSkyPhase(now.getHours(), now.getMinutes());
+  const phases = ['deep-night','dawn','morning','day','golden','dusk','evening','night'];
+  const idx = phases.indexOf(phase);
+  const next = phases[(idx+1) % phases.length];
+  const a = SKY_PALETTES[phase];
+  const b = SKY_PALETTES[next];
+  return {
+    top:    lerpColor(a.top,    b.top,    p),
+    bot:    lerpColor(a.bot,    b.bot,    p),
+    starOp: lerp(a.starOp,  b.starOp,  p),
+    cloudOp:lerp(a.cloudOp, b.cloudOp, p),
+    sunOp:  lerp(a.sunOp,   b.sunOp,   p),
+    moonOp: lerp(a.moonOp,  b.moonOp,  p),
+    sunY:   lerp(a.sunY,    b.sunY,    p),
+    moonY:  lerp(a.moonY,   b.moonY,   p),
+    phase
+  };
+}
+
+let t = 0;
+function drawSky() {
+  const W = canvas.width, H = canvas.height;
+  if (!W || !H) return;
+  t += 0.016;
+
+  const pal = getPalette();
+
+  // Background gradient
+  const grad = ctx2d.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, rgb(pal.top));
+  grad.addColorStop(1, rgb(pal.bot));
+  ctx2d.fillStyle = grad;
+  ctx2d.fillRect(0, 0, W, H);
+
+  // STARS
+  if (pal.starOp > 0.01) {
+    STARS.forEach(s => {
+      s.x = (s.x + s.speed) % 1;
+      const twinkle = 0.5 + 0.5 * Math.sin(t * 2.5 + s.twinkle);
+      const op = pal.starOp * twinkle;
+      const x = s.x * W, y = s.y * H;
+      ctx2d.beginPath();
+      ctx2d.arc(x, y, s.r, 0, Math.PI * 2);
+      ctx2d.fillStyle = `rgba(255,255,255,${op})`;
+      ctx2d.fill();
+      // Star glow
+      if (s.r > 1.2 && op > 0.5) {
+        const grd = ctx2d.createRadialGradient(x,y,0,x,y,s.r*4);
+        grd.addColorStop(0, `rgba(200,210,255,${op*0.4})`);
+        grd.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx2d.beginPath();
+        ctx2d.arc(x, y, s.r*4, 0, Math.PI*2);
+        ctx2d.fillStyle = grd;
+        ctx2d.fill();
+      }
+    });
+  }
+
+  // SUN
+  if (pal.sunOp > 0.01) {
+    const sx = W * 0.72;
+    const sy = H * pal.sunY;
+    const sr = 28;
+    // rays
+    sunAngle += 0.004;
+    for (let i = 0; i < 12; i++) {
+      const a = sunAngle + (i / 12) * Math.PI * 2;
+      const r1 = sr + 8, r2 = sr + 18 + Math.sin(t*3 + i)*4;
+      ctx2d.beginPath();
+      ctx2d.moveTo(sx + Math.cos(a)*r1, sy + Math.sin(a)*r1);
+      ctx2d.lineTo(sx + Math.cos(a)*r2, sy + Math.sin(a)*r2);
+      ctx2d.strokeStyle = `rgba(255,230,100,${pal.sunOp*0.5})`;
+      ctx2d.lineWidth = 2;
+      ctx2d.stroke();
+    }
+    // glow halo
+    const sg = ctx2d.createRadialGradient(sx,sy,sr*0.5,sx,sy,sr*3.5);
+    sg.addColorStop(0, `rgba(255,220,80,${pal.sunOp*0.4})`);
+    sg.addColorStop(1, 'rgba(255,150,0,0)');
+    ctx2d.beginPath();
+    ctx2d.arc(sx, sy, sr*3.5, 0, Math.PI*2);
+    ctx2d.fillStyle = sg;
+    ctx2d.fill();
+    // sun body
+    const sb = ctx2d.createRadialGradient(sx-sr*0.2,sy-sr*0.2,0,sx,sy,sr);
+    sb.addColorStop(0, `rgba(255,255,200,${pal.sunOp})`);
+    sb.addColorStop(1, `rgba(255,200,50,${pal.sunOp})`);
+    ctx2d.beginPath();
+    ctx2d.arc(sx, sy, sr, 0, Math.PI*2);
+    ctx2d.fillStyle = sb;
+    ctx2d.fill();
+  }
+
+  // MOON
+  if (pal.moonOp > 0.01) {
+    const mx = W * 0.75;
+    const my = H * pal.moonY;
+    const mr = 22;
+    // moon glow
+    const mg = ctx2d.createRadialGradient(mx,my,mr*0.5,mx,my,mr*3);
+    mg.addColorStop(0, `rgba(200,220,255,${pal.moonOp*0.2})`);
+    mg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx2d.beginPath();
+    ctx2d.arc(mx, my, mr*3, 0, Math.PI*2);
+    ctx2d.fillStyle = mg;
+    ctx2d.fill();
+    // moon body (crescent)
+    ctx2d.save();
+    ctx2d.beginPath();
+    ctx2d.arc(mx, my, mr, 0, Math.PI*2);
+    ctx2d.fillStyle = `rgba(240,248,255,${pal.moonOp})`;
+    ctx2d.fill();
+    ctx2d.beginPath();
+    ctx2d.arc(mx+mr*0.35, my-mr*0.1, mr*0.85, 0, Math.PI*2);
+    ctx2d.fillStyle = rgb(lerpColor(pal.top, pal.bot, pal.moonY));
+    ctx2d.fill();
+    // craters
+    [[mx-6,my+5,3],[mx+4,my-7,2],[mx-10,my-8,1.5]].forEach(([cx,cy,cr])=>{
+      ctx2d.beginPath();
+      ctx2d.arc(cx,cy,cr,0,Math.PI*2);
+      ctx2d.fillStyle=`rgba(180,200,240,${pal.moonOp*0.35})`;
+      ctx2d.fill();
+    });
+    ctx2d.restore();
+  }
+
+  // CLOUDS
+  CLOUDS.forEach((c, i) => {
+    c.x = (c.x + c.speed) % 1.3;
+    if (c.x > 1.2) c.x = -0.2;
+    const cx = c.x * W;
+    const cy = c.y * H + Math.sin(t * 0.4 + i) * 4;
+    const cw = c.w * W;
+    const ch = c.h * H;
+    const op = pal.cloudOp * c.opacity;
+    if (op < 0.01) return;
+
+    ctx2d.save();
+    // Cloud tint changes with sky phase
+    let cr, cg, cb;
+    if (pal.phase === 'day') { cr=255;cg=255;cb=255; }
+    else if (pal.phase === 'golden' || pal.phase === 'dusk') { cr=255;cg=180;cb=120; }
+    else if (pal.phase === 'morning' || pal.phase === 'dawn') { cr=255;cg=220;cb=200; }
+    else { cr=160;cg=160;cb=210; }
+
+    ctx2d.globalAlpha = op;
+    // Main cloud body
+    ctx2d.beginPath();
+    ctx2d.ellipse(cx, cy, cw*0.5, ch*0.5, 0, 0, Math.PI*2);
+    ctx2d.ellipse(cx+cw*0.25, cy-ch*0.2, cw*0.3, ch*0.45, 0, 0, Math.PI*2);
+    ctx2d.ellipse(cx-cw*0.25, cy-ch*0.1, cw*0.28, ch*0.4, 0, 0, Math.PI*2);
+    ctx2d.ellipse(cx+cw*0.4, cy+ch*0.05, cw*0.25, ch*0.38, 0, 0, Math.PI*2);
+    ctx2d.fillStyle = `rgb(${cr},${cg},${cb})`;
+    ctx2d.fill();
+    ctx2d.restore();
+  });
+
+  // HORIZON GLOW at dawn/dusk
+  if (pal.sunOp > 0.1 && (pal.phase === 'dawn' || pal.phase === 'golden' || pal.phase === 'dusk' || pal.phase === 'morning')) {
+    const hg = ctx2d.createLinearGradient(0, H*0.6, 0, H);
+    hg.addColorStop(0, `rgba(255,150,50,${pal.sunOp*0.25})`);
+    hg.addColorStop(1, 'rgba(255,80,0,0)');
+    ctx2d.fillStyle = hg;
+    ctx2d.fillRect(0, H*0.6, W, H*0.4);
+  }
+
+  requestAnimationFrame(drawSky);
+}
+
+window.addEventListener('resize', () => { resize(); });
+resize();
+requestAnimationFrame(drawSky);
+
+/* ============================================================
+   HERO TEXT
+============================================================ */
+function initHero() {
+  const h = new Date().getHours();
+  let gr = h < 12 ? 'Buenos días ☀️' : h < 18 ? 'Buenas tardes 🌤' : 'Buenas noches 🌙';
+  document.getElementById('h-greet').textContent = gr;
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const d = new Date();
+  document.getElementById('h-time').textContent =
+    days[d.getDay()] + ' ' + d.getDate() + ' de ' + months[d.getMonth()] + ' · ' + d.getFullYear();
+
+  const allV = Object.values(VERSES).flat();
+  const v = allV[Math.floor(Math.random() * allV.length)];
+  document.getElementById('v-txt').textContent = '\u201C' + v.t + '\u201D';
+  document.getElementById('v-ref').textContent = v.r;
+}
+
+/* ============================================================
+   SOUND ENGINE
+============================================================ */
+function getAC() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function makeRain() {
+  const ac = getAC();
+  const buf = ac.createBuffer(1, ac.sampleRate * 3, ac.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * 0.3;
+  const src = ac.createBufferSource(); src.buffer=buf; src.loop=true;
+  const f = ac.createBiquadFilter(); f.type='bandpass'; f.frequency.value=900; f.Q.value=0.4;
+  const g = ac.createGain(); g.gain.value = 0.45;
+  src.connect(f); f.connect(g); g.connect(ac.destination); src.start();
+  return {src, gain:g};
+}
+
+function makeForest() {
+  const ac = getAC();
+  const mg = ac.createGain(); mg.gain.value=0.15; mg.connect(ac.destination);
+  const nodes = [];
+  for (let i=0; i<5; i++) {
+    const osc = ac.createOscillator();
+    const og = ac.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 220 + i*280 + Math.random()*80;
+    og.gain.value = 0;
+    osc.connect(og); og.connect(mg); osc.start();
+    nodes.push({osc,og});
+    scheduleChirp(og, ac, Math.random()*4);
+  }
+  function scheduleChirp(og, ac, delay) {
+    const t = ac.currentTime + delay;
+    og.gain.setValueAtTime(0, t);
+    og.gain.linearRampToValueAtTime(0.35, t+0.06);
+    og.gain.linearRampToValueAtTime(0, t+0.35);
+    setTimeout(() => scheduleChirp(og, ac, 3+Math.random()*7), (delay+4)*1000);
+  }
+  return {src:{stop:()=>nodes.forEach(n=>{try{n.osc.stop()}catch(e){}})}, gain:mg};
+}
+
+function makeCalm() {
+  const ac = getAC();
+  const mg = ac.createGain(); mg.gain.value=0.18; mg.connect(ac.destination);
+  const freqs = [174.6, 174.8, 349.2, 432];
+  const oscs = freqs.map(f => {
+    const o = ac.createOscillator(), g2 = ac.createGain();
+    o.type='sine'; o.frequency.value=f; g2.gain.value=0.25;
+    o.connect(g2); g2.connect(mg); o.start();
+    return o;
+  });
+  return {src:{stop:()=>oscs.forEach(o=>{try{o.stop()}catch(e){}})}, gain:mg};
+}
+
+function toggleSnd(type) {
+  if (activeSnd === type) {
+    if (sndNodes[type]) { try{sndNodes[type].src.stop()}catch(e){} delete sndNodes[type]; }
+    document.getElementById('s-'+type).classList.remove('on');
+    document.getElementById('wave-vis').classList.remove('on');
+    activeSnd = null;
+    return;
+  }
+  if (activeSnd && sndNodes[activeSnd]) {
+    try{sndNodes[activeSnd].src.stop()}catch(e){}
+    delete sndNodes[activeSnd];
+    document.getElementById('s-'+activeSnd).classList.remove('on');
+  }
+  try {
+    const makers = {rain:makeRain, forest:makeForest, calm:makeCalm};
+    sndNodes[type] = makers[type]();
+    activeSnd = type;
+    document.getElementById('s-'+type).classList.add('on');
+    document.getElementById('wave-vis').classList.add('on');
+  } catch(e) { console.warn('Audio:', e); activeSnd = null; }
+}
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+function go(id, idx) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  document.getElementById('s-'+id).classList.add('on');
+  document.querySelectorAll('.pill')[idx].classList.add('on');
+  const renders = {hoy:renderHoy, empresa:renderEmp, rutina:renderRut, biblia:renderBiblia, fe:renderFe};
+  renders[id]();
+}
+
+/* ============================================================
+   RING HELPER
+============================================================ */
+function setRing(id, pct) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const circ = 314.2;
+  el.style.strokeDashoffset = circ - (circ * pct / 100);
+}
+
+/* ============================================================
+   HOY
+============================================================ */
+function renderHoy() {
+  const rd = rutina.filter(t=>t.done).length, rt = rutina.length;
+  const ed = empTasks.filter(t=>t.done).length, et = empTasks.length;
+  const total = rd + ed, all = rt + et;
+  const pct = Math.round((total / all) * 100);
+  document.getElementById('ring-num').textContent = pct + '%';
+  setRing('ring-circle', pct);
+  document.getElementById('s-emp').textContent = ed + '/' + et;
+  document.getElementById('s-rut').textContent = rd + '/' + rt;
+
+  const h = new Date().getHours();
+  const rbEl = document.getElementById('rest-hoy-wrap');
+  rbEl.innerHTML = (h >= 21 || h < 6)
+    ? `<div class="rest-banner"><i class="ti ti-moon-stars" aria-hidden="true"></i><div><div class="rest-title">Hora de descansar</div><div class="rest-sub">«Venid a mí y yo os haré descansar» — Mt 11:28</div></div></div>`
+    : '';
+
+  const upcoming = [
+    ...empTasks.filter(t=>!t.done).slice(0,2),
+    ...rutina.filter(t=>!t.done).slice(0,2)
+  ];
+  document.getElementById('hoy-list').innerHTML = upcoming.map(t => `
+    <div class="task-card">
+      <div class="chk"><i class="ti ti-clock" style="color:#d1d5db;font-size:12px" aria-hidden="true"></i></div>
+      <div class="task-body">
+        <div class="task-name">${t.n}</div>
+        <div class="task-hint"><i class="ti ti-tag" aria-hidden="true"></i>${t.cat||'Rutina'} ${t.t?'· '+t.t:''}</div>
+      </div>
+      <span class="badge ${t.pri?'b'+t.pri[0]:'br'}">${t.pri||'hábito'}</span>
+    </div>`).join('') || '<div class="empty">¡Todo al día! Dios te ha bendecido hoy 🎉</div>';
+
+  renderMotiv();
+}
+
+function renderMotiv() {
+  const m = MOTIV[motI % MOTIV.length];
+  document.getElementById('mot-txt').textContent = m.t;
+  document.getElementById('mot-auth').textContent = m.a;
+}
+
+function refreshMotiv() {
+  motI++;
+  renderMotiv();
+}
+
+/* ============================================================
+   EMPRESA
+============================================================ */
+function renderEmp() {
+  // Projects
+  document.getElementById('proj-list').innerHTML = proyectos.map(p => {
+    const pct = Math.round((p.done / p.tasks) * 100);
+    return `<div class="proj">
+      <div class="proj-top"><span class="proj-name">${p.n}</span><span class="proj-pct">${pct}%</span></div>
+      <div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div>
+      <div class="proj-sub">${p.done} de ${p.tasks} tareas completadas</div>
+    </div>`;
+  }).join('');
+
+  // Kanban
+  const cols = {pend:'kb-pend',prog:'kb-prog',rev:'kb-rev',done:'kb-done'};
+  Object.entries(cols).forEach(([k, elid]) => {
+    const items = empTasks.filter(t => t.status === k);
+    document.getElementById(elid).innerHTML = items.length
+      ? items.map(t => `<div class="kb-item"><div class="kb-item-n">${t.n}</div><span class="badge b${t.pri[0]}">${t.pri}</span></div>`).join('')
+      : '<div style="font-size:11px;color:#d1d5db;text-align:center;padding:6px">—</div>';
+  });
+
+  // List
+  document.getElementById('emp-list').innerHTML = empTasks.map((t, i) => `
+    <div class="task-card ${t.done?'done-card':''}" onclick="toggleEmp(${i})">
+      <div class="chk ${t.done?'done':''}">${t.done?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+      <div class="task-body">
+        <div class="task-name ${t.done?'done':''}">${t.n}</div>
+        <div class="task-hint"><i class="ti ti-tag" aria-hidden="true"></i>${t.cat}</div>
+      </div>
+      <span class="badge b${t.pri[0]}">${t.pri}</span>
+    </div>`).join('');
+}
+
+function toggleEmp(i) {
+  empTasks[i].done = !empTasks[i].done;
+  empTasks[i].status = empTasks[i].done ? 'done' : 'pend';
+  renderEmp();
+}
+
+function addEmp() {
+  const inp = document.getElementById('emp-inp');
+  const n = inp.value.trim();
+  if (!n) return;
+  const pri = document.getElementById('emp-pri').value;
+  empTasks.unshift({n, cat:'General', pri, status:'pend', done:false});
+  inp.value = '';
+  renderEmp();
+}
+
+function addProj() {
+  const inp = document.getElementById('proj-inp');
+  const n = inp.value.trim();
+  if (!n) return;
+  proyectos.push({n, tasks:1, done:0});
+  inp.value = '';
+  renderEmp();
+}
+
+/* ============================================================
+   RUTINA
+============================================================ */
+function renderRut() {
+  const done = rutina.filter(t=>t.done).length;
+  const pct = Math.round((done / rutina.length) * 100);
+  document.getElementById('rut-num').textContent = pct + '%';
+  setRing('rut-circle', pct);
+
+  document.getElementById('rut-list').innerHTML = rutina.map((t, i) => `
+    <div class="task-card ${t.done?'done-card':''}" onclick="toggleRut(${i})">
+      <div class="chk ${t.done?'done':''}">${t.done?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
+      <div class="task-body">
+        <div class="task-name ${t.done?'done':''}">${t.n}</div>
+        <div class="task-hint"><i class="ti ti-clock" aria-hidden="true"></i>${t.t}</div>
+      </div>
+      <i class="ti ${t.ic}" style="color:#d1d5db;font-size:20px" aria-hidden="true"></i>
+    </div>`).join('');
+}
+
+function toggleRut(i) {
+  rutina[i].done = !rutina[i].done;
+  renderRut();
+  if (rutina.filter(t=>t.done).length === rutina.length) {
+    setTimeout(() => alert('¡Completaste toda tu rutina! 🎉 Dios es fiel.'), 200);
+  }
+}
+
+function addRut() {
+  const inp = document.getElementById('rut-inp');
+  const n = inp.value.trim();
+  if (!n) return;
+  rutina.push({n, t:'—', ic:'ti-star', done:false});
+  inp.value = '';
+  renderRut();
+}
+
+/* ============================================================
+   BIBLIA
+============================================================ */
+function renderBiblia() {
+  const cats = Object.keys(VERSES);
+  document.getElementById('vcat-wrap').innerHTML = cats.map(c =>
+    `<button class="vcat-btn ${c===vcat?'on':''}" onclick="setVcat('${c}',this)">${c.charAt(0).toUpperCase()+c.slice(1)}</button>`
+  ).join('');
+  renderVerses();
+}
+
+function renderVerses() {
+  document.getElementById('v-list').innerHTML = VERSES[vcat].map(v =>
+    `<div class="verse-card"><div class="vc-txt">&ldquo;${v.t}&rdquo;</div><div class="vc-ref">${v.r}</div></div>`
+  ).join('');
+}
+
+function setVcat(c, el) {
+  vcat = c;
+  document.querySelectorAll('.vcat-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  renderVerses();
+}
+
+/* ============================================================
+   FE / ORACIÓN
+============================================================ */
+function renderFe() {
+  const pl = document.getElementById('pray-list');
+  pl.innerHTML = prayers.length
+    ? prayers.slice(0,8).map(p =>
+        `<div class="pray-item"><div class="pray-txt">${p.t}</div><div class="pray-dt">${p.d}</div></div>`
+      ).join('')
+    : '<div class="empty">Tus oraciones guardadas aparecerán aquí 🙏</div>';
+}
+
+function savePray() {
+  const inp = document.getElementById('pray-inp');
+  const t = inp.value.trim();
+  if (!t) return;
+  const d = new Date().toLocaleDateString('es-CO', {day:'numeric', month:'short', year:'numeric'});
+  prayers.unshift({t, d});
+  inp.value = '';
+  renderFe();
+}
+
+/* ============================================================
+   PWA INSTALL
+============================================================ */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+
+document.getElementById('install-btn').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const {outcome} = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('install-banner').style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').style.display = 'none';
+});
+
+/* ============================================================
+   SERVICE WORKER
+============================================================ */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+initHero();
+renderHoy();
+renderBiblia();
+</script>
+</body>
+</html>
