@@ -46,31 +46,35 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   padding:48px 20px 16px;
   flex-shrink:0;
 }
-.hero-time{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
-.hero-greeting{font-size:27px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:6px}
-.hero-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.5}
+.hero-time{font-size:11px;color:rgba(255,255,255,.75);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.hero-greeting{font-size:28px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:6px;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.5;text-shadow:0 1px 3px rgba(0,0,0,.2)}
 
 /* VERSE FLOAT */
 .verse-float{
   position:relative;z-index:2;
   margin:0 16px 10px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,10,50,.55);
+  border:1px solid rgba(255,255,255,.22);
   border-radius:20px;padding:14px 16px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   transition:background .8s;
   flex-shrink:0;
 }
 .verse-float i{font-size:20px;color:#a78bfa;margin-bottom:5px;display:block}
-.verse-txt{font-size:13px;color:rgba(255,255,255,.92);line-height:1.65;font-style:italic;margin-bottom:4px}
+.verse-txt{font-size:13px;color:#fff;line-height:1.65;font-style:italic;margin-bottom:4px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
 .verse-ref{font-size:11px;color:#a78bfa;font-weight:600;letter-spacing:.04em}
 
 /* MUSIC PLAYER */
 .music-player{
   position:relative;z-index:2;
   margin:0 16px 10px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,10,50,.6);
+  border:1px solid rgba(255,255,255,.2);
   border-radius:18px;padding:12px 14px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   flex-shrink:0;
 }
 .mp-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -94,19 +98,6 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .mp-track{flex-shrink:0;padding:5px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:transparent;cursor:pointer;color:rgba(255,255,255,.65);font-size:11px;font-family:'Inter',sans-serif;font-weight:500;transition:all .2s;white-space:nowrap}
 .mp-track.on{background:rgba(167,139,250,.35);border-color:#a78bfa;color:#fff}
 /* Ambient sounds row */
-.amb-bar{display:flex;gap:7px;padding:0 16px 10px;flex-shrink:0;align-items:center;position:relative;z-index:2}
-.snd-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,.6);font-size:11px;font-family:'Inter',sans-serif;transition:all .25s;flex-shrink:0}
-.snd-btn i{font-size:13px}
-.snd-btn.on{background:rgba(167,139,250,.25);border-color:#a78bfa;color:#ddd6fe}
-.waves{display:none;gap:2px;align-items:center;height:14px;margin-left:2px}
-.waves.on{display:flex}
-.wav{width:3px;border-radius:99px;background:#a78bfa;animation:wav 1s ease-in-out infinite}
-.wav:nth-child(1){height:4px;animation-delay:0s}
-.wav:nth-child(2){height:10px;animation-delay:.15s}
-.wav:nth-child(3){height:6px;animation-delay:.3s}
-.wav:nth-child(4){height:12px;animation-delay:.1s}
-.wav:nth-child(5){height:5px;animation-delay:.25s}
-@keyframes wav{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
 /* Spotify in player */
 .mp-spotify{display:flex;align-items:center;gap:5px;text-decoration:none;
   padding:5px 12px;border-radius:99px;flex-shrink:0;
@@ -119,7 +110,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* ===================== MAIN PANEL ===================== */
 .panel{
   position:relative;z-index:2;
-  background:#f8f7ff;
+  background:linear-gradient(180deg,#f5f3ff 0%,#f0fdf9 100%);
   border-radius:28px 28px 0 0;
   flex:1;overflow:hidden;
   display:flex;flex-direction:column;
@@ -141,7 +132,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   transition:all .2s;white-space:nowrap;
 }
 .pill i{font-size:14px}
-.pill.on{background:#2d1b69;border-color:#2d1b69;color:#fff}
+.pill.on{background:linear-gradient(135deg,#2d1b69,#11998e);border-color:transparent;color:#fff;box-shadow:0 2px 12px rgba(45,27,105,.35)}
 
 /* SCROLL AREA */
 .scroll{flex:1;overflow-y:auto;padding:4px 16px 20px;scrollbar-width:thin;scrollbar-color:#e5e7eb transparent}
@@ -157,30 +148,32 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
 /* PROGRESS RING */
 .ring-wrap{display:flex;justify-content:center;padding:2px 0 6px}
-.ring-outer{position:relative;width:110px;height:110px}
+.ring-outer{position:relative;width:140px;height:140px}
 .ring-outer svg{transform:rotate(-90deg)}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-pct{font-size:26px;font-weight:800;color:#2d1b69;letter-spacing:-.5px}
-.ring-sub{font-size:11px;color:#9ca3af;margin-top:1px}
+.ring-pct{font-size:34px;font-weight:900;color:#2d1b69;letter-spacing:-1px}
+.ring-sub{font-size:13px;margin-top:2px;font-weight:600;background:linear-gradient(90deg,#2d1b69,#11998e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* STATS GRID */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
 .stat-box{border-radius:14px;padding:10px 12px;position:relative;overflow:hidden}
-.stat-box.purple{background:#f5f3ff}
-.stat-box.green{background:#f0fdf4}
-.stat-box.amber{background:#fffbeb}
-.stat-box.blue{background:#eff6ff}
+.stat-box.purple{background:linear-gradient(135deg,#ede9fe,#e8f5ff)}
+.stat-box.green{background:linear-gradient(135deg,#d1fae5,#e0f7f0)}
+.stat-box.amber{background:linear-gradient(135deg,#fef3c7,#fffbeb)}
+.stat-box.blue{background:linear-gradient(135deg,#dbeafe,#eff6ff)}
 .stat-ic{font-size:18px;margin-bottom:3px}
 .stat-ic.purple{color:#7c3aed}
 .stat-ic.green{color:#059669}
 .stat-ic.amber{color:#d97706}
 .stat-ic.blue{color:#2563eb}
-.stat-val{font-size:22px;font-weight:800;color:#111827;margin-bottom:1px}
+.stat-val{font-size:26px;font-weight:900;color:#111827;margin-bottom:1px}
 .stat-lbl{font-size:12px;color:#6b7280;font-weight:600}
 .stat-ring{position:absolute;right:-10px;bottom:-10px;width:60px;height:60px;border-radius:50%;opacity:.12}
 
 /* SECTION LABEL */
-.slbl{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 6px}
+.slbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 6px;
+  background:linear-gradient(90deg,#2d1b69,#11998e);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* MOTIV CARD */
 .motiv-card{
@@ -198,8 +191,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   width:50px;height:50px;border-radius:50%;
   background:rgba(255,255,255,.04);
 }
-.motiv-txt{font-size:13px;color:#fff;line-height:1.5;margin-bottom:5px;position:relative;z-index:1}
-.motiv-auth{font-size:12px;color:rgba(255,255,255,.55);position:relative;z-index:1}
+.motiv-txt{font-size:14px;color:#fff;line-height:1.6;margin-bottom:6px;position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.motiv-auth{font-size:12px;color:rgba(255,255,255,.8);position:relative;z-index:1;font-weight:500}
 
 /* REST BANNER */
 .rest-banner{
@@ -214,6 +207,10 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* TASK CARD */
 .task-card{
   background:#fff;border-radius:14px;padding:11px 14px;
+  border-left:3px solid transparent;
+  background-image:linear-gradient(#fff,#fff),linear-gradient(135deg,#2d1b69,#11998e);
+  background-origin:border-box;
+  background-clip:padding-box,border-box;
   margin-bottom:8px;display:flex;align-items:center;gap:11px;
   cursor:pointer;transition:all .15s;
   border:1.5px solid #f3f4f6;
@@ -264,17 +261,17 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .vcat-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .vcat-btn{padding:5px 12px;border-radius:99px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:all .15s}
 .vcat-btn.on{background:#2d1b69;border-color:#2d1b69;color:#fff}
-.verse-card{background:#f5f3ff;border-radius:14px;padding:14px;margin-bottom:8px}
+.verse-card{background:linear-gradient(135deg,#f5f3ff,#e8f5f0);border-radius:14px;padding:14px;margin-bottom:8px;border:1px solid rgba(45,27,105,.1)}
 .vc-txt{font-size:13px;color:#3730a3;line-height:1.65;font-style:italic;margin-bottom:5px}
 .vc-ref{font-size:11px;font-weight:700;color:#7c3aed}
 
 /* READING PLAN */
-.plan-card{background:linear-gradient(135deg,#ede9fe,#d1fae5);border-radius:14px;padding:14px;margin-bottom:8px}
-.plan-title{font-size:12px;font-weight:700;color:#2d1b69;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.plan-card{background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:14px;padding:14px;margin-bottom:8px}
+.plan-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .plan-title i{font-size:16px}
 .plan-days{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
-.plan-day{background:rgba(255,255,255,.7);border-radius:8px;padding:6px 9px;font-size:11px;color:#3730a3}
-.plan-day strong{display:block;font-size:10px;color:#6b7280;font-weight:500;margin-bottom:1px}
+.plan-day{background:rgba(255,255,255,.15);border-radius:8px;padding:6px 9px;font-size:11px;color:#fff}
+.plan-day strong{display:block;font-size:10px;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:1px}
 
 /* PRAYER */
 .pray-area{width:100%;min-height:80px;resize:none;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px 12px;font-size:13px;font-family:'Inter',sans-serif;color:#111827;background:#fff;outline:none;margin-top:6px;transition:border .2s}
@@ -363,8 +360,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 .install-banner{
   position:relative;z-index:5;
   margin:0 16px 8px;
-  background:rgba(45,27,105,.85);
-  border:1px solid rgba(167,139,250,.4);
+  background:rgba(20,12,60,.92);
+  border:1px solid rgba(167,139,250,.5);
   border-radius:16px;padding:11px 14px;
   display:flex;align-items:center;gap:10px;
   flex-shrink:0;
@@ -446,7 +443,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <button class="pill" onclick="go('empresa',1)" role="tab"><i class="ti ti-building" aria-hidden="true"></i>Empresa</button>
       <button class="pill" onclick="go('rutina',2)" role="tab"><i class="ti ti-checklist" aria-hidden="true"></i>Rutina</button>
       <button class="pill" onclick="go('biblia',3)" role="tab"><i class="ti ti-book" aria-hidden="true"></i>Biblia</button>
-      <button class="pill" onclick="go('fe',4)" role="tab"><i class="ti ti-heart" aria-hidden="true"></i>Oración</button>
+      <button class="pill" onclick="go('hobbies',4)" role="tab"><i class="ti ti-palette" aria-hidden="true"></i>Hobbies</button>
+      <button class="pill" onclick="go('fe',5)" role="tab"><i class="ti ti-heart" aria-hidden="true"></i>Oración</button>
     </div>
 
     <div class="scroll">
@@ -663,6 +661,20 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
       </div>
 
+      <!-- HOBBIES -->
+      <div id="s-hobbies" class="sec" role="tabpanel">
+        <div class="motiv-card">
+          <div class="motiv-txt">«Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas» — Eclesiastés 9:10</div>
+          <div class="motiv-auth">— Tus hobbies también glorifican a Jehová</div>
+        </div>
+        <div class="slbl">Mis hobbies</div>
+        <div id="hobby-list"><div class="empty"><i class="ti ti-palette" style="font-size:28px;display:block;margin-bottom:8px;color:#7c3aed"></i>Agrega tus actividades favoritas</div></div>
+        <div class="add-wrap">
+          <input class="add-inp" id="hobby-inp" placeholder="Ej: Leer, Caminar, Pintar…">
+          <button class="add-go" onclick="addHobby()" aria-label="Agregar"><i class="ti ti-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
       <!-- FE / ORACIÓN -->
       <div id="s-fe" class="sec" role="tabpanel">
         <div class="motiv-card">
@@ -748,6 +760,7 @@ function saveData() {
     localStorage.setItem('pt_proyectos', JSON.stringify(proyectos));
     localStorage.setItem('pt_prayers',   JSON.stringify(prayers));
     localStorage.setItem('pt_reminders', JSON.stringify(reminders));
+    localStorage.setItem('pt_hobbies',   JSON.stringify(hobbies));
   } catch(e) { console.warn('saveData:', e); }
 }
 
@@ -758,6 +771,7 @@ function loadData() {
     proyectos  = JSON.parse(localStorage.getItem('pt_proyectos')) || [];
     prayers    = JSON.parse(localStorage.getItem('pt_prayers'))   || [];
     reminders  = JSON.parse(localStorage.getItem('pt_reminders')) || [];
+    hobbies    = JSON.parse(localStorage.getItem('pt_hobbies'))    || [];
   } catch(e) { console.warn('loadData:', e); }
 }
 
@@ -782,65 +796,356 @@ function resize() {
   canvas.height = canvas.offsetHeight;
 }
 
-// STARS
-const STARS = Array.from({length:80}, () => ({
-  x: Math.random(),
-  y: Math.random() * 0.6,
-  r: Math.random() * 1.4 + 0.4,
-  speed: Math.random() * 0.00008 + 0.00003,
-  phase: Math.random() * Math.PI * 2,
-  twinkle: Math.random() * Math.PI * 2
+// ── STARS ──────────────────────────────────────────────────
+const STARS = Array.from({length:100}, () => ({
+  x: Math.random(), y: Math.random() * 0.65,
+  r: Math.random() * 1.6 + 0.5,
+  speed: Math.random() * 0.00006 + 0.00002,
+  twinkle: Math.random() * Math.PI * 2,
+  color: Math.random() > 0.8 ? [255,220,180] : [255,255,255]
 }));
 
-// CLOUDS
-const CLOUDS = Array.from({length:7}, (_, i) => ({
-  x: Math.random(),
-  y: 0.1 + Math.random() * 0.35,
-  w: 0.15 + Math.random() * 0.2,
-  h: 0.04 + Math.random() * 0.05,
-  speed: 0.00003 + Math.random() * 0.00004,
-  opacity: 0.5 + Math.random() * 0.4,
-  layer: i % 3
+// ── CLOUDS ─────────────────────────────────────────────────
+const CLOUDS = Array.from({length:9}, (_, i) => ({
+  x: Math.random() * 1.4 - 0.2,
+  y: 0.05 + Math.random() * 0.55,
+  w: 0.18 + Math.random() * 0.25,
+  h: 0.05 + Math.random() * 0.06,
+  speed: 0.00004 + Math.random() * 0.00006,
+  opacity: 0.55 + Math.random() * 0.45,
+  puffs: Array.from({length: 4 + Math.floor(Math.random()*4)}, () => ({
+    ox: (Math.random()-0.5), oy: (Math.random()-0.5)*0.6, r: 0.3 + Math.random()*0.5
+  }))
 }));
 
-// SUN PARTICLES (rays)
+// ── BIRDS ──────────────────────────────────────────────────
+const BIRDS = Array.from({length:12}, () => ({
+  x: Math.random(),
+  y: 0.1 + Math.random() * 0.3,
+  speed: 0.0001 + Math.random() * 0.00015,
+  wingPhase: Math.random() * Math.PI * 2,
+  size: 0.008 + Math.random() * 0.006,
+  delay: Math.random() * 200
+}));
+
+// ── SKY OBJECTS ────────────────────────────────────────────
+const SKY_OBJECTS = [
+  // Airplane 1
+  { type:'plane', x:-0.1, y:0.12, speed:0.0006, scale:1, dir:1, nextAt: 30 + Math.random()*60 },
+  // Airplane 2 (opposite direction, higher)
+  { type:'plane', x:1.1,  y:0.08, speed:0.0005, scale:0.75, dir:-1, nextAt: 80 + Math.random()*80 },
+  // Helicopter
+  { type:'heli',  x:-0.1, y:0.22, speed:0.0003, scale:0.8, dir:1, nextAt: 120 + Math.random()*100 },
+  // Hot air balloon
+  { type:'balloon', x:0.15, y:0.25, speed:0.00008, scale:1, dir:1, nextAt: 50 + Math.random()*120 },
+  // Shooting star (night only)
+  { type:'star', x:0.9, y:0.05, speed:0.002, scale:1, dir:1, nextAt: 40 + Math.random()*60 },
+  // Bird flock (V formation)
+  { type:'flock', x:-0.05, y:0.18, speed:0.0004, scale:1, dir:1, nextAt: 20 + Math.random()*40 },
+];
+
+let objT = 0;
+
+function drawSkyObjects(W, H, pal) {
+  objT += 0.016;
+  const isNight = pal.starOp > 0.6;
+  const isDayTime = pal.phase === 'day' || pal.phase === 'morning' || pal.phase === 'golden';
+
+  SKY_OBJECTS.forEach(obj => {
+    // countdown to next appearance
+    obj.nextAt -= 0.016;
+    if (obj.nextAt > 0) return;
+
+    // move
+    obj.x += obj.speed * obj.dir;
+
+    // reset when off screen
+    const offRight = obj.dir === 1  && obj.x > 1.3;
+    const offLeft  = obj.dir === -1 && obj.x < -0.3;
+    if (offRight || offLeft) {
+      obj.x = obj.dir === 1 ? -0.15 : 1.15;
+      obj.y = 0.05 + Math.random() * 0.28;
+      // wait before next pass
+      const waits = {plane:90+Math.random()*120, heli:150+Math.random()*150,
+                     balloon:180+Math.random()*120, star:60+Math.random()*80, flock:30+Math.random()*50};
+      obj.nextAt = waits[obj.type] || 60;
+      return;
+    }
+
+    const x = obj.x * W, y = obj.y * H;
+    const sc = obj.scale;
+
+    ctx2d.save();
+    if (obj.dir === -1) {
+      ctx2d.translate(x, y);
+      ctx2d.scale(-1, 1);
+      ctx2d.translate(-x, -y);
+    }
+
+    if (obj.type === 'plane') {
+      if (!isDayTime && pal.phase !== 'dawn' && pal.phase !== 'dusk') { ctx2d.restore(); return; }
+      drawPlane(x, y, sc, W, pal);
+    } else if (obj.type === 'heli') {
+      if (!isDayTime) { ctx2d.restore(); return; }
+      drawHelicopter(x, y, sc, W, objT);
+    } else if (obj.type === 'balloon') {
+      if (!isDayTime && pal.phase !== 'golden') { ctx2d.restore(); return; }
+      drawBalloon(x, y, sc, W, objT);
+    } else if (obj.type === 'star') {
+      if (!isNight) { ctx2d.restore(); return; }
+      drawShootingStar(x, y, W);
+    } else if (obj.type === 'flock') {
+      drawFlock(x, y, sc, W, objT, pal);
+    }
+
+    ctx2d.restore();
+  });
+}
+
+function drawPlane(x, y, sc, W, pal) {
+  const s = W * 0.032 * sc;
+  const col = pal.phase === 'day' ? 'rgba(240,245,255,0.92)' : 'rgba(255,220,180,0.85)';
+  const shadow = 'rgba(100,120,160,0.3)';
+
+  // Fuselage
+  ctx2d.beginPath();
+  ctx2d.ellipse(x, y, s*1.6, s*0.28, 0, 0, Math.PI*2);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Nose cone
+  ctx2d.beginPath();
+  ctx2d.moveTo(x + s*1.6, y);
+  ctx2d.lineTo(x + s*2.1, y - s*0.08);
+  ctx2d.lineTo(x + s*2.1, y + s*0.08);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Main wings
+  ctx2d.beginPath();
+  ctx2d.moveTo(x + s*0.3, y);
+  ctx2d.lineTo(x - s*0.4, y - s*1.1);
+  ctx2d.lineTo(x - s*0.9, y - s*1.1);
+  ctx2d.lineTo(x - s*0.6, y);
+  ctx2d.fillStyle = col; ctx2d.fill();
+  // Wing shadow
+  ctx2d.beginPath();
+  ctx2d.moveTo(x + s*0.3, y);
+  ctx2d.lineTo(x - s*0.4, y + s*1.1);
+  ctx2d.lineTo(x - s*0.9, y + s*1.1);
+  ctx2d.lineTo(x - s*0.6, y);
+  ctx2d.fillStyle = shadow; ctx2d.fill();
+
+  // Tail fin
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*1.3, y);
+  ctx2d.lineTo(x - s*1.6, y - s*0.7);
+  ctx2d.lineTo(x - s*1.0, y - s*0.35);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Tail horizontal
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*1.2, y);
+  ctx2d.lineTo(x - s*1.6, y - s*0.45);
+  ctx2d.lineTo(x - s*1.7, y - s*0.38);
+  ctx2d.lineTo(x - s*1.3, y + s*0.08);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Windows
+  for (let w=0; w<4; w++) {
+    ctx2d.beginPath();
+    ctx2d.ellipse(x + s*(0.8 - w*0.45), y - s*0.1, s*0.12, s*0.15, 0, 0, Math.PI*2);
+    ctx2d.fillStyle = 'rgba(150,220,255,0.7)'; ctx2d.fill();
+  }
+
+  // Contrail
+  const grad = ctx2d.createLinearGradient(x - s*2, y, x - s*8, y);
+  grad.addColorStop(0, 'rgba(255,255,255,0.5)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*2, y - s*0.1);
+  ctx2d.lineTo(x - s*8, y - s*0.1 - s*0.3);
+  ctx2d.lineWidth = s*0.18; ctx2d.strokeStyle = grad; ctx2d.stroke();
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*2, y + s*0.1);
+  ctx2d.lineTo(x - s*8, y + s*0.1 - s*0.3);
+  ctx2d.lineWidth = s*0.18; ctx2d.stroke();
+}
+
+function drawHelicopter(x, y, sc, W, t) {
+  const s = W * 0.022 * sc;
+  const col = 'rgba(230,240,255,0.9)';
+
+  // Body
+  ctx2d.beginPath();
+  ctx2d.ellipse(x, y, s*1.2, s*0.38, -0.15, 0, Math.PI*2);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Cabin bubble
+  ctx2d.beginPath();
+  ctx2d.ellipse(x + s*0.5, y - s*0.1, s*0.55, s*0.42, 0, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(150,220,255,0.6)'; ctx2d.fill();
+
+  // Tail boom
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*0.9, y);
+  ctx2d.lineTo(x - s*2.2, y - s*0.15);
+  ctx2d.lineTo(x - s*2.2, y + s*0.1);
+  ctx2d.fillStyle = col; ctx2d.fill();
+
+  // Tail rotor
+  ctx2d.save();
+  ctx2d.translate(x - s*2.1, y - s*0.05);
+  ctx2d.rotate(t * 8);
+  for (let r=0; r<3; r++) {
+    ctx2d.rotate(Math.PI*2/3);
+    ctx2d.beginPath();
+    ctx2d.rect(-s*0.05, 0, s*0.1, s*0.5);
+    ctx2d.fillStyle = 'rgba(200,210,230,0.8)'; ctx2d.fill();
+  }
+  ctx2d.restore();
+
+  // Main rotor (spinning)
+  ctx2d.save();
+  ctx2d.translate(x + s*0.1, y - s*0.38);
+  ctx2d.rotate(t * 12);
+  for (let r=0; r<2; r++) {
+    ctx2d.rotate(Math.PI);
+    ctx2d.beginPath();
+    ctx2d.ellipse(0, s*1.1, s*0.12, s*1.1, 0, 0, Math.PI*2);
+    ctx2d.fillStyle = 'rgba(210,220,240,0.75)'; ctx2d.fill();
+  }
+  ctx2d.restore();
+
+  // Skids
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*0.5, y + s*0.4); ctx2d.lineTo(x + s*0.8, y + s*0.4);
+  ctx2d.strokeStyle = 'rgba(180,190,210,0.8)'; ctx2d.lineWidth = s*0.12; ctx2d.stroke();
+  ctx2d.beginPath();
+  ctx2d.moveTo(x - s*0.3, y + s*0.38); ctx2d.lineTo(x - s*0.3, y + s*0.55);
+  ctx2d.moveTo(x + s*0.5, y + s*0.38); ctx2d.lineTo(x + s*0.5, y + s*0.55);
+  ctx2d.stroke();
+}
+
+function drawBalloon(x, y, sc, W, t) {
+  const s = W * 0.028 * sc;
+  const bob = Math.sin(t * 0.5) * s * 0.3;
+  const yy = y + bob;
+
+  // Balloon envelope
+  const colors = ['#FF6B6B','#FFE66D','#4ECDC4','#A855F7'];
+  for (let p=0; p<4; p++) {
+    ctx2d.beginPath();
+    ctx2d.arc(x + (p-1.5)*s*0.45, yy - s*0.2, s*0.7, 0, Math.PI*2);
+    ctx2d.fillStyle = colors[p] + 'CC'; ctx2d.fill();
+  }
+  // Main shape
+  ctx2d.beginPath();
+  ctx2d.ellipse(x, yy - s*0.3, s*1.05, s*1.3, 0, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(255,255,255,0.15)'; ctx2d.fill();
+
+  // Highlight
+  ctx2d.beginPath();
+  ctx2d.ellipse(x - s*0.3, yy - s*0.7, s*0.3, s*0.45, -0.4, 0, Math.PI*2);
+  ctx2d.fillStyle = 'rgba(255,255,255,0.35)'; ctx2d.fill();
+
+  // Ropes
+  ctx2d.strokeStyle = 'rgba(180,140,80,0.7)'; ctx2d.lineWidth = s*0.05;
+  [[-0.5,0.5],[0,0.6],[0.5,0.5]].forEach(([dx,dy]) => {
+    ctx2d.beginPath();
+    ctx2d.moveTo(x + dx*s, yy + s*0.9);
+    ctx2d.lineTo(x, yy + s*1.4);
+    ctx2d.stroke();
+  });
+
+  // Basket
+  ctx2d.beginPath();
+  ctx2d.roundRect(x - s*0.3, yy + s*1.35, s*0.6, s*0.38, s*0.08);
+  ctx2d.fillStyle = 'rgba(180,130,60,0.85)'; ctx2d.fill();
+  ctx2d.strokeStyle = 'rgba(140,100,40,0.6)'; ctx2d.lineWidth = s*0.05; ctx2d.stroke();
+}
+
+function drawShootingStar(x, y, W) {
+  const len = W * 0.12;
+  const grad = ctx2d.createLinearGradient(x, y, x - len, y + len*0.4);
+  grad.addColorStop(0, 'rgba(255,255,200,0.95)');
+  grad.addColorStop(0.3, 'rgba(255,255,180,0.5)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx2d.beginPath();
+  ctx2d.moveTo(x, y);
+  ctx2d.lineTo(x - len, y + len*0.4);
+  ctx2d.strokeStyle = grad; ctx2d.lineWidth = 2; ctx2d.stroke();
+  // Head glow
+  const hg = ctx2d.createRadialGradient(x,y,0,x,y,W*0.015);
+  hg.addColorStop(0,'rgba(255,255,220,0.9)');
+  hg.addColorStop(1,'rgba(255,255,200,0)');
+  ctx2d.beginPath(); ctx2d.arc(x,y,W*0.015,0,Math.PI*2);
+  ctx2d.fillStyle = hg; ctx2d.fill();
+}
+
+function drawFlock(x, y, sc, W, t, pal) {
+  const op = pal.starOp < 0.8 ? 0.6 : 0;
+  if (op < 0.01) return;
+  const s = W * 0.01 * sc;
+  const positions = [[0,0],[s*2.5,-s],[s*2.5,s],[s*5,-s*1.8],[s*5,s*1.8]];
+  positions.forEach(([dx,dy], i) => {
+    const wp = Math.sin(t*4 + i*0.8) * s*0.4;
+    ctx2d.beginPath();
+    ctx2d.moveTo(x+dx, y+dy);
+    ctx2d.quadraticCurveTo(x+dx+s*0.5, y+dy-wp, x+dx+s, y+dy);
+    ctx2d.quadraticCurveTo(x+dx+s*1.5, y+dy-wp, x+dx+s*2, y+dy);
+    ctx2d.strokeStyle = `rgba(30,20,60,${op})`;
+    ctx2d.lineWidth = 1.5; ctx2d.stroke();
+  });
+}
+
+// ── BREEZE PARTICLES ───────────────────────────────────────
+const BREEZE = Array.from({length:25}, () => ({
+  x: Math.random(),
+  y: 0.15 + Math.random() * 0.6,
+  len: 0.03 + Math.random() * 0.05,
+  speed: 0.0002 + Math.random() * 0.0003,
+  opacity: 0.1 + Math.random() * 0.2,
+  life: Math.random(),
+  lifeSpeed: 0.002 + Math.random() * 0.003
+}));
+
+// ── SUN ────────────────────────────────────────────────────
 let sunAngle = 0;
+let sunPulse = 0;
+
+// ── RAIN DROPS ─────────────────────────────────────────────
+const RAINDROPS = Array.from({length:40}, () => ({
+  x: Math.random(), y: Math.random(),
+  speed: 0.004 + Math.random() * 0.006,
+  len: 0.02 + Math.random() * 0.03,
+  opacity: 0.1 + Math.random() * 0.25
+}));
 
 function getSkyPhase(h, m) {
-  // returns 0=night, 1=dawn, 2=morning, 3=day, 4=dusk, 5=evening, 6=deep night
   const t = h + m / 60;
-  if (t < 4.5) return {phase:'deep-night', p:0};
-  if (t < 6.5) return {phase:'dawn', p:(t-4.5)/2};
-  if (t < 8.5) return {phase:'morning', p:(t-6.5)/2};
-  if (t < 16)  return {phase:'day', p:1};
-  if (t < 18.5)return {phase:'golden', p:(t-16)/2.5};
-  if (t < 20)  return {phase:'dusk', p:(t-18.5)/1.5};
-  if (t < 21.5)return {phase:'evening', p:(t-20)/1.5};
+  if (t < 5)    return {phase:'deep-night', p:0};
+  if (t < 7)    return {phase:'dawn',       p:(t-5)/2};
+  if (t < 9)    return {phase:'morning',    p:(t-7)/2};
+  if (t < 17)   return {phase:'day',        p:1};
+  if (t < 19)   return {phase:'golden',     p:(t-17)/2};
+  if (t < 20.5) return {phase:'dusk',       p:(t-19)/1.5};
+  if (t < 22)   return {phase:'evening',    p:(t-20.5)/1.5};
   return {phase:'night', p:0};
 }
 
-function lerp(a, b, t) { return a + (b-a)*t; }
+function lerp(a,b,t){return a+(b-a)*t}
+function lerpC(c1,c2,t){return[Math.round(lerp(c1[0],c2[0],t)),Math.round(lerp(c1[1],c2[1],t)),Math.round(lerp(c1[2],c2[2],t))]}
+function rgb(c){return `rgb(${c[0]},${c[1]},${c[2]})`}
+function rgba(c,a){return `rgba(${c[0]},${c[1]},${c[2]},${a})`}
 
-function lerpColor(c1, c2, t) {
-  return [
-    Math.round(lerp(c1[0],c2[0],t)),
-    Math.round(lerp(c1[1],c2[1],t)),
-    Math.round(lerp(c1[2],c2[2],t))
-  ];
-}
-
-function rgb(c) { return `rgb(${c[0]},${c[1]},${c[2]})`; }
-function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
-
-const SKY_PALETTES = {
-  'deep-night': { top:[8,6,30], bot:[15,10,50], starOp:1, cloudOp:0.05, sunOp:0, moonOp:1, sunY:1.2, moonY:0.25 },
-  'dawn':       { top:[60,20,80], bot:[200,80,50], starOp:0.3, cloudOp:0.4, sunOp:0.3, moonOp:0.2, sunY:0.6, moonY:-0.1 },
-  'morning':    { top:[255,140,50], bot:[255,210,120], starOp:0, cloudOp:0.7, sunOp:0.9, moonOp:0, sunY:0.4, moonY:-0.2 },
-  'day':        { top:[40,120,255], bot:[120,200,255], starOp:0, cloudOp:0.85, sunOp:1, moonOp:0, sunY:0.15, moonY:-0.2 },
-  'golden':     { top:[255,100,20], bot:[255,180,80], starOp:0.1, cloudOp:0.9, sunOp:0.85, moonOp:0.1, sunY:0.55, moonY:0.1 },
-  'dusk':       { top:[30,10,70], bot:[180,60,40], starOp:0.5, cloudOp:0.5, sunOp:0.3, moonOp:0.5, sunY:0.75, moonY:0.3 },
-  'evening':    { top:[10,5,40], bot:[80,20,80], starOp:0.8, cloudOp:0.15, sunOp:0, moonOp:0.9, sunY:1.2, moonY:0.22 },
-  'night':      { top:[8,6,30], bot:[20,12,60], starOp:1, cloudOp:0.06, sunOp:0, moonOp:1, sunY:1.2, moonY:0.2 }
+const PAL = {
+  'deep-night':{ top:[5,4,22],   bot:[12,8,45],    starOp:1,   cloudOp:0.04, sunOp:0, moonOp:1,   sunY:1.3, moonY:0.22, rain:0 },
+  'dawn':      { top:[200,130,50],  bot:[255,200,100], starOp:0.1, cloudOp:0.6,  sunOp:0.8,moonOp:0.05,sunY:0.22,moonY:-0.1,rain:0 },
+  'morning':   { top:[25,100,230],  bot:[80,170,255],  starOp:0,   cloudOp:0.9,  sunOp:1,  moonOp:0,   sunY:0.13,moonY:-0.3,rain:0 },
+  'day':       { top:[15,95,220],   bot:[70,165,255],  starOp:0,   cloudOp:1,    sunOp:1,  moonOp:0,   sunY:0.12,moonY:-0.3,rain:0 },
+  'golden':    { top:[255,90,10], bot:[255,175,70],  starOp:0.1, cloudOp:1,    sunOp:0.9,moonOp:0.1,sunY:0.52,moonY:0.1,rain:0 },
+  'dusk':      { top:[25,8,65],   bot:[170,50,35],   starOp:0.5, cloudOp:0.55, sunOp:0.25,moonOp:0.5,sunY:0.78,moonY:0.28,rain:0 },
+  'evening':   { top:[8,4,35],    bot:[60,15,75],    starOp:0.85,cloudOp:0.12, sunOp:0, moonOp:0.9, sunY:1.3, moonY:0.2,rain:0 },
+  'night':     { top:[5,4,22],    bot:[15,9,50],     starOp:1,   cloudOp:0.05, sunOp:0, moonOp:1,   sunY:1.3, moonY:0.18,rain:0 }
 };
 
 function getPalette() {
@@ -849,17 +1154,17 @@ function getPalette() {
   const phases = ['deep-night','dawn','morning','day','golden','dusk','evening','night'];
   const idx = phases.indexOf(phase);
   const next = phases[(idx+1) % phases.length];
-  const a = SKY_PALETTES[phase];
-  const b = SKY_PALETTES[next];
+  const a = PAL[phase], b = PAL[next];
   return {
-    top:    lerpColor(a.top,    b.top,    p),
-    bot:    lerpColor(a.bot,    b.bot,    p),
-    starOp: lerp(a.starOp,  b.starOp,  p),
-    cloudOp:lerp(a.cloudOp, b.cloudOp, p),
-    sunOp:  lerp(a.sunOp,   b.sunOp,   p),
-    moonOp: lerp(a.moonOp,  b.moonOp,  p),
-    sunY:   lerp(a.sunY,    b.sunY,    p),
-    moonY:  lerp(a.moonY,   b.moonY,   p),
+    top:    lerpC(a.top,   b.top,   p),
+    bot:    lerpC(a.bot,   b.bot,   p),
+    starOp: lerp(a.starOp, b.starOp,p),
+    cloudOp:lerp(a.cloudOp,b.cloudOp,p),
+    sunOp:  lerp(a.sunOp,  b.sunOp, p),
+    moonOp: lerp(a.moonOp, b.moonOp,p),
+    sunY:   lerp(a.sunY,   b.sunY,  p),
+    moonY:  lerp(a.moonY,  b.moonY, p),
+    rain:   lerp(a.rain||0,b.rain||0,p),
     phase
   };
 }
@@ -867,150 +1172,266 @@ function getPalette() {
 let t = 0;
 function drawSky() {
   const W = canvas.width, H = canvas.height;
-  if (!W || !H) return;
+  if (!W || !H) { requestAnimationFrame(drawSky); return; }
   t += 0.016;
+  sunPulse += 0.03;
 
   const pal = getPalette();
+  const isDark = (pal.phase === 'night' || pal.phase === 'deep-night' || pal.phase === 'evening');
+  const isDay  = (pal.phase === 'day');
+  const isDawn = (pal.phase === 'dawn' || pal.phase === 'morning');
+  const isGolden = (pal.phase === 'golden' || pal.phase === 'dusk');
 
-  // Background gradient
+  // ── Background ─────────────────────────────────────────────
   const grad = ctx2d.createLinearGradient(0, 0, 0, H);
   grad.addColorStop(0, rgb(pal.top));
+  grad.addColorStop(0.6, rgb(lerpC(pal.top, pal.bot, 0.6)));
   grad.addColorStop(1, rgb(pal.bot));
   ctx2d.fillStyle = grad;
   ctx2d.fillRect(0, 0, W, H);
 
-  // STARS
+  // ── Stars with glow ────────────────────────────────────────
   if (pal.starOp > 0.01) {
     STARS.forEach(s => {
-      s.x = (s.x + s.speed) % 1;
-      const twinkle = 0.5 + 0.5 * Math.sin(t * 2.5 + s.twinkle);
-      const op = pal.starOp * twinkle;
+      s.x = (s.x + s.speed) % 1.0;
+      const tw = 0.4 + 0.6 * Math.sin(t * 2.2 + s.twinkle);
+      const op = pal.starOp * tw;
       const x = s.x * W, y = s.y * H;
-      ctx2d.beginPath();
-      ctx2d.arc(x, y, s.r, 0, Math.PI * 2);
-      ctx2d.fillStyle = `rgba(255,255,255,${op})`;
-      ctx2d.fill();
-      // Star glow
-      if (s.r > 1.2 && op > 0.5) {
-        const grd = ctx2d.createRadialGradient(x,y,0,x,y,s.r*4);
-        grd.addColorStop(0, `rgba(200,210,255,${op*0.4})`);
+      // Glow
+      if (s.r > 1.1 && op > 0.4) {
+        const grd = ctx2d.createRadialGradient(x,y,0,x,y,s.r*5);
+        grd.addColorStop(0, `rgba(${s.color.join(',')},${op*0.35})`);
         grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx2d.beginPath();
-        ctx2d.arc(x, y, s.r*4, 0, Math.PI*2);
-        ctx2d.fillStyle = grd;
-        ctx2d.fill();
+        ctx2d.beginPath(); ctx2d.arc(x,y,s.r*5,0,Math.PI*2);
+        ctx2d.fillStyle = grd; ctx2d.fill();
       }
-    });
-  }
-
-  // SUN
-  if (pal.sunOp > 0.01) {
-    const sx = W * 0.72;
-    const sy = H * pal.sunY;
-    const sr = 28;
-    // rays
-    sunAngle += 0.004;
-    for (let i = 0; i < 12; i++) {
-      const a = sunAngle + (i / 12) * Math.PI * 2;
-      const r1 = sr + 8, r2 = sr + 18 + Math.sin(t*3 + i)*4;
-      ctx2d.beginPath();
-      ctx2d.moveTo(sx + Math.cos(a)*r1, sy + Math.sin(a)*r1);
-      ctx2d.lineTo(sx + Math.cos(a)*r2, sy + Math.sin(a)*r2);
-      ctx2d.strokeStyle = `rgba(255,230,100,${pal.sunOp*0.5})`;
-      ctx2d.lineWidth = 2;
-      ctx2d.stroke();
-    }
-    // glow halo
-    const sg = ctx2d.createRadialGradient(sx,sy,sr*0.5,sx,sy,sr*3.5);
-    sg.addColorStop(0, `rgba(255,220,80,${pal.sunOp*0.4})`);
-    sg.addColorStop(1, 'rgba(255,150,0,0)');
-    ctx2d.beginPath();
-    ctx2d.arc(sx, sy, sr*3.5, 0, Math.PI*2);
-    ctx2d.fillStyle = sg;
-    ctx2d.fill();
-    // sun body
-    const sb = ctx2d.createRadialGradient(sx-sr*0.2,sy-sr*0.2,0,sx,sy,sr);
-    sb.addColorStop(0, `rgba(255,255,200,${pal.sunOp})`);
-    sb.addColorStop(1, `rgba(255,200,50,${pal.sunOp})`);
-    ctx2d.beginPath();
-    ctx2d.arc(sx, sy, sr, 0, Math.PI*2);
-    ctx2d.fillStyle = sb;
-    ctx2d.fill();
-  }
-
-  // MOON
-  if (pal.moonOp > 0.01) {
-    const mx = W * 0.75;
-    const my = H * pal.moonY;
-    const mr = 22;
-    // moon glow
-    const mg = ctx2d.createRadialGradient(mx,my,mr*0.5,mx,my,mr*3);
-    mg.addColorStop(0, `rgba(200,220,255,${pal.moonOp*0.2})`);
-    mg.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx2d.beginPath();
-    ctx2d.arc(mx, my, mr*3, 0, Math.PI*2);
-    ctx2d.fillStyle = mg;
-    ctx2d.fill();
-    // moon body (crescent)
-    ctx2d.save();
-    ctx2d.beginPath();
-    ctx2d.arc(mx, my, mr, 0, Math.PI*2);
-    ctx2d.fillStyle = `rgba(240,248,255,${pal.moonOp})`;
-    ctx2d.fill();
-    ctx2d.beginPath();
-    ctx2d.arc(mx+mr*0.35, my-mr*0.1, mr*0.85, 0, Math.PI*2);
-    ctx2d.fillStyle = rgb(lerpColor(pal.top, pal.bot, pal.moonY));
-    ctx2d.fill();
-    // craters
-    [[mx-6,my+5,3],[mx+4,my-7,2],[mx-10,my-8,1.5]].forEach(([cx,cy,cr])=>{
-      ctx2d.beginPath();
-      ctx2d.arc(cx,cy,cr,0,Math.PI*2);
-      ctx2d.fillStyle=`rgba(180,200,240,${pal.moonOp*0.35})`;
+      ctx2d.beginPath(); ctx2d.arc(x,y,s.r,0,Math.PI*2);
+      ctx2d.fillStyle = `rgba(${s.color.join(',')},${op})`;
       ctx2d.fill();
     });
-    ctx2d.restore();
   }
 
-  // CLOUDS
-  CLOUDS.forEach((c, i) => {
-    c.x = (c.x + c.speed) % 1.3;
-    if (c.x > 1.2) c.x = -0.2;
-    const cx = c.x * W;
-    const cy = c.y * H + Math.sin(t * 0.4 + i) * 4;
-    const cw = c.w * W;
-    const ch = c.h * H;
-    const op = pal.cloudOp * c.opacity;
-    if (op < 0.01) return;
+  // ── SUN — vivid with corona, rays, heat shimmer ────────────
+  if (pal.sunOp > 0.01) {
+    const sx = W * 0.78, sy = Math.max(H * 0.12, H * pal.sunY);
+    const sr = isDay ? 32 : 26;
+    sunAngle += isDay ? 0.003 : 0.005;
 
+    // Corona / atmosphere
+    const atm = ctx2d.createRadialGradient(sx,sy,sr,sx,sy,sr*5.5);
+    const atmC = isGolden ? '255,140,40' : isDawn ? '255,180,80' : '255,230,100';
+    atm.addColorStop(0, `rgba(${atmC},${pal.sunOp*0.45})`);
+    atm.addColorStop(0.4, `rgba(${atmC},${pal.sunOp*0.15})`);
+    atm.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx2d.beginPath(); ctx2d.arc(sx,sy,sr*5.5,0,Math.PI*2);
+    ctx2d.fillStyle = atm; ctx2d.fill();
+
+    // Soft diffuse glow ring (no rays/lines)
+    const glowRing = ctx2d.createRadialGradient(sx,sy,sr*0.9,sx,sy,sr*2.8);
+    glowRing.addColorStop(0,`rgba(255,230,80,${pal.sunOp*0.35})`);
+    glowRing.addColorStop(0.5,`rgba(255,200,40,${pal.sunOp*0.12})`);
+    glowRing.addColorStop(1,'rgba(255,160,0,0)');
+    ctx2d.beginPath(); ctx2d.arc(sx,sy,sr*2.8,0,Math.PI*2);
+    ctx2d.fillStyle = glowRing; ctx2d.fill();
+
+    // ── Sun body with texture ──────────────────────────────
+    // Base glow layer
+    const sb0 = ctx2d.createRadialGradient(sx,sy,0,sx,sy,sr*1.15);
+    sb0.addColorStop(0, `rgba(255,255,200,${pal.sunOp})`);
+    sb0.addColorStop(1, `rgba(255,160,0,0)`);
+    ctx2d.beginPath(); ctx2d.arc(sx,sy,sr*1.15,0,Math.PI*2);
+    ctx2d.fillStyle = sb0; ctx2d.fill();
+
+    // Main body gradient
+    const sb = ctx2d.createRadialGradient(sx-sr*0.3,sy-sr*0.3,sr*0.05,sx,sy,sr);
+    if (isDay) {
+      sb.addColorStop(0,  'rgba(255,255,240,1)');
+      sb.addColorStop(0.3,`rgba(255,245,120,${pal.sunOp})`);
+      sb.addColorStop(0.7,`rgba(255,210,40,${pal.sunOp})`);
+      sb.addColorStop(1,  `rgba(255,160,10,${pal.sunOp})`);
+    } else {
+      sb.addColorStop(0,  'rgba(255,240,200,1)');
+      sb.addColorStop(0.5,`rgba(255,180,60,${pal.sunOp})`);
+      sb.addColorStop(1,  `rgba(255,100,10,${pal.sunOp})`);
+    }
+    ctx2d.beginPath(); ctx2d.arc(sx,sy,sr,0,Math.PI*2);
+    ctx2d.fillStyle = sb; ctx2d.fill();
+
+    // ── Solar granules (texture spots) ──────────────────────
     ctx2d.save();
-    // Cloud tint changes with sky phase
-    let cr, cg, cb;
-    if (pal.phase === 'day') { cr=255;cg=255;cb=255; }
-    else if (pal.phase === 'golden' || pal.phase === 'dusk') { cr=255;cg=180;cb=120; }
-    else if (pal.phase === 'morning' || pal.phase === 'dawn') { cr=255;cg=220;cb=200; }
-    else { cr=160;cg=160;cb=210; }
-
-    ctx2d.globalAlpha = op;
-    // Main cloud body
-    ctx2d.beginPath();
-    ctx2d.ellipse(cx, cy, cw*0.5, ch*0.5, 0, 0, Math.PI*2);
-    ctx2d.ellipse(cx+cw*0.25, cy-ch*0.2, cw*0.3, ch*0.45, 0, 0, Math.PI*2);
-    ctx2d.ellipse(cx-cw*0.25, cy-ch*0.1, cw*0.28, ch*0.4, 0, 0, Math.PI*2);
-    ctx2d.ellipse(cx+cw*0.4, cy+ch*0.05, cw*0.25, ch*0.38, 0, 0, Math.PI*2);
-    ctx2d.fillStyle = `rgb(${cr},${cg},${cb})`;
-    ctx2d.fill();
+    ctx2d.globalCompositeOperation = 'overlay';
+    const granulesCount = 18;
+    for (let g=0; g<granulesCount; g++) {
+      const ga = (g/granulesCount)*Math.PI*2 + sunAngle*0.3;
+      const gr2 = (0.15 + (g%3)*0.22) * sr;
+      const gx = sx + Math.cos(ga)*gr2 + Math.sin(t*1.5+g)*2;
+      const gy = sy + Math.sin(ga)*gr2 * 0.85 + Math.cos(t*1.2+g)*2;
+      const gSize = sr * (0.08 + (g%2)*0.06);
+      const grd = ctx2d.createRadialGradient(gx,gy,0,gx,gy,gSize);
+      grd.addColorStop(0,`rgba(255,255,180,${pal.sunOp*0.5})`);
+      grd.addColorStop(1,'rgba(255,200,0,0)');
+      ctx2d.beginPath(); ctx2d.arc(gx,gy,gSize,0,Math.PI*2);
+      ctx2d.fillStyle = grd; ctx2d.fill();
+    }
     ctx2d.restore();
+
+    // (solar flares removed)
+
+    // ── Limb darkening ring ─────────────────────────────────
+    const ld = ctx2d.createRadialGradient(sx,sy,sr*0.65,sx,sy,sr);
+    ld.addColorStop(0,'rgba(0,0,0,0)');
+    ld.addColorStop(1,`rgba(200,80,0,${pal.sunOp*0.22})`);
+    ctx2d.beginPath(); ctx2d.arc(sx,sy,sr,0,Math.PI*2);
+    ctx2d.fillStyle = ld; ctx2d.fill();
+
+    // ── Bright hot spot ─────────────────────────────────────
+    const hot = ctx2d.createRadialGradient(sx-sr*0.2,sy-sr*0.25,0,sx-sr*0.2,sy-sr*0.25,sr*0.45);
+    hot.addColorStop(0,`rgba(255,255,255,${pal.sunOp*0.7})`);
+    hot.addColorStop(1,'rgba(255,255,255,0)');
+    ctx2d.beginPath(); ctx2d.arc(sx-sr*0.2,sy-sr*0.25,sr*0.45,0,Math.PI*2);
+    ctx2d.fillStyle = hot; ctx2d.fill();
+
+    // ── Heat shimmer lines below sun ────────────────────────
+    if (pal.sunOp > 0.5) {
+      for (let i=0; i<6; i++) {
+        const shimY = sy + sr + 8 + i*9 + Math.sin(t*3+i)*3;
+        const shimW = (sr * 1.8) * (1 - i*0.13);
+        ctx2d.beginPath();
+        ctx2d.moveTo(sx - shimW, shimY);
+        ctx2d.bezierCurveTo(
+          sx-shimW*0.4, shimY+Math.sin(t*5+i)*5,
+          sx+shimW*0.4, shimY-Math.sin(t*5+i)*5,
+          sx+shimW, shimY
+        );
+        ctx2d.strokeStyle = `rgba(255,210,60,${(0.07-i*0.01)*pal.sunOp})`;
+        ctx2d.lineWidth = 1.5; ctx2d.stroke();
+      }
+    }
+  }
+
+  // ── MOON with glow ─────────────────────────────────────────
+  if (pal.moonOp > 0.01) {
+    const mx = W*0.72, my = H*pal.moonY, mr = 24;
+    const mg = ctx2d.createRadialGradient(mx,my,mr*0.4,mx,my,mr*4);
+    mg.addColorStop(0,`rgba(180,210,255,${pal.moonOp*0.25})`);
+    mg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx2d.beginPath(); ctx2d.arc(mx,my,mr*4,0,Math.PI*2);
+    ctx2d.fillStyle = mg; ctx2d.fill();
+    // Body
+    ctx2d.beginPath(); ctx2d.arc(mx,my,mr,0,Math.PI*2);
+    ctx2d.fillStyle = `rgba(238,248,255,${pal.moonOp})`; ctx2d.fill();
+    // Crescent shadow
+    ctx2d.beginPath(); ctx2d.arc(mx+mr*0.38,my-mr*0.1,mr*0.84,0,Math.PI*2);
+    const shadowC = lerpC(pal.top, pal.bot, pal.moonY);
+    ctx2d.fillStyle = rgb(shadowC); ctx2d.fill();
+    // Craters
+    [[mx-7,my+6,3.5],[mx+5,my-8,2.5],[mx-11,my-9,2]].forEach(([cx,cy,cr])=>{
+      ctx2d.beginPath(); ctx2d.arc(cx,cy,cr,0,Math.PI*2);
+      ctx2d.fillStyle=`rgba(170,195,235,${pal.moonOp*0.4})`; ctx2d.fill();
+    });
+  }
+
+  // ── CLOUDS — fluffy, colorful, 3D ──────────────────────────
+  if (pal.cloudOp > 0.01) {
+    CLOUDS.forEach((c, ci) => {
+      c.x += c.speed + Math.sin(t*0.1+ci)*0.000015; // slight breeze sway
+      if (c.x > 1.25) c.x = -0.25;
+      const cx2 = c.x * W;
+      const cy2 = c.y * H + Math.sin(t*0.35 + ci*0.9) * 5;
+      const cw = c.w * W, ch = c.h * H;
+      const op = pal.cloudOp * c.opacity;
+      if (op < 0.02) return;
+
+      let r,g,b2;
+      if (isDay)       { r=255;g=255;b2=255; }
+      else if (isGolden){ r=255;g=185;b2=115; }
+      else if (isDawn)  { r=255;g=215;b2=190; }
+      else              { r=150;g=155;b2=205; }
+
+      // Shadow layer
+      ctx2d.save(); ctx2d.globalAlpha = op * 0.25;
+      c.puffs.forEach(p => {
+        ctx2d.beginPath();
+        ctx2d.ellipse(cx2 + p.ox*cw*0.5 + 6, cy2 + p.oy*ch*0.5 + 8, cw*0.28*(p.r||0.5), ch*0.45*(p.r||0.5), 0, 0, Math.PI*2);
+        ctx2d.fillStyle = `rgb(${Math.max(0,r-60)},${Math.max(0,g-60)},${Math.max(0,b2-40)})`;
+        ctx2d.fill();
+      });
+      ctx2d.restore();
+
+      // Main puffs
+      ctx2d.save(); ctx2d.globalAlpha = op;
+      c.puffs.forEach(p => {
+        const px = cx2 + p.ox*cw*0.5, py = cy2 + p.oy*ch*0.5;
+        const pGrad = ctx2d.createRadialGradient(px-cw*0.05,py-ch*0.1,0,px,py,cw*0.32*(p.r||0.5));
+        pGrad.addColorStop(0, `rgba(${Math.min(255,r+20)},${Math.min(255,g+20)},${Math.min(255,b2+15)},1)`);
+        pGrad.addColorStop(1, `rgba(${r},${g},${b2},0.7)`);
+        ctx2d.beginPath();
+        ctx2d.ellipse(px, py, cw*0.3*(p.r||0.5), ch*0.48*(p.r||0.5), 0, 0, Math.PI*2);
+        ctx2d.fillStyle = pGrad; ctx2d.fill();
+      });
+      ctx2d.restore();
+    });
+  }
+
+  // ── BIRDS flying ──────────────────────────────────────────
+  if (pal.starOp < 0.9) { // birds visible except deep night
+    BIRDS.forEach((b2, bi) => {
+      if (t < b2.delay * 0.01) return;
+      b2.x = (b2.x + b2.speed) % 1.1;
+      if (b2.x > 1.05) b2.x = -0.05;
+      b2.wingPhase += 0.08 + b2.speed * 200;
+
+      const bx = b2.x * W;
+      const by = b2.y * H + Math.sin(t * 0.4 + bi) * 8;
+      const bSize = b2.size * W;
+      const wing = Math.sin(b2.wingPhase) * bSize * 0.6;
+
+      ctx2d.save();
+      ctx2d.globalAlpha = 0.55 + pal.sunOp * 0.3;
+      ctx2d.strokeStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(30,20,60,0.55)';
+      ctx2d.lineWidth = 1.5;
+      ctx2d.lineCap = 'round';
+      // Left wing
+      ctx2d.beginPath();
+      ctx2d.moveTo(bx, by);
+      ctx2d.quadraticCurveTo(bx - bSize*0.5, by - wing, bx - bSize, by);
+      ctx2d.stroke();
+      // Right wing
+      ctx2d.beginPath();
+      ctx2d.moveTo(bx, by);
+      ctx2d.quadraticCurveTo(bx + bSize*0.5, by - wing, bx + bSize, by);
+      ctx2d.stroke();
+      ctx2d.restore();
+    });
+  }
+
+  // ── BREEZE particles ──────────────────────────────────────
+  BREEZE.forEach(b2 => {
+    b2.x = (b2.x + b2.speed) % 1.1;
+    b2.life += b2.lifeSpeed;
+    if (b2.life > 1) { b2.life = 0; b2.x = -0.05; b2.y = 0.1 + Math.random()*0.7; }
+    const bOp = b2.opacity * Math.sin(b2.life * Math.PI) * pal.cloudOp;
+    if (bOp < 0.01) return;
+    const bx = b2.x * W, by = b2.y * H;
+    const len = b2.len * W;
+    ctx2d.beginPath();
+    ctx2d.moveTo(bx, by);
+    ctx2d.bezierCurveTo(bx+len*0.3, by-2, bx+len*0.7, by+2, bx+len, by);
+    ctx2d.strokeStyle = `rgba(255,255,255,${bOp})`;
+    ctx2d.lineWidth = 0.8; ctx2d.stroke();
   });
 
-  // HORIZON GLOW at dawn/dusk
-  if (pal.sunOp > 0.1 && (pal.phase === 'dawn' || pal.phase === 'golden' || pal.phase === 'dusk' || pal.phase === 'morning')) {
-    const hg = ctx2d.createLinearGradient(0, H*0.6, 0, H);
-    hg.addColorStop(0, `rgba(255,150,50,${pal.sunOp*0.25})`);
-    hg.addColorStop(1, 'rgba(255,80,0,0)');
+  // ── HORIZON GLOW at dawn/golden ───────────────────────────
+  if ((isDawn || isGolden) && pal.sunOp > 0.1) {
+    const hg = ctx2d.createLinearGradient(0, H*0.55, 0, H);
+    const hCol = isGolden ? '255,130,40' : '255,160,60';
+    hg.addColorStop(0, `rgba(${hCol},${pal.sunOp*0.3})`);
+    hg.addColorStop(1, `rgba(${hCol},0)`);
     ctx2d.fillStyle = hg;
-    ctx2d.fillRect(0, H*0.6, W, H*0.4);
+    ctx2d.fillRect(0, H*0.55, W, H*0.45);
   }
 
+  drawSkyObjects(W, H, pal);
   requestAnimationFrame(drawSky);
 }
 
@@ -1249,7 +1670,7 @@ function go(id, idx) {
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
   document.getElementById('s-'+id).classList.add('on');
   document.querySelectorAll('.pill')[idx].classList.add('on');
-  const renders = {hoy:renderHoy, empresa:renderEmp, rutina:renderRut, biblia:renderBiblia, fe:renderFe};
+  const renders = {hoy:renderHoy, empresa:renderEmp, rutina:renderRut, biblia:renderBiblia, hobbies:renderHobbies, fe:renderFe};
   renders[id]();
 }
 
