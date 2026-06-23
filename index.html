@@ -1011,10 +1011,11 @@ function initHero() {
    MUSIC PLAYER ENGINE
 ============================================================ */
 const BASE = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+const RAW = 'https://raw.githubusercontent.com/josejo48-commits/paz-total/main/music/';
 const TRACKS = [
-  {file: BASE + 'music/instrumental.mp3', title:'Instrumental de paz',  artist:'Orangiro Musik'},
-  {file: BASE + 'music/cradle.mp3',       title:'Cuna del alma',        artist:'Lemon Music Studio'},
-  {file: BASE + 'music/lullaby.mp3',      title:'Nana suave',           artist:'Alex Morgan'}
+  {file: RAW + 'instrumental.mp3', title:'Instrumental de paz',  artist:'Orangiro Musik'},
+  {file: RAW + 'cradle.mp3',       title:'Cuna del alma',        artist:'Lemon Music Studio'},
+  {file: RAW + 'lullaby.mp3',      title:'Nana suave',           artist:'Alex Morgan'}
 ];
 
 let trackIdx = 0;
