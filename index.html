@@ -1300,20 +1300,19 @@ const PAL = {
 function getPalette() {
   const now = new Date();
   const {phase, p} = getSkyPhase(now.getHours(), now.getMinutes());
-  const phases = ['deep-night','dawn','morning','day','golden','dusk','evening','night'];
-  const idx = phases.indexOf(phase);
-  const next = phases[(idx+1) % phases.length];
-  const a = PAL[phase], b = PAL[next];
+  const a = PAL[phase];
+  // Only interpolate WITHIN a phase transition, not toward next phase
+  // This prevents orange bleeding into blue morning/day
   return {
-    top:    lerpC(a.top,   b.top,   p),
-    bot:    lerpC(a.bot,   b.bot,   p),
-    starOp: lerp(a.starOp, b.starOp,p),
-    cloudOp:lerp(a.cloudOp,b.cloudOp,p),
-    sunOp:  lerp(a.sunOp,  b.sunOp, p),
-    moonOp: lerp(a.moonOp, b.moonOp,p),
-    sunY:   lerp(a.sunY,   b.sunY,  p),
-    moonY:  lerp(a.moonY,  b.moonY, p),
-    rain:   lerp(a.rain||0,b.rain||0,p),
+    top:     a.top,
+    bot:     a.bot,
+    starOp:  a.starOp,
+    cloudOp: a.cloudOp,
+    sunOp:   a.sunOp,
+    moonOp:  a.moonOp,
+    sunY:    a.sunY,
+    moonY:   a.moonY,
+    rain:    a.rain||0,
     phase
   };
 }
