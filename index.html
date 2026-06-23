@@ -1260,7 +1260,7 @@ function renderHoy() {
   const rd = rutina.filter(t=>t.done).length, rt = rutina.length;
   const ed = empTasks.filter(t=>t.done).length, et = empTasks.length;
   const total = rd + ed, all = rt + et;
-  const pct = Math.round((total / all) * 100);
+  const pct = all > 0 ? Math.round((total / all) * 100) : 0;
   document.getElementById('ring-num').textContent = pct + '%';
   setRing('ring-circle', pct);
   document.getElementById('s-emp').textContent = ed + '/' + et;
@@ -1369,7 +1369,7 @@ function addProj() {
 ============================================================ */
 function renderRut() {
   const done = rutina.filter(t=>t.done).length;
-  const pct = Math.round((done / rutina.length) * 100);
+  const pct = rutina.length > 0 ? Math.round((done / rutina.length) * 100) : 0;
   document.getElementById('rut-num').textContent = pct + '%';
   setRing('rut-circle', pct);
 
