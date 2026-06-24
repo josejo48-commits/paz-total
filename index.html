@@ -453,54 +453,59 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
       <!-- HOY -->
       <div id="s-hoy" class="sec on" role="tabpanel">
-        <div class="ring-wrap">
-          <div class="ring-outer" aria-label="Progreso del día">
-            <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#f3f4f6" stroke-width="9"/>
-              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg1)" stroke-width="9"
-                stroke-linecap="round" stroke-dasharray="314.2" id="ring-circle"
-                style="stroke-dashoffset:314.2;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
-              <defs>
-                <linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#7c3aed"/>
-                  <stop offset="100%" stop-color="#11998e"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="ring-center">
-              <div class="ring-pct" id="ring-num">0%</div>
-              <div class="ring-sub">completado</div>
-            </div>
+
+        <!-- COMPAÑERO ESPIRITUAL -->
+        <div class="companion-card">
+          <div class="companion-avatar">🕊️</div>
+          <div class="companion-body">
+            <div class="companion-name">Tu compañero Paz Total</div>
+            <div class="companion-msg" id="companion-msg">¡Hola! ¿Cómo amaneciste hoy?</div>
           </div>
         </div>
 
+        <!-- ESTADO DE ÁNIMO -->
+        <div class="slbl">¿Cómo te sientes hoy?</div>
+        <div class="mood-row">
+          <button class="mood-btn" onclick="setMood(this,'😄','¡Qué alegría escucharlo! Que Jehová bendiga cada momento de tu día.')">😄<span>Excelente</span></button>
+          <button class="mood-btn" onclick="setMood(this,'🙂','Me alegra que estés bien. Sigue adelante, estoy aquí contigo.')">🙂<span>Bien</span></button>
+          <button class="mood-btn" onclick="setMood(this,'😐','Entiendo. Los días regulares también tienen propósito. ¿Qué te pesa hoy?')">😐<span>Regular</span></button>
+          <button class="mood-btn" onclick="setMood(this,'😔','Recuerda: «Él da esfuerzo al cansado» — Is 40:29. Tómate una pausa.')">😔<span>Cansado</span></button>
+          <button class="mood-btn" onclick="setMood(this,'🙏','Que hermoso. En oración estás más cerca de Jehová. Adelante.')">🙏<span>Orando</span></button>
+        </div>
+
+        <!-- STATS -->
         <div class="stats">
           <div class="stat-box purple">
             <div class="stat-ic purple"><i class="ti ti-building" aria-hidden="true"></i></div>
-            <div class="stat-val" id="s-emp">0/6</div>
+            <div class="stat-val" id="s-emp">0/0</div>
             <div class="stat-lbl">Empresa</div>
-            <div class="stat-ring" style="background:#7c3aed"></div>
           </div>
           <div class="stat-box green">
-            <div class="stat-ic green"><i class="ti ti-run" aria-hidden="true"></i></div>
-            <div class="stat-val" id="s-rut">0/7</div>
+            <div class="stat-ic green"><i class="ti ti-checklist" aria-hidden="true"></i></div>
+            <div class="stat-val" id="s-rut">0/0</div>
             <div class="stat-lbl">Rutina</div>
-            <div class="stat-ring" style="background:#059669"></div>
           </div>
+        </div>
+        <div style="background:#f3f4f6;border-radius:99px;height:7px;margin:-6px 0 14px;overflow:hidden">
+          <div id="prog-bar" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#7c3aed,#11998e);width:0%;transition:width .8s ease"></div>
         </div>
 
         <div id="rest-hoy-wrap"></div>
 
-        <div class="motiv-card">
+        <!-- SEGUIMIENTO PROYECTOS -->
+        <div id="proj-followup" style="display:none"></div>
+
+        <!-- PENDIENTES -->
+        <div class="slbl">Pendientes de hoy</div>
+        <div id="hoy-list"></div>
+
+        <!-- MOTIVACION -->
+        <div class="motiv-card" style="margin-top:10px">
           <div class="motiv-txt" id="mot-txt"></div>
           <div class="motiv-auth" id="mot-auth"></div>
         </div>
-
-        <div class="slbl">Próximas tareas</div>
-        <div id="hoy-list"></div>
-
-        <button onclick="refreshMotiv()" style="width:100%;background:transparent;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px">
-          <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase motivacional
+        <button onclick="refreshMotiv()" style="width:100%;background:transparent;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px">
+          <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase
         </button>
 
       </div>
@@ -718,20 +723,69 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
     </div>
   </div>
 
-  <!-- WELLNESS POPUP FLOTANTE -->
+  <!-- WELLNESS POPUP FLOTANTE CON SEGUIMIENTO -->
   <div id="wellness-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:50;animation:slideUp .35s ease">
     <div style="background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px 18px;box-shadow:0 8px 32px rgba(45,27,105,.45)">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div id="wp-icon" style="font-size:32px;flex-shrink:0">💧</div>
-        <div style="flex:1">
-          <div id="wp-name" style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px">Toma agua</div>
-          <div id="wp-sub" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.4">Tus riñones te lo agradecerán</div>
+      
+      <!-- FASE 1: NOTIFICACIÓN -->
+      <div id="wp-phase1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div id="wp-icon" style="font-size:32px;flex-shrink:0">💧</div>
+          <div style="flex:1">
+            <div id="wp-name" style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px">Toma agua</div>
+            <div id="wp-sub" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.4">Tus riñones te lo agradecerán</div>
+          </div>
+          <button onclick="dismissWellness()" style="background:rgba(255,255,255,.15);border:none;border-radius:10px;color:#fff;width:30px;height:30px;font-size:18px;cursor:pointer;flex-shrink:0">×</button>
         </div>
-        <button onclick="dismissWellness()" style="background:rgba(255,255,255,.2);border:none;border-radius:10px;color:#fff;width:32px;height:32px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+        <div style="display:flex;gap:8px">
+          <button onclick="wellnessDone()" style="flex:1;background:#fff;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#2d1b69;cursor:pointer">✅ ¡Ya lo hice!</button>
+          <button onclick="wellnessSnooze()" style="flex:1;background:rgba(255,255,255,.18);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:500;color:#fff;cursor:pointer">⏰ En 10 min</button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button onclick="doneWellness()" style="flex:1;background:#fff;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#2d1b69;cursor:pointer">✓ ¡Listo!</button>
-        <button onclick="snoozeWellnessPopup()" style="flex:1;background:rgba(255,255,255,.2);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#fff;cursor:pointer">⏰ En 10 min</button>
+
+      <!-- FASE 2: SEGUIMIENTO (aparece después de "Ya lo hice") -->
+      <div id="wp-phase2" style="display:none">
+        <div style="font-size:22px;text-align:center;margin-bottom:8px" id="wp-followup-icon">💧</div>
+        <div id="wp-followup-q" style="font-size:14px;font-weight:600;color:#fff;text-align:center;margin-bottom:14px;line-height:1.5">
+          ¿Pudiste hacerlo?
+        </div>
+        <div style="display:flex;gap:8px">
+          <button onclick="wellnessConfirm(true)" style="flex:1;background:#fff;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#059669;cursor:pointer">😊 Sí, perfecto</button>
+          <button onclick="wellnessConfirm(false)" style="flex:1;background:rgba(255,255,255,.18);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:500;color:#fff;cursor:pointer">😔 No pude</button>
+        </div>
+      </div>
+
+      <!-- FASE 3: RESPUESTA FINAL -->
+      <div id="wp-phase3" style="display:none;text-align:center;padding:8px 0">
+        <div style="font-size:28px;margin-bottom:8px" id="wp-final-icon">🎉</div>
+        <div id="wp-final-msg" style="font-size:14px;color:#fff;line-height:1.6;font-weight:500"></div>
+        <button onclick="closeWellnessPopup()" style="background:rgba(255,255,255,.2);border:none;border-radius:10px;color:#fff;padding:8px 20px;font-size:13px;cursor:pointer;margin-top:12px">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOLLOWUP POPUP - seguimiento inteligente -->
+  <div id="followup-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:51;animation:slideUp .35s ease">
+    <div style="background:linear-gradient(135deg,#1a0533,#0f6e56);border-radius:20px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div id="fp-icon" style="font-size:28px;flex-shrink:0">🔔</div>
+        <div style="flex:1">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Tu compañero pregunta</div>
+          <div id="fp-question" style="font-size:13px;color:#fff;line-height:1.5;font-weight:500"></div>
+        </div>
+        <button onclick="closeFollowupPopup()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;color:#fff;width:28px;height:28px;font-size:16px;cursor:pointer;flex-shrink:0">×</button>
+      </div>
+      <!-- Fase 2: botones -->
+      <div id="fp-phase2" style="display:flex;gap:8px">
+        <button id="fp-yes" style="flex:1;background:#fff;border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#0f6e56;cursor:pointer">✅ Ya está resuelto</button>
+        <button id="fp-no"  style="flex:1;background:rgba(255,255,255,.18);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:500;color:#fff;cursor:pointer">⏳ Aún pendiente</button>
+      </div>
+      <!-- Fase 3: respuesta -->
+      <div id="fp-phase3" style="display:none;text-align:center;padding:6px 0">
+        <div style="font-size:28px;margin-bottom:8px" id="fp-final-icon">🎉</div>
+        <div id="fp-final-msg" style="font-size:13px;color:#fff;line-height:1.6"></div>
+        <button onclick="closeFollowupPopup()" style="background:rgba(255,255,255,.2);border:none;border-radius:10px;color:#fff;padding:8px 20px;font-size:13px;cursor:pointer;margin-top:10px">Cerrar</button>
       </div>
     </div>
   </div>
@@ -1874,15 +1928,241 @@ function setRing(id, pct) {
 /* ============================================================
    HOY
 ============================================================ */
+/* ============================================================
+   COMPANION & MOOD
+============================================================ */
+const COMPANION_MSGS = {
+  morning: [
+    "¡Buenos días! ¿Ya tomaste agua? Tu cuerpo lo necesita para empezar bien.",
+    "¡Hola! Que este día esté lleno de la paz de Jehová. ¿Cómo amaneciste?",
+    "¡Buen día! «Las misericordias de Jehová son nuevas cada mañana» — Lam 3:23",
+    "Buenos días. ¿Tienes pendientes de empresa hoy? Puedo ayudarte a organizarlos.",
+  ],
+  afternoon: [
+    "¿Ya almorzaste? Cuida tu cuerpo, es el templo que Jehová te dio.",
+    "¿Cómo va tu día? Recuerda tomar una pausa activa si llevas horas trabajando.",
+    "A mitad del día — ¿cómo van tus tareas? Puedes revisarlas en Empresa.",
+    "¿Has hablado con tu familia hoy? Una llamada corta puede alegrarles el día.",
+  ],
+  evening: [
+    "Ya casi termina el día. ¿Completaste tu rutina? Cada hábito cuenta.",
+    "Buen momento para revisar tus proyectos y planear mañana.",
+    "¿Cómo te fue hoy? Tómate un momento para agradecer a Jehová.",
+    "Recuerda descansar bien. «En paz me acostaré» — Sal 4:8",
+  ],
+  night: [
+    "Buenas noches. Antes de dormir, ¿oraste hoy?",
+    "Es hora de descansar. Deja los problemas del día en manos de Jehová.",
+    "Que tengas un descanso reparador. Mañana es un nuevo día.",
+  ]
+};
+
+let currentMood = localStorage.getItem('pt_mood') || '';
+let lastMoodDate = localStorage.getItem('pt_mood_date') || '';
+
+// ── SMART FOLLOWUP SYSTEM ─────────────────────────────────
+// Tracks pending questions about tasks, reminders, projects
+let pendingFollowups = JSON.parse(localStorage.getItem('pt_followups') || '[]');
+
+function saveFollowups() {
+  localStorage.setItem('pt_followups', JSON.stringify(pendingFollowups));
+}
+
+function addFollowup(type, name, id) {
+  // Schedule followup for next day morning
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(8, 0, 0, 0);
+  pendingFollowups.push({
+    type,   // 'reminder' | 'task' | 'project'
+    name,
+    id,
+    askAt: tomorrow.getTime(),
+    answered: false
+  });
+  saveFollowups();
+}
+
+function getSmartFollowup() {
+  const now = Date.now();
+  const due = pendingFollowups.filter(f => !f.answered && f.askAt <= now);
+  if (due.length === 0) return null;
+  return due[0];
+}
+
+function answerFollowup(idx, resolved) {
+  const f = pendingFollowups[idx];
+  if (!f) return;
+  f.answered = true;
+  saveFollowups();
+
+  const popup = document.getElementById('followup-popup');
+  const phase3 = document.getElementById('fp-phase3');
+  const icon = document.getElementById('fp-final-icon');
+  const msg = document.getElementById('fp-final-msg');
+
+  document.getElementById('fp-phase2').style.display = 'none';
+  phase3.style.display = 'block';
+
+  if (resolved) {
+    icon.textContent = '🎉';
+    if (f.type === 'reminder') msg.textContent = `¡Qué bien! Me alegra que «${f.name}» ya esté resuelto. Un pendiente menos, sigue adelante 💪`;
+    if (f.type === 'task')     msg.textContent = `¡Excelente! «${f.name}» completada. Cada tarea terminada es un paso hacia tus metas 🙌`;
+    if (f.type === 'project')  msg.textContent = `¡Genial! «${f.name}» avanzando. ¿Quieres actualizar el progreso en la pestaña Empresa?`;
+  } else {
+    icon.textContent = '💙';
+    if (f.type === 'reminder') msg.textContent = `No te preocupes con «${f.name}». Te lo recuerdo mañana. A veces las cosas toman su tiempo 🙏`;
+    if (f.type === 'task')     msg.textContent = `Tranquilo, «${f.name}» sigue pendiente. ¿Necesitas dividirla en pasos más pequeños?`;
+    if (f.type === 'project')  msg.textContent = `«${f.name}» sigue en proceso. Los grandes logros toman tiempo. ¡Tú puedes!`;
+    // Reschedule for tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    pendingFollowups.push({...f, answered: false, askAt: tomorrow.getTime()});
+    saveFollowups();
+  }
+}
+
+function closeFollowupPopup() {
+  const popup = document.getElementById('followup-popup');
+  if (popup) popup.style.display = 'none';
+  document.getElementById('fp-phase2').style.display = 'block';
+  document.getElementById('fp-phase3').style.display = 'none';
+  checkFollowupPopup();
+}
+
+function checkFollowupPopup() {
+  const f = getSmartFollowup();
+  if (!f) return;
+  const idx = pendingFollowups.indexOf(f);
+
+  const icons = {reminder:'🔔', task:'✅', project:'📋'};
+  const questions = {
+    reminder: `Ayer anotaste recordarme de: «${f.name}» ¿Ya lo atendiste o sigue pendiente?`,
+    task:     `Hace un tiempo agregaste la tarea: «${f.name}» ¿Ya la completaste?`,
+    project:  `¿Cómo va tu proyecto «${f.name}»? ¿Has avanzado desde la última vez?`
+  };
+
+  document.getElementById('fp-icon').textContent = icons[f.type] || '🔔';
+  document.getElementById('fp-question').textContent = questions[f.type] || `¿Ya resolviste «${f.name}»?`;
+  document.getElementById('fp-yes').onclick = () => answerFollowup(idx, true);
+  document.getElementById('fp-no').onclick  = () => answerFollowup(idx, false);
+
+  const popup = document.getElementById('followup-popup');
+  if (popup) popup.style.display = 'block';
+  playWellnessSound();
+}
+
+function getCompanionMsg() {
+  // Priority: smart followup pending
+  const f = getSmartFollowup();
+  if (f) {
+    setTimeout(checkFollowupPopup, 2000);
+    const questions = {
+      reminder: `Oye, ¿recuerdas «${f.name}»? Tengo una pregunta para ti sobre eso 🔔`,
+      task:     `¿Cómo vas con la tarea «${f.name}»? Quiero saber si ya la resolviste ✅`,
+      project:  `¿Cómo va «${f.name}»? Cuéntame cómo has avanzado 📋`
+    };
+    return questions[f.type] || `Tengo una pregunta sobre «${f.name}» para ti`;
+  }
+
+  const h = new Date().getHours();
+  let pool;
+  if (h >= 5 && h < 12)       pool = COMPANION_MSGS.morning;
+  else if (h >= 12 && h < 18) pool = COMPANION_MSGS.afternoon;
+  else if (h >= 18 && h < 21) pool = COMPANION_MSGS.evening;
+  else                          pool = COMPANION_MSGS.night;
+
+  const today = new Date().toDateString();
+  if (currentMood && lastMoodDate === today) {
+    if (currentMood === '😔') return 'Veo que estás cansado. «Él da esfuerzo al cansado» — Is 40:29. Tómate una pausa.';
+    if (currentMood === '😐') return 'Los días regulares también tienen propósito. ¿Hay algo que pueda ayudarte hoy?';
+    if (currentMood === '🙏') return 'La oración es lo más poderoso. Jehová escucha cada palabra de tu corazón.';
+  }
+
+  if (proyectos.length > 0) {
+    const active = proyectos.filter(p => p.tasks === 0 || p.done < p.tasks);
+    if (active.length > 0 && Math.random() > 0.6) {
+      return `¿Cómo va «${active[0].n}»? Puedes actualizar el progreso en Empresa 📋`;
+    }
+  }
+
+  if (empTasks.filter(t=>!t.done).length > 0 && Math.random() > 0.6) {
+    const pending = empTasks.filter(t=>!t.done);
+    return `Tienes ${pending.length} tarea(s) pendiente(s). ¿Ya comenzaste con «${pending[0].n}»?`;
+  }
+
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function setMood(btn, emoji, response) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMood = emoji;
+  const today = new Date().toDateString();
+  lastMoodDate = today;
+  localStorage.setItem('pt_mood', emoji);
+  localStorage.setItem('pt_mood_date', today);
+  // Update companion message
+  document.getElementById('companion-msg').textContent = response;
+  // Gentle sound
+  try {
+    const ac = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ac.createOscillator(); const g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type='sine'; o.frequency.value=528;
+    g.gain.setValueAtTime(0,ac.currentTime);
+    g.gain.linearRampToValueAtTime(0.1,ac.currentTime+0.05);
+    g.gain.linearRampToValueAtTime(0,ac.currentTime+0.6);
+    o.start(); o.stop(ac.currentTime+0.7);
+  } catch(e){}
+}
+
+function renderProjectFollowup() {
+  const el = document.getElementById('proj-followup');
+  if (!el || proyectos.length === 0) { if(el) el.style.display='none'; return; }
+  el.style.display = 'block';
+  el.className = 'followup-card';
+  el.innerHTML = '<div style="font-size:12px;font-weight:700;color:#2d1b69;margin-bottom:8px">📋 Seguimiento de proyectos</div>' +
+    proyectos.map((p,i) => {
+      const pct = p.tasks > 0 ? Math.round((p.done/p.tasks)*100) : 0;
+      return `<div class="followup-proj">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:#111827">${p.n}</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:2px">${p.done} de ${p.tasks} tareas · ${pct}%</div>
+          <div style="height:4px;background:#f3f4f6;border-radius:99px;margin-top:4px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#7c3aed,#11998e);border-radius:99px"></div>
+          </div>
+        </div>
+        <button onclick="projDone(${i});renderProjectFollowup();" style="background:linear-gradient(135deg,#2d1b69,#11998e);border:none;border-radius:8px;color:#fff;font-size:11px;padding:5px 10px;cursor:pointer;margin-left:10px;flex-shrink:0">+1 tarea</button>
+      </div>`;
+    }).join('');
+}
+
 function renderHoy() {
   const rd = rutina.filter(t=>t.done).length, rt = rutina.length;
   const ed = empTasks.filter(t=>t.done).length, et = empTasks.length;
   const total = rd + ed, all = rt + et;
   const pct = all > 0 ? Math.round((total / all) * 100) : 0;
-  document.getElementById('ring-num').textContent = pct + '%';
-  setRing('ring-circle', pct);
   document.getElementById('s-emp').textContent = ed + '/' + et;
   document.getElementById('s-rut').textContent = rd + '/' + rt;
+  const pb = document.getElementById('prog-bar');
+  if (pb) pb.style.width = pct + '%';
+
+  // Companion message
+  const cmsg = document.getElementById('companion-msg');
+  if (cmsg) cmsg.textContent = getCompanionMsg();
+
+  // Restore mood
+  const today = new Date().toDateString();
+  if (lastMoodDate === today && currentMood) {
+    document.querySelectorAll('.mood-btn').forEach(b => {
+      if (b.textContent.includes(currentMood)) b.classList.add('active');
+    });
+  }
+
+  // Project followup
+  renderProjectFollowup();
 
   const h = new Date().getHours();
   const rbEl = document.getElementById('rest-hoy-wrap');
@@ -1976,9 +2256,11 @@ function addEmp() {
   const n = inp.value.trim();
   if (!n) return;
   const pri = document.getElementById('emp-pri').value;
-  empTasks.unshift({n, cat:'General', pri, status:'pend', done:false});
+  const taskId = Date.now();
+  empTasks.unshift({n, cat:'General', pri, status:'pend', done:false, id:taskId});
   inp.value = '';
   saveData();
+  addFollowup('task', n, taskId);
   renderEmp();
 }
 
@@ -1986,9 +2268,11 @@ function addProj() {
   const inp = document.getElementById('proj-inp');
   const n = inp.value.trim();
   if (!n) return;
-  proyectos.push({n, tasks:0, done:0});
+  const projId = Date.now();
+  proyectos.push({n, tasks:0, done:0, id:projId});
   inp.value = '';
   saveData();
+  addFollowup('project', n, projId);
   renderEmp();
 }
 
@@ -2136,10 +2420,12 @@ function addReminder() {
   if ('Notification' in window && Notification.permission === 'default') {
     Notification.requestPermission();
   }
-  reminders.push({id: Date.now(), n, t, fired: false});
+  const remId = Date.now();
+  reminders.push({id: remId, n, t, fired: false});
   nameInp.value = '';
   timeInp.value = '';
   saveData();
+  addFollowup('reminder', n, remId);
   renderReminders();
   startAlarmCheck();
 }
@@ -2244,6 +2530,8 @@ loadData();
 initHero();
 renderHoy();
 startWellnessCheck();
+renderProjectFollowup();
+setTimeout(checkFollowupPopup, 3000);
 renderBiblia();
 renderReminders();
 startAlarmCheck();
