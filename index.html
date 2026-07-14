@@ -13,6 +13,8 @@
 <link rel="icon" href="icons/icon-192.png">
 <title>Paz Total 🕊️</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" rel="stylesheet">
 <style>
@@ -2519,6 +2521,112 @@ function dismissAlarm() {
 
 // (reminders init handled in main init)
 
+/* ============================================================
+   FIREBASE CLOUD MESSAGING - NOTIFICACIONES REALES
+============================================================ */
+const FB_CONFIG = {
+  apiKey: "AIzaSyALu4HDEYgAqCxdA3p-3XK6q01qXSuiLOo",
+  authDomain: "paz-total-adea6.firebaseapp.com",
+  projectId: "paz-total-adea6",
+  storageBucket: "paz-total-adea6.firebasestorage.app",
+  messagingSenderId: "396671031069",
+  appId: "1:396671031069:web:d0ddd4c6a9cabc8f6833f4"
+};
+
+let fbMessaging = null;
+let fbSwReg = null;
+
+async function initFirebase() {
+  try {
+    if (typeof firebase === 'undefined') { startLocalNotifications(); return; }
+    if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
+    fbMessaging = firebase.messaging();
+
+    // Register Firebase SW
+    if ('serviceWorker' in navigator) {
+      fbSwReg = await navigator.serviceWorker.register('/paz-total/firebase-messaging-sw.js');
+      // Get FCM token
+      try {
+        const token = await fbMessaging.getToken({ serviceWorkerRegistration: fbSwReg });
+        if (token) {
+          localStorage.setItem('fcm_token', token);
+          console.log('✅ Firebase FCM listo');
+        }
+      } catch(e) { console.warn('Token error:', e.message); }
+
+      // Handle foreground messages
+      fbMessaging.onMessage((payload) => {
+        const idx = parseInt(payload.data?.idx || 0);
+        currentWellnessIdx = idx;
+        showWellnessPopup(WELLNESS[idx] || WELLNESS[0]);
+        playWellnessSound();
+      });
+    }
+
+    startLocalNotifications(); // Schedule local timers as backup
+  } catch(e) {
+    console.warn('Firebase error:', e.message);
+    startLocalNotifications();
+  }
+}
+
+function startLocalNotifications() {
+  // Schedule each wellness item using setTimeout
+  WELLNESS.forEach((w, idx) => {
+    scheduleOne(w, idx);
+  });
+}
+
+function scheduleOne(w, idx) {
+  const now = Date.now();
+  const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
+  const delay = Math.max(5000, nextTime - now);
+
+  setTimeout(() => {
+    // Native notification (works when app is in background)
+    if ('Notification' in window && Notification.permission === 'granted') {
+      const n = new Notification('🕊️ ' + w.name, {
+        body: w.sub,
+        icon: '/paz-total/icons/icon-192.png',
+        badge: '/paz-total/icons/icon-192.png',
+        vibrate: [300, 100, 300, 100, 300],
+        tag: 'wellness-' + idx,
+        renotify: true
+      });
+      n.onclick = () => {
+        window.focus();
+        currentWellnessIdx = idx;
+        showWellnessPopup(w);
+        n.close();
+      };
+    }
+    // In-app popup
+    if (document.visibilityState === 'visible') {
+      currentWellnessIdx = idx;
+      showWellnessPopup(w);
+      playWellnessSound();
+    }
+    // Schedule next
+    wellnessTimes[idx] = Date.now() + w.interval * 60000;
+    saveWellnessTimes();
+    scheduleOne(w, idx);
+  }, delay);
+}
+
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) { startLocalNotifications(); return; }
+  if (Notification.permission === 'granted') {
+    initFirebase();
+  } else if (Notification.permission === 'default') {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') initFirebase();
+    else startLocalNotifications();
+  } else {
+    startLocalNotifications();
+  }
+}
+
+/* Service Workers */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
@@ -2529,9 +2637,9 @@ if ('serviceWorker' in navigator) {
 loadData();
 initHero();
 renderHoy();
-startWellnessCheck();
 renderProjectFollowup();
 setTimeout(checkFollowupPopup, 3000);
+requestNotificationPermission();
 renderBiblia();
 renderReminders();
 startAlarmCheck();
