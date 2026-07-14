@@ -2547,7 +2547,7 @@ async function initFirebase() {
       fbSwReg = await navigator.serviceWorker.register('/paz-total/firebase-messaging-sw.js');
       // Get FCM token
       try {
-        const token = await fbMessaging.getToken({ serviceWorkerRegistration: fbSwReg });
+        const token = await fbMessaging.getToken({ serviceWorkerRegistration: fbSwReg, vapidKey: 'BD1-iFJvQOL_Ak6inrgzgTZd7IbyGvDTj6L4ueGVWHo46cjR6iEgRWUujnzIrYpucGHuRtVdH_C_Zdy7t8RuKOc' });
         if (token) {
           localStorage.setItem('fcm_token', token);
           console.log('✅ Firebase FCM listo');
