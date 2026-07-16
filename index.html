@@ -509,6 +509,9 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         <button onclick="refreshMotiv()" style="width:100%;background:transparent;border:1.5px solid #e5e7eb;border-radius:12px;padding:10px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px">
           <i class="ti ti-refresh" aria-hidden="true"></i> Nueva frase
         </button>
+        <button onclick="testNotification()" style="width:100%;background:linear-gradient(135deg,#2d1b69,#11998e);border:none;border-radius:12px;padding:10px;font-size:13px;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;margin-top:6px">
+          🔔 Probar notificación ahora
+        </button>
 
       </div>
 
@@ -2611,6 +2614,135 @@ function scheduleOne(w, idx) {
     saveWellnessTimes();
     scheduleOne(w, idx);
   }, delay);
+}
+
+/* ============================================================
+   SISTEMA DE NOTIFICACIONES - GARANTIZADO
+============================================================ */
+
+let swRegistration = null;
+
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    alert('Tu navegador no soporta notificaciones. Prueba abriendo la app en Chrome.');
+    return;
+  }
+
+  let permission = Notification.permission;
+  if (permission === 'default') {
+    permission = await Notification.requestPermission();
+  }
+
+  if (permission === 'granted') {
+    initNotifications();
+  } else {
+    // Mostrar instrucciones
+    const msg = document.getElementById('companion-msg');
+    if (msg) msg.textContent = 'Para recibir recordatorios: ve a Ajustes → Aplicaciones → Paz Total → Notificaciones → Activar.';
+  }
+}
+
+async function initNotifications() {
+  try {
+    // Registrar service worker
+    if ('serviceWorker' in navigator) {
+      swRegistration = await navigator.serviceWorker.register('/paz-total/sw.js');
+      console.log('✅ SW registrado');
+
+      // Enviar tiempos guardados al SW para programar notificaciones
+      const times = JSON.parse(localStorage.getItem('pt_wellness') || '{}');
+      swRegistration.active?.postMessage({ type: 'SCHEDULE_NOTIFICATIONS', times });
+
+      // Esperar a que el SW esté activo
+      navigator.serviceWorker.ready.then(reg => {
+        reg.active?.postMessage({ type: 'SCHEDULE_NOTIFICATIONS', times });
+      });
+
+      // Escuchar mensajes del SW (cuando la app está abierta)
+      navigator.serviceWorker.addEventListener('message', e => {
+        if (e.data?.type === 'WELLNESS_DUE') {
+          const w = WELLNESS[e.data.idx];
+          if (w) {
+            currentWellnessIdx = e.data.idx;
+            showWellnessPopup(w);
+            playWellnessSound();
+            wellnessTimes[e.data.idx] = Date.now() + w.interval * 60000;
+            saveWellnessTimes();
+          }
+        }
+      });
+    }
+
+    // Backup: también programar localmente con setTimeout
+    startLocalNotifications();
+
+  } catch(e) {
+    console.warn('SW error:', e);
+    startLocalNotifications();
+  }
+}
+
+function startLocalNotifications() {
+  WELLNESS.forEach((w, idx) => scheduleOne(w, idx));
+}
+
+function scheduleOne(w, idx) {
+  const now = Date.now();
+  const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
+  const delay = Math.max(10000, nextTime - now);
+
+  setTimeout(() => {
+    // Notificación nativa del sistema
+    if (Notification.permission === 'granted') {
+      try {
+        const n = new Notification('🕊️ ' + w.name, {
+          body: w.sub,
+          icon: '/paz-total/icons/icon-192.png',
+          badge: '/paz-total/icons/icon-192.png',
+          vibrate: [300, 100, 300],
+          tag: 'wellness-' + idx,
+          renotify: true
+        });
+        n.onclick = () => {
+          window.focus();
+          currentWellnessIdx = idx;
+          showWellnessPopup(w);
+          n.close();
+        };
+      } catch(e) {}
+    }
+
+    // Popup dentro de la app si está abierta
+    if (document.visibilityState === 'visible') {
+      currentWellnessIdx = idx;
+      showWellnessPopup(w);
+      playWellnessSound();
+    }
+
+    // Actualizar tiempo y reprogramar
+    wellnessTimes[idx] = Date.now() + w.interval * 60000;
+    saveWellnessTimes();
+    // Actualizar SW con nuevos tiempos
+    if (swRegistration?.active) {
+      swRegistration.active.postMessage({
+        type: 'SCHEDULE_NOTIFICATIONS',
+        times: wellnessTimes
+      });
+    }
+    scheduleOne(w, idx);
+  }, delay);
+}
+
+// Botón de prueba para verificar que las notificaciones funcionan
+function testNotification() {
+  if (Notification.permission === 'granted') {
+    new Notification('✅ Paz Total - Prueba', {
+      body: 'Las notificaciones funcionan correctamente 🎉',
+      icon: '/paz-total/icons/icon-192.png'
+    });
+  } else {
+    requestNotificationPermission();
+  }
 }
 
 async function requestNotificationPermission() {
