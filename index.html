@@ -31,6 +31,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* ===================== PHONE FRAME ===================== */
 .phone{
   width:100%;max-width:390px;height:100svh;
+  display:grid;
+  grid-template-rows:50vh 50vh;
   position:relative;overflow:hidden;
   display:flex;flex-direction:column;
   background:#0f0c29;
@@ -45,8 +47,12 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* ===================== TOP HERO ===================== */
 .hero{
   position:relative;z-index:2;
-  padding:48px 20px 16px;
+  padding:48px 20px 20px;
   flex-shrink:0;
+  min-height:42svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
 }
 .hero-time{font-size:11px;color:rgba(255,255,255,.75);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
 .hero-greeting{font-size:28px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:6px;text-shadow:0 1px 4px rgba(0,0,0,.3)}
@@ -391,7 +397,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   </div>
 
   <!-- INSTALL BANNER -->
-  <div class="install-banner" id="install-banner" style="display:none">
+  <div class="install-banner" id="install-banner" style="display:none;position:absolute;top:0;left:0;right:0;z-index:99">
     <i class="ti ti-download" style="font-size:20px;color:#a78bfa;flex-shrink:0" aria-hidden="true"></i>
     <div class="install-txt">Instala esta app en tu celular para usarla sin internet</div>
     <button class="install-btn" id="install-btn">Instalar</button>
@@ -422,7 +428,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
 
                 <!-- COMPAÑERO ESPIRITUAL -->
-        <div style="margin:0 16px 12px;background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px;position:relative;overflow:hidden">
+        <div style="margin:0 0 12px;background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px;position:relative;overflow:hidden">
           <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
           <div style="position:absolute;bottom:-15px;left:10px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
@@ -454,7 +460,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- VERSÍCULO Y MÚSICA -->
-        <div style="margin:0 16px 12px;display:grid;grid-template-columns:1fr;gap:8px">
+        <div style="margin:0 0 12px;display:grid;grid-template-columns:1fr;gap:8px">
           <!-- Versículo -->
           <div style="background:linear-gradient(135deg,#1e1b4b,#0f4c75);border-radius:16px;padding:12px 14px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -541,7 +547,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <div id="s-empresa" class="sec" role="tabpanel">
 
         <!-- HEADER EMPRESA -->
-        <div style="margin:0 16px 16px;background:linear-gradient(135deg,#1e1b4b 0%,#4c1d95 50%,#2d1b69 100%);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(45,27,105,.35)">
+        <div style="margin:0 0 16px;background:linear-gradient(135deg,#1e1b4b 0%,#4c1d95 50%,#2d1b69 100%);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(45,27,105,.35)">
           <div style="position:absolute;top:-20px;right:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
           <div style="display:flex;align-items:center;gap:12px;position:relative;z-index:1">
             <div style="width:46px;height:46px;border-radius:14px;background:rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
@@ -555,14 +561,14 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- RECORDATORIOS -->
-        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+        <div style="margin:0 0 8px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(217,119,6,.25)">
             <i class="ti ti-bell" style="font-size:14px;color:#d97706"></i>
           </div>
           <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Recordatorios</div>
         </div>
         <div id="rem-list" style="padding:0 16px"></div>
-        <div style="margin:0 16px 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+        <div style="margin:0 0 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
           <i class="ti ti-bell-plus" style="font-size:18px;color:#d97706;flex-shrink:0"></i>
           <input class="add-inp" id="rem-inp" placeholder="Nombre del recordatorio…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
           <input class="add-inp" id="rem-time" type="time" style="border:none;background:#f9fafb;border-radius:8px;padding:4px 8px;font-size:12px;color:#374151;outline:none">
@@ -572,14 +578,14 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- PROYECTOS -->
-        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+        <div style="margin:0 0 8px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(124,58,237,.2)">
             <i class="ti ti-folder" style="font-size:14px;color:#7c3aed"></i>
           </div>
           <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Proyectos activos</div>
         </div>
         <div id="proj-list" style="padding:0 16px"></div>
-        <div style="margin:0 16px 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+        <div style="margin:0 0 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
           <i class="ti ti-folder-plus" style="font-size:18px;color:#7c3aed;flex-shrink:0"></i>
           <input class="add-inp" id="proj-inp" placeholder="Nombre del proyecto…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
           <button onclick="addProj()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
@@ -588,13 +594,13 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- KANBAN -->
-        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+        <div style="margin:0 0 8px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(5,150,105,.2)">
             <i class="ti ti-layout-kanban" style="font-size:14px;color:#059669"></i>
           </div>
           <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Tablero Kanban</div>
         </div>
-        <div style="margin:0 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="margin:0 0 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <div style="background:#fff;border-radius:14px;padding:12px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.04)">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
               <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
@@ -626,14 +632,14 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- TAREAS -->
-        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+        <div style="margin:0 0 8px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(37,99,235,.2)">
             <i class="ti ti-checklist" style="font-size:14px;color:#2563eb"></i>
           </div>
           <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Lista de tareas</div>
         </div>
         <div id="emp-list" style="padding:0 16px"></div>
-        <div style="margin:0 16px 20px;background:#fff;border-radius:14px;padding:10px 12px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center">
+        <div style="margin:0 0 20px;background:#fff;border-radius:14px;padding:10px 12px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center">
           <i class="ti ti-plus-circle" style="font-size:18px;color:#2563eb;flex-shrink:0"></i>
           <input class="add-inp" id="emp-inp" placeholder="Nueva tarea…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
           <select id="emp-pri" style="border:none;background:#f9fafb;border-radius:8px;padding:4px 8px;font-size:12px;color:#374151;outline:none;cursor:pointer">
@@ -652,7 +658,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <div id="s-rutina" class="sec" role="tabpanel">
 
         <!-- HEADER RUTINA -->
-        <div style="margin:0 16px 14px;background:linear-gradient(135deg,#4c1d95,#065f46);border-radius:20px;padding:20px;position:relative;overflow:hidden">
+        <div style="margin:0 0 14px;background:linear-gradient(135deg,#4c1d95,#065f46);border-radius:20px;padding:20px;position:relative;overflow:hidden">
           <div style="position:absolute;top:-25px;right:-25px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
           <div style="position:absolute;bottom:-20px;left:15px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
           <div style="display:flex;align-items:center;gap:16px;position:relative;z-index:1">
@@ -687,7 +693,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- VERSÍCULO MOTIVACIONAL -->
-        <div style="margin:0 16px 12px;background:#fef3c7;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid #fde68a">
+        <div style="margin:0 0 12px;background:#fef3c7;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid #fde68a">
           <div style="font-size:22px;flex-shrink:0">☕</div>
           <div>
             <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:2px">Pausa activa cada 60 min</div>
@@ -711,7 +717,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <div id="s-biblia" class="sec" role="tabpanel">
 
         <!-- HEADER BIBLIA -->
-        <div style="margin:0 16px 14px;background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(6,79,59,.35)">
+        <div style="margin:0 0 14px;background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(6,79,59,.35)">
           <div style="position:absolute;top:-25px;right:-25px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
           <div style="position:absolute;bottom:-15px;left:10px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
           <div style="display:flex;align-items:center;gap:14px;position:relative;z-index:1;margin-bottom:14px">
@@ -731,7 +737,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         </div>
 
         <!-- QUICK LINKS -->
-        <div style="margin:0 16px 6px;display:flex;align-items:center;gap:10px">
+        <div style="margin:0 0 6px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(5,150,105,.2)">
             <i class="ti ti-bolt" style="font-size:14px;color:#059669"></i>
           </div>
@@ -812,24 +818,6 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
     </div><!-- end .scroll -->
   </div><!-- end .panel -->
-
-  <!-- WELLNESS POPUP -->
-  <div id="wellness-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:50;animation:slideUp .35s ease">
-    <div id="wellness-popup-inner" style="background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.4)">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div id="wp-icon" style="font-size:32px;flex-shrink:0">💧</div>
-        <div style="flex:1">
-          <div id="wp-name" style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px">Toma agua</div>
-          <div id="wp-sub" style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.4">Tus riñones te lo agradecerán</div>
-        </div>
-        <button onclick="dismissWellness()" style="background:rgba(255,255,255,.2);border:none;border-radius:99px;width:28px;height:28px;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button onclick="doneWellness()" style="flex:1;background:rgba(255,255,255,.95);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:600;color:#2d1b69;cursor:pointer">✓ Hecho</button>
-        <button onclick="snoozeWellnessPopup()" style="flex:1;background:rgba(255,255,255,.2);border:none;border-radius:10px;padding:9px;font-size:13px;font-weight:500;color:#fff;cursor:pointer">⏰ En 10 min</button>
-      </div>
-    </div>
-  </div>
 
   <!-- WELLNESS POPUP FLOTANTE CON SEGUIMIENTO -->
   <div id="wellness-popup" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;z-index:50;animation:slideUp .35s ease">
@@ -1531,6 +1519,11 @@ function drawSky() {
   const isDawn = (pal.phase === 'dawn' || pal.phase === 'morning');
   const isGolden = (pal.phase === 'golden' || pal.phase === 'dusk');
 
+  // Sun-only color override: orange from 4:50-5:00pm and 5:00-6:00am
+  const _now = new Date();
+  const _hDec = _now.getHours() + _now.getMinutes() / 60;
+  const sunOrangeWindow = (_hDec >= 16 + 50/60 && _hDec < 17) || (_hDec >= 5 && _hDec < 6);
+
   // ── Background ─────────────────────────────────────────────
   const grad = ctx2d.createLinearGradient(0, 0, 0, H);
   grad.addColorStop(0, rgb(pal.top));
@@ -1593,7 +1586,7 @@ function drawSky() {
 
     // Main body gradient
     const sb = ctx2d.createRadialGradient(sx-sr*0.3,sy-sr*0.3,sr*0.05,sx,sy,sr);
-    if (isDay) {
+    if (isDay && !sunOrangeWindow) {
       sb.addColorStop(0,  'rgba(255,255,240,1)');
       sb.addColorStop(0.3,`rgba(255,245,120,${pal.sunOp})`);
       sb.addColorStop(0.7,`rgba(255,210,40,${pal.sunOp})`);
@@ -2670,7 +2663,106 @@ function dismissAlarm() {
 // (reminders init handled in main init)
 
 /* ============================================================
-   FIREBASE CLOUD MESSAGING - NOTIFICACIONES REALES
+   SISTEMA DE BIENESTAR (WELLNESS) - recordatorios recurrentes
+============================================================ */
+const WELLNESS = [
+  { icon:'💧', name:'Toma agua', sub:'Tus riñones te lo agradecerán. ¡Hidrátate!', interval: 60 },
+  { icon:'🧘', name:'Pausa activa', sub:'Levántate, estira y respira 5 minutos', interval: 90 },
+  { icon:'📞', name:'Llama a tu familia', sub:'Un momento de conexión hace bien al alma', interval: 480 },
+  { icon:'🌿', name:'Sal a caminar', sub:'10 minutos al aire libre renueva tu energía', interval: 240 },
+  { icon:'🙏', name:'Momento de oración', sub:'Detente un momento y habla con Jehová', interval: 180 },
+  { icon:'😌', name:'Respira profundo', sub:'3 respiraciones lentas aclaran la mente', interval: 45 },
+  { icon:'🍽️', name:'Hora de comer', sub:'Nutre tu cuerpo, es templo de Dios', interval: 360 },
+  { icon:'👁️', name:'Descansa la vista', sub:'Mira a lo lejos 20 segundos', interval: 30 },
+  { icon:'💪', name:'Toma tu vitamina', sub:'No olvides tu suplemento diario', interval: 1440 },
+  { icon:'😴', name:'Prepárate para descansar', sub:'Tu cuerpo necesita recuperarse', interval: 720 }
+];
+
+let wellnessTimes = JSON.parse(localStorage.getItem('pt_wellness') || '{}');
+let currentWellnessIdx = 0;
+
+function saveWellnessTimes() {
+  localStorage.setItem('pt_wellness', JSON.stringify(wellnessTimes));
+}
+
+function showWellnessPopup(w) {
+  const iconEl = document.getElementById('wp-icon');
+  const nameEl = document.getElementById('wp-name');
+  const subEl  = document.getElementById('wp-sub');
+  if (iconEl) iconEl.textContent = w.icon;
+  if (nameEl) nameEl.textContent = w.name;
+  if (subEl)  subEl.textContent  = w.sub;
+  const p1 = document.getElementById('wp-phase1');
+  const p2 = document.getElementById('wp-phase2');
+  const p3 = document.getElementById('wp-phase3');
+  if (p1) p1.style.display = 'block';
+  if (p2) p2.style.display = 'none';
+  if (p3) p3.style.display = 'none';
+  const pop = document.getElementById('wellness-popup');
+  if (pop) pop.style.display = 'block';
+}
+
+function dismissWellness() {
+  const pop = document.getElementById('wellness-popup');
+  if (pop) pop.style.display = 'none';
+}
+
+function wellnessSnooze() {
+  wellnessTimes[currentWellnessIdx] = Date.now() + 10 * 60000;
+  saveWellnessTimes();
+  dismissWellness();
+}
+
+function wellnessDone() {
+  const w = WELLNESS[currentWellnessIdx];
+  const fIcon = document.getElementById('wp-followup-icon');
+  const fQ    = document.getElementById('wp-followup-q');
+  if (fIcon) fIcon.textContent = w.icon;
+  if (fQ)    fQ.textContent = '¿Pudiste hacerlo?';
+  const p1 = document.getElementById('wp-phase1');
+  const p2 = document.getElementById('wp-phase2');
+  if (p1) p1.style.display = 'none';
+  if (p2) p2.style.display = 'block';
+}
+
+function wellnessConfirm(done) {
+  const finalIcon = document.getElementById('wp-final-icon');
+  const finalMsg  = document.getElementById('wp-final-msg');
+  if (finalIcon) finalIcon.textContent = done ? '🎉' : '💙';
+  if (finalMsg)  finalMsg.textContent = done
+    ? '¡Bien hecho! Cuidar tu cuerpo también honra a Dios.'
+    : 'No pasa nada, te lo recuerdo pronto. Un paso a la vez.';
+  const p2 = document.getElementById('wp-phase2');
+  const p3 = document.getElementById('wp-phase3');
+  if (p2) p2.style.display = 'none';
+  if (p3) p3.style.display = 'block';
+  if (!done) {
+    wellnessTimes[currentWellnessIdx] = Date.now() + 10 * 60000;
+    saveWellnessTimes();
+  }
+}
+
+function closeWellnessPopup() {
+  dismissWellness();
+}
+
+function playWellnessSound() {
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(); const g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = 'sine'; o.frequency.value = 740;
+    g.gain.setValueAtTime(0, ac.currentTime);
+    g.gain.linearRampToValueAtTime(0.25, ac.currentTime + 0.05);
+    g.gain.linearRampToValueAtTime(0, ac.currentTime + 0.5);
+    o.start(); o.stop(ac.currentTime + 0.55);
+  } catch(e) {}
+}
+
+/* ============================================================
+   FIREBASE CLOUD MESSAGING - preparado para push real (requiere
+   un backend/cron que llame a la API de FCM; sin eso, esta parte
+   solo obtiene el token pero no dispara nada por sí sola)
 ============================================================ */
 const FB_CONFIG = {
   apiKey: "AIzaSyALu4HDEYgAqCxdA3p-3XK6q01qXSuiLOo",
@@ -2682,90 +2774,103 @@ const FB_CONFIG = {
 };
 
 let fbMessaging = null;
-let fbSwReg = null;
 
-async function initFirebase() {
+async function initFirebase(reg) {
   try {
-    if (typeof firebase === 'undefined') { startLocalNotifications(); return; }
+    if (typeof firebase === 'undefined') return;
     if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
     fbMessaging = firebase.messaging();
 
-    // Register Firebase SW
-    if ('serviceWorker' in navigator) {
-      fbSwReg = await navigator.serviceWorker.register('/paz-total/firebase-messaging-sw.js');
-      // Get FCM token
+    // Reutiliza el ÚNICO service worker (sw.js) para pedir el token,
+    // en vez de registrar un segundo SW (eso causaba conflictos de scope
+    // y era una causa real de que las notificaciones fallaran).
+    if (reg) {
       try {
-        const token = await fbMessaging.getToken({ serviceWorkerRegistration: fbSwReg, vapidKey: 'BD1-iFJvQOL_Ak6inrgzgTZd7IbyGvDTj6L4ueGVWHo46cjR6iEgRWUujnzIrYpucGHuRtVdH_C_Zdy7t8RuKOc' });
-        if (token) {
-          localStorage.setItem('fcm_token', token);
-          console.log('✅ Firebase FCM listo');
-        }
-      } catch(e) { console.warn('Token error:', e.message); }
-
-      // Handle foreground messages
-      fbMessaging.onMessage((payload) => {
-        const idx = parseInt(payload.data?.idx || 0);
-        currentWellnessIdx = idx;
-        showWellnessPopup(WELLNESS[idx] || WELLNESS[0]);
-        playWellnessSound();
-      });
+        const token = await fbMessaging.getToken({ serviceWorkerRegistration: reg, vapidKey: 'BD1-iFJvQOL_Ak6inrgzgTZd7IbyGvDTj6L4ueGVWHo46cjR6iEgRWUujnzIrYpucGHuRtVdH_C_Zdy7t8RuKOc' });
+        if (token) localStorage.setItem('fcm_token', token);
+      } catch(e) { console.warn('FCM token error:', e.message); }
     }
 
-    startLocalNotifications(); // Schedule local timers as backup
+    fbMessaging.onMessage((payload) => {
+      const idx = parseInt(payload.data?.idx || 0);
+      currentWellnessIdx = idx;
+      showWellnessPopup(WELLNESS[idx] || WELLNESS[0]);
+      playWellnessSound();
+    });
   } catch(e) {
     console.warn('Firebase error:', e.message);
-    startLocalNotifications();
   }
 }
 
+/* ============================================================
+   PROGRAMACIÓN LOCAL DE RECORDATORIOS DE BIENESTAR
+   (funciona mientras la app está abierta o recién en segundo
+   plano; el navegador puede pausar temporizadores si el celular
+   se bloquea por mucho tiempo o la app queda totalmente cerrada)
+============================================================ */
+let swRegistration = null;
+
 function startLocalNotifications() {
-  // Schedule each wellness item using setTimeout
-  WELLNESS.forEach((w, idx) => {
-    scheduleOne(w, idx);
-  });
+  WELLNESS.forEach((w, idx) => scheduleOne(w, idx));
 }
 
 function scheduleOne(w, idx) {
   const now = Date.now();
   const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
-  const delay = Math.max(5000, nextTime - now);
+  const delay = Math.max(10000, nextTime - now);
 
-  setTimeout(() => {
-    // Native notification (works when app is in background)
-    if ('Notification' in window && Notification.permission === 'granted') {
-      const n = new Notification('🕊️ ' + w.name, {
-        body: w.sub,
-        icon: '/paz-total/icons/icon-192.png',
-        badge: '/paz-total/icons/icon-192.png',
-        vibrate: [300, 100, 300, 100, 300],
-        tag: 'wellness-' + idx,
-        renotify: true
-      });
-      n.onclick = () => {
-        window.focus();
-        currentWellnessIdx = idx;
-        showWellnessPopup(w);
-        n.close();
-      };
+  setTimeout(async () => {
+    if (Notification.permission === 'granted') {
+      try {
+        const reg = swRegistration || await navigator.serviceWorker.ready;
+        await reg.showNotification('🕊️ ' + w.name, {
+          body: w.sub,
+          icon: '/paz-total/icons/icon-192.png',
+          badge: '/paz-total/icons/icon-192.png',
+          vibrate: [400, 100, 400, 100, 400],
+          tag: 'wellness-' + idx,
+          renotify: true,
+          requireInteraction: false,
+          data: { idx: idx, url: '/paz-total/' }
+        });
+      } catch(e) {
+        try {
+          new Notification('🕊️ ' + w.name, { body: w.sub, tag: 'wellness-' + idx, renotify: true });
+        } catch(e2) {}
+      }
     }
-    // In-app popup
+
     if (document.visibilityState === 'visible') {
       currentWellnessIdx = idx;
       showWellnessPopup(w);
       playWellnessSound();
     }
-    // Schedule next
+
     wellnessTimes[idx] = Date.now() + w.interval * 60000;
     saveWellnessTimes();
     scheduleOne(w, idx);
   }, delay);
 }
 
-/* ============================================================
-   SISTEMA DE NOTIFICACIONES - GARANTIZADO
-============================================================ */
-
-let swRegistration = null;
+async function testNotification() {
+  if (Notification.permission === 'granted') {
+    try {
+      const reg = swRegistration || await navigator.serviceWorker.ready;
+      await reg.showNotification('🕊️ Paz Total', {
+        body: '¡Las notificaciones funcionan! Llegará así cada recordatorio 🎉',
+        icon: '/paz-total/icons/icon-192.png',
+        badge: '/paz-total/icons/icon-192.png',
+        vibrate: [400, 100, 400],
+        tag: 'test-notif',
+        renotify: true
+      });
+    } catch(e) {
+      new Notification('🕊️ Paz Total', { body: '¡Las notificaciones funcionan! 🎉' });
+    }
+  } else {
+    requestNotificationPermission();
+  }
+}
 
 async function requestNotificationPermission() {
   if (!('Notification' in window)) {
@@ -2778,147 +2883,23 @@ async function requestNotificationPermission() {
     permission = await Notification.requestPermission();
   }
 
-  if (permission === 'granted') {
-    initNotifications();
-  } else {
-    // Mostrar instrucciones
+  if (permission !== 'granted') {
     const msg = document.getElementById('companion-msg');
     if (msg) msg.textContent = 'Para recibir recordatorios: ve a Ajustes → Aplicaciones → Paz Total → Notificaciones → Activar.';
+    return;
   }
-}
 
-async function initNotifications() {
   try {
-    // Registrar service worker
     if ('serviceWorker' in navigator) {
-      swRegistration = await navigator.serviceWorker.register('/paz-total/sw.js');
-      console.log('✅ SW registrado');
-
-      // Enviar tiempos guardados al SW para programar notificaciones
-      const times = JSON.parse(localStorage.getItem('pt_wellness') || '{}');
-      swRegistration.active?.postMessage({ type: 'SCHEDULE_NOTIFICATIONS', times });
-
-      // Esperar a que el SW esté activo
-      navigator.serviceWorker.ready.then(reg => {
-        reg.active?.postMessage({ type: 'SCHEDULE_NOTIFICATIONS', times });
-      });
-
-      // Escuchar mensajes del SW (cuando la app está abierta)
-      navigator.serviceWorker.addEventListener('message', e => {
-        if (e.data?.type === 'WELLNESS_DUE') {
-          const w = WELLNESS[e.data.idx];
-          if (w) {
-            currentWellnessIdx = e.data.idx;
-            showWellnessPopup(w);
-            playWellnessSound();
-            wellnessTimes[e.data.idx] = Date.now() + w.interval * 60000;
-            saveWellnessTimes();
-          }
-        }
-      });
+      swRegistration = await navigator.serviceWorker.register('sw.js');
+      await navigator.serviceWorker.ready;
     }
-
-    // Backup: también programar localmente con setTimeout
-    startLocalNotifications();
-
   } catch(e) {
     console.warn('SW error:', e);
-    startLocalNotifications();
   }
-}
 
-function startLocalNotifications() {
-  WELLNESS.forEach((w, idx) => scheduleOne(w, idx));
-}
-
-function scheduleOne(w, idx) {
-  const now = Date.now();
-  const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
-  const delay = Math.max(10000, nextTime - now);
-
-  setTimeout(async () => {
-    // Usar Service Worker para mostrar notificación en barra del sistema
-    if (Notification.permission === 'granted') {
-      try {
-        const reg = await navigator.serviceWorker.ready;
-        // showNotification del SW aparece en la barra de notificaciones del celular
-        await reg.showNotification('🕊️ ' + w.name, {
-          body: w.sub,
-          icon: '/paz-total/icons/icon-192.png',
-          badge: '/paz-total/icons/icon-192.png',
-          vibrate: [400, 100, 400, 100, 400],
-          tag: 'wellness-' + idx,
-          renotify: true,
-          requireInteraction: false,
-          data: { idx: idx, url: '/paz-total/' }
-        });
-      } catch(e) {
-        // Fallback
-        try {
-          new Notification('🕊️ ' + w.name, {
-            body: w.sub,
-            icon: '/paz-total/icons/icon-192.png',
-            tag: 'wellness-' + idx,
-            renotify: true
-          });
-        } catch(e2) {}
-      }
-    }
-
-    // Popup dentro de la app si está visible
-    if (document.visibilityState === 'visible') {
-      currentWellnessIdx = idx;
-      showWellnessPopup(w);
-      playWellnessSound();
-    }
-
-    // Actualizar tiempo y reprogramar
-    wellnessTimes[idx] = Date.now() + w.interval * 60000;
-    saveWellnessTimes();
-    scheduleOne(w, idx);
-  }, delay);
-}
-
-// Botón de prueba para verificar que las notificaciones funcionan
-async function testNotification() {
-  if (Notification.permission === 'granted') {
-    try {
-      const reg = await navigator.serviceWorker.ready;
-      await reg.showNotification('🕊️ Paz Total', {
-        body: '¡Las notificaciones funcionan! Llegará así cada recordatorio 🎉',
-        icon: '/paz-total/icons/icon-192.png',
-        badge: '/paz-total/icons/icon-192.png',
-        vibrate: [400, 100, 400],
-        tag: 'test-notif',
-        renotify: true
-      });
-    } catch(e) {
-      new Notification('🕊️ Paz Total', {
-        body: '¡Las notificaciones funcionan! 🎉',
-        icon: '/paz-total/icons/icon-192.png'
-      });
-    }
-  } else {
-    requestNotificationPermission();
-  }
-}
-
-async function requestNotificationPermission() {
-  if (!('Notification' in window)) { startLocalNotifications(); return; }
-  if (Notification.permission === 'granted') {
-    initFirebase();
-  } else if (Notification.permission === 'default') {
-    const perm = await Notification.requestPermission();
-    if (perm === 'granted') initFirebase();
-    else startLocalNotifications();
-  } else {
-    startLocalNotifications();
-  }
-}
-
-/* Service Workers */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  initFirebase(swRegistration);
+  startLocalNotifications();
 }
 
 /* ============================================================

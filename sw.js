@@ -1,10 +1,28 @@
 // ============================================================
-// PAZ TOTAL - SERVICE WORKER v28
-// Notificaciones programadas sin servidor externo
+// PAZ TOTAL - SERVICE WORKER v29
+// ============================================================
+// IMPORTANTE: este service worker YA NO programa recordatorios
+// con setTimeout internamente. Los navegadores apagan (terminan)
+// el service worker tras ~30s sin actividad, así que un setTimeout
+// de horas nunca llega a dispararse aquí de forma confiable — es
+// una limitación del navegador, no del código. La programación
+// de recordatorios ahora vive en index.html (setTimeout de página,
+// funciona mientras la app está abierta/reciente en segundo plano).
+//
+// Este archivo se encarga de lo que SÍ puede hacer de forma
+// confiable: mostrar la notificación en la barra del sistema
+// (showNotification), reaccionar al clic, y recibir pushes reales
+// de Firebase Cloud Messaging (lo único que puede despertar la app
+// aunque esté completamente cerrada — pero requiere que un backend
+// externo llame a la API de FCM; sin eso, esta parte queda lista
+// pero inactiva).
 // ============================================================
 
-const CACHE = 'paz-total-v28';
+const CACHE = 'paz-total-v29';
 
+// Debe coincidir EXACTO (mismo orden, mismos índices) con el
+// arreglo WELLNESS de index.html, porque los mensajes de Firebase
+// solo mandan el índice (idx), no el contenido.
 const WELLNESS = [
   { icon:'💧', name:'Toma agua', sub:'Tus riñones te lo agradecerán. ¡Hidrátate!', interval: 60 },
   { icon:'🧘', name:'Pausa activa', sub:'Levántate, estira y respira 5 minutos', interval: 90 },
@@ -18,7 +36,6 @@ const WELLNESS = [
   { icon:'😴', name:'Prepárate para descansar', sub:'Tu cuerpo necesita recuperarse', interval: 720 },
 ];
 
-// Install
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
@@ -27,44 +44,15 @@ self.addEventListener('activate', e => {
   e.waitUntil(clients.claim());
 });
 
-// Manejar mensajes desde la app
+// Mensajes desde la app (solo prueba manual; ya no programamos
+// recordatorios de largo plazo aquí — ver nota arriba)
 self.addEventListener('message', e => {
-  if (e.data && e.data.type === 'SCHEDULE_NOTIFICATIONS') {
-    scheduleAll(e.data.times || {});
-  }
   if (e.data && e.data.type === 'TEST_NOTIFICATION') {
     showNotification('🕊️ Paz Total', 'Las notificaciones funcionan correctamente ✅', '🕊️');
   }
 });
 
-function scheduleAll(savedTimes) {
-  const now = Date.now();
-  WELLNESS.forEach((w, i) => {
-    const nextTime = savedTimes[i] ? parseInt(savedTimes[i]) : now + w.interval * 60000;
-    const delay = Math.max(5000, nextTime - now);
-    setTimeout(() => fireNotification(w, i, savedTimes), delay);
-  });
-}
-
-function fireNotification(w, idx, savedTimes) {
-  showNotification(w.icon + ' ' + w.name, w.sub, w.icon);
-  // Notify the app to update times
-  const newNext = Date.now() + w.interval * 60000;
-  // Schedule next occurrence
-  setTimeout(() => fireNotification(w, idx, savedTimes), w.interval * 60000);
-  // Tell all open clients
-  clients.matchAll().then(cs => {
-    cs.forEach(c => c.postMessage({
-      type: 'WELLNESS_DUE',
-      idx: idx,
-      name: w.name,
-      sub: w.sub,
-      icon: w.icon
-    }));
-  });
-}
-
-function showNotification(title, body, icon) {
+function showNotification(title, body, icon, idx) {
   const options = {
     body: body,
     icon: '/paz-total/icons/icon-192.png',
@@ -72,12 +60,14 @@ function showNotification(title, body, icon) {
     vibrate: [300, 100, 300, 100, 300],
     requireInteraction: false,
     silent: false,
-    tag: 'paz-total-' + Date.now(),
+    tag: 'paz-total-' + (idx !== undefined ? idx : Date.now()),
+    renotify: true,
+    data: { idx: idx, url: '/paz-total/' }
   };
   self.registration.showNotification(title, options);
 }
 
-// Manejar click en notificación
+// Clic en la notificación → abre o enfoca la app
 self.addEventListener('notificationclick', e => {
   e.notification.close();
   e.waitUntil(
@@ -91,7 +81,9 @@ self.addEventListener('notificationclick', e => {
   );
 });
 
-// Firebase background messages
+// Firebase Cloud Messaging - push en segundo plano
+// (solo se dispara si un backend externo envía un push real vía
+// la API de FCM; obtener el token no es suficiente por sí solo)
 try {
   importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
   importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
@@ -106,8 +98,9 @@ try {
 
   const messaging = firebase.messaging();
   messaging.onBackgroundMessage(payload => {
-    const { title, body } = payload.notification || {};
-    showNotification(title || '🕊️ Paz Total', body || 'Tienes un recordatorio', '🕊️');
+    const idx = parseInt(payload.data?.idx || 0);
+    const w = WELLNESS[idx] || { icon:'🕊️', name:'Paz Total', sub:'Tienes un recordatorio' };
+    showNotification(w.icon + ' ' + w.name, w.sub, w.icon, idx);
   });
 } catch(e) {
   // Firebase no disponible, solo notificaciones locales
