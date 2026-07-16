@@ -71,27 +71,27 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* MUSIC PLAYER */
 .music-player{
   position:relative;z-index:2;
-  margin:0 16px 10px;
-  background:rgba(15,10,50,.6);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:18px;padding:12px 14px;
+  margin:0 16px 8px;
+  background:rgba(15,10,50,.55);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;padding:6px 10px;
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   flex-shrink:0;
 }
-.mp-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.mp-icon{width:40px;height:40px;border-radius:10px;background:rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.mp-icon i{font-size:20px;color:#ddd6fe}
+.mp-top{display:flex;align-items:center;gap:8px;margin-bottom:0}
+.mp-icon{width:28px;height:28px;border-radius:7px;background:rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mp-icon i{font-size:14px;color:#ddd6fe}
 .mp-info{flex:1;min-width:0}
-.mp-title{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mp-artist{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px}
+.mp-title{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-artist{font-size:10px;color:rgba(255,255,255,.55);margin-top:0}
 .mp-controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .mp-ctrl{background:transparent;border:none;cursor:pointer;color:rgba(255,255,255,.75);padding:4px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.mp-ctrl i{font-size:22px}
-.mp-ctrl.play-btn{width:38px;height:38px;border-radius:50%;background:rgba(167,139,250,.4);border:1px solid rgba(167,139,250,.5)}
-.mp-ctrl.play-btn i{font-size:18px;color:#fff}
+.mp-ctrl i{font-size:18px}
+.mp-ctrl.play-btn{width:30px;height:30px;border-radius:50%;background:rgba(167,139,250,.4);border:1px solid rgba(167,139,250,.5)}
+.mp-ctrl.play-btn i{font-size:14px;color:#fff}
 .mp-ctrl:active{transform:scale(.92)}
-.mp-progress{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.mp-progress{display:flex;align-items:center;gap:8px;margin-top:6px;margin-bottom:4px}
 .mp-time{font-size:10px;color:rgba(255,255,255,.5);min-width:28px}
 .mp-bar{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:99px;cursor:pointer;position:relative}
 .mp-bar-fill{height:100%;background:#a78bfa;border-radius:99px;transition:width .5s linear;pointer-events:none}
@@ -180,7 +180,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 /* MOTIV CARD */
 .motiv-card{
   background:linear-gradient(135deg,#2d1b69 0%,#11998e 100%);
-  border-radius:16px;padding:12px 14px;margin-bottom:10px;
+  border-radius:14px;padding:10px 12px;margin-bottom:8px;
   position:relative;overflow:hidden;
 }
 .motiv-card::before{
@@ -193,8 +193,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
   width:50px;height:50px;border-radius:50%;
   background:rgba(255,255,255,.04);
 }
-.motiv-txt{font-size:14px;color:#fff;line-height:1.6;margin-bottom:6px;position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.3)}
-.motiv-auth{font-size:12px;color:rgba(255,255,255,.8);position:relative;z-index:1;font-weight:500}
+.motiv-txt{font-size:13px;color:#fff;line-height:1.5;margin-bottom:4px;position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.motiv-auth{font-size:11px;color:rgba(255,255,255,.8);position:relative;z-index:1;font-weight:500}
 
 /* REST BANNER */
 .rest-banner{
@@ -398,45 +398,8 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
     <button class="install-close" onclick="document.getElementById('install-banner').style.display='none'">×</button>
   </div>
 
-  <!-- VERSE FLOAT -->
-  <div class="verse-float">
-    <i class="ti ti-book" aria-hidden="true"></i>
-    <div class="verse-txt" id="v-txt"></div>
-    <div class="verse-ref" id="v-ref"></div>
-  </div>
 
-  <!-- MUSIC PLAYER -->
-  <div class="music-player">
-    <div class="mp-top">
-      <div class="mp-icon"><i class="ti ti-music" aria-hidden="true"></i></div>
-      <div class="mp-info">
-        <div class="mp-title" id="mp-title">Instrumental de paz</div>
-        <div class="mp-artist" id="mp-artist">Música relajante</div>
-      </div>
-      <div class="mp-controls">
-        <button class="mp-ctrl" onclick="prevTrack()" aria-label="Anterior"><i class="ti ti-player-skip-back" aria-hidden="true"></i></button>
-        <button class="mp-ctrl play-btn" id="mp-play" onclick="togglePlay()" aria-label="Reproducir">
-          <i class="ti ti-player-play" id="mp-play-icon" aria-hidden="true"></i>
-        </button>
-        <button class="mp-ctrl" onclick="nextTrack()" aria-label="Siguiente"><i class="ti ti-player-skip-forward" aria-hidden="true"></i></button>
-      </div>
-    </div>
-    <div class="mp-progress">
-      <span class="mp-time" id="mp-cur">0:00</span>
-      <div class="mp-bar" onclick="seekTo(event)" aria-label="Progreso">
-        <div class="mp-bar-fill" id="mp-fill" style="width:0%"></div>
-      </div>
-      <span class="mp-time" id="mp-dur">0:00</span>
-    </div>
-    <div class="mp-tracks">
-      <button class="mp-track on" onclick="selectTrack(0,this)"><i class="ti ti-guitar-pick" aria-hidden="true"></i> Instrumental</button>
-      <button class="mp-track" onclick="selectTrack(1,this)"><i class="ti ti-moon" aria-hidden="true"></i> Cuna del alma</button>
-      <button class="mp-track" onclick="selectTrack(2,this)"><i class="ti ti-star" aria-hidden="true"></i> Nana suave</button>
-      <a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank" rel="noopener" class="mp-spotify" aria-label="Abrir Spotify">
-        <i class="ti ti-brand-spotify" aria-hidden="true"></i> Spotify
-      </a>
-    </div>
-  </div>
+
 
 
 
@@ -456,23 +419,82 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
       <!-- HOY -->
       <div id="s-hoy" class="sec on" role="tabpanel">
 
-        <!-- COMPAÑERO ESPIRITUAL -->
-        <div class="companion-card">
-          <div class="companion-avatar">🕊️</div>
-          <div class="companion-body">
-            <div class="companion-name">Tu compañero Paz Total</div>
-            <div class="companion-msg" id="companion-msg">¡Hola! ¿Cómo amaneciste hoy?</div>
+
+
+                <!-- COMPAÑERO ESPIRITUAL -->
+        <div style="margin:0 16px 12px;background:linear-gradient(135deg,#2d1b69,#11998e);border-radius:20px;padding:16px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+          <div style="position:absolute;bottom:-15px;left:10px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+            <div style="width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🕊️</div>
+            <div>
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Tu compañero · Paz Total</div>
+              <div id="companion-msg" style="font-size:13px;color:#fff;line-height:1.45;font-weight:500">¡Hola! ¿Cómo amaneciste hoy?</div>
+            </div>
+          </div>
+          <!-- ESTADO DE ÁNIMO dentro del compañero -->
+          <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">¿Cómo te sientes hoy?</div>
+          <div style="display:flex;gap:6px">
+            <button class="mood-btn" onclick="setMood(this,'😄','¡Qué alegría! Que Jehová bendiga cada momento de tu día 🌟')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;flex:1;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s">
+              <span style="font-size:20px">😄</span><span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Excelente</span>
+            </button>
+            <button class="mood-btn" onclick="setMood(this,'🙂','Me alegra que estés bien. Sigue adelante 💪')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;flex:1;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s">
+              <span style="font-size:20px">🙂</span><span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Bien</span>
+            </button>
+            <button class="mood-btn" onclick="setMood(this,'😐','Los días regulares también tienen propósito 🙏')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;flex:1;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s">
+              <span style="font-size:20px">😐</span><span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Regular</span>
+            </button>
+            <button class="mood-btn" onclick="setMood(this,'😔','«Él da esfuerzo al cansado» — Is 40:29 💙')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;flex:1;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s">
+              <span style="font-size:20px">😔</span><span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Cansado</span>
+            </button>
+            <button class="mood-btn" onclick="setMood(this,'🙏','Jehová escucha cada palabra de tu corazón 🕊️')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;flex:1;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s">
+              <span style="font-size:20px">🙏</span><span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">Orando</span>
+            </button>
           </div>
         </div>
 
-        <!-- ESTADO DE ÁNIMO -->
-        <div class="slbl">¿Cómo te sientes hoy?</div>
-        <div class="mood-row">
-          <button class="mood-btn" onclick="setMood(this,'😄','¡Qué alegría escucharlo! Que Jehová bendiga cada momento de tu día.')">😄<span>Excelente</span></button>
-          <button class="mood-btn" onclick="setMood(this,'🙂','Me alegra que estés bien. Sigue adelante, estoy aquí contigo.')">🙂<span>Bien</span></button>
-          <button class="mood-btn" onclick="setMood(this,'😐','Entiendo. Los días regulares también tienen propósito. ¿Qué te pesa hoy?')">😐<span>Regular</span></button>
-          <button class="mood-btn" onclick="setMood(this,'😔','Recuerda: «Él da esfuerzo al cansado» — Is 40:29. Tómate una pausa.')">😔<span>Cansado</span></button>
-          <button class="mood-btn" onclick="setMood(this,'🙏','Que hermoso. En oración estás más cerca de Jehová. Adelante.')">🙏<span>Orando</span></button>
+        <!-- VERSÍCULO Y MÚSICA -->
+        <div style="margin:0 16px 12px;display:grid;grid-template-columns:1fr;gap:8px">
+          <!-- Versículo -->
+          <div style="background:linear-gradient(135deg,#1e1b4b,#0f4c75);border-radius:16px;padding:12px 14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <div style="width:28px;height:28px;border-radius:8px;background:rgba(165,180,252,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="ti ti-book" style="font-size:14px;color:#a5b4fc"></i>
+              </div>
+              <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.06em">Versículo del día</span>
+            </div>
+            <div id="v-txt" style="font-size:12px;color:#e0e7ff;line-height:1.5;margin-bottom:5px;font-style:italic"></div>
+            <div id="v-ref" style="font-size:10px;color:#a5b4fc;font-weight:700"></div>
+          </div>
+          <!-- Música -->
+          <div class="music-player" style="margin:0;border-radius:16px">
+            <div class="mp-top" onclick="togglePlayer()" style="cursor:pointer;user-select:none">
+              <div class="mp-icon"><i class="ti ti-music" aria-hidden="true"></i></div>
+              <div class="mp-info">
+                <div class="mp-title" id="mp-title">Instrumental de paz</div>
+                <div class="mp-artist">Música relajante · toca para expandir</div>
+              </div>
+              <div class="mp-controls">
+                <button class="mp-ctrl" onclick="event.stopPropagation();prevTrack()" aria-label="Anterior"><i class="ti ti-player-skip-back"></i></button>
+                <button class="mp-ctrl play-btn" id="mp-play" onclick="event.stopPropagation();togglePlay()" aria-label="Reproducir">
+                  <i class="ti ti-player-play" id="mp-play-icon"></i>
+                </button>
+                <button class="mp-ctrl" onclick="event.stopPropagation();nextTrack()" aria-label="Siguiente"><i class="ti ti-player-skip-forward"></i></button>
+              </div>
+            </div>
+            <div id="mp-details" style="display:none;margin-top:8px">
+              <div class="mp-progress">
+                <span class="mp-time" id="mp-cur">0:00</span>
+                <div class="mp-bar" onclick="seekTo(event)"><div class="mp-bar-fill" id="mp-fill" style="width:0%"></div></div>
+                <span class="mp-time" id="mp-dur">0:00</span>
+              </div>
+              <div class="mp-tracks">
+                <button class="mp-track on" onclick="selectTrack(0,this)"><i class="ti ti-guitar-pick"></i> Instrumental</button>
+                <button class="mp-track" onclick="selectTrack(1,this)"><i class="ti ti-moon"></i> Cuna del alma</button>
+                <button class="mp-track" onclick="selectTrack(2,this)"><i class="ti ti-star"></i> Nana suave</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- STATS -->
@@ -502,7 +524,7 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
         <div id="hoy-list"></div>
 
         <!-- MOTIVACION -->
-        <div class="motiv-card" style="margin-top:10px">
+        <div class="motiv-card" style="margin-top:6px;padding:8px 12px">
           <div class="motiv-txt" id="mot-txt"></div>
           <div class="motiv-auth" id="mot-auth"></div>
         </div>
@@ -517,123 +539,204 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
 
       <!-- EMPRESA -->
       <div id="s-empresa" class="sec" role="tabpanel">
-        <div class="slbl">Recordatorios con alarma</div>
-        <div id="rem-list"></div>
-        <div class="rem-add-wrap">
-          <input class="add-inp" id="rem-inp" placeholder="Nombre del recordatorio…" style="flex:1">
-          <input class="add-inp" id="rem-time" type="time" style="max-width:100px">
-          <button class="add-go" onclick="addReminder()" aria-label="Agregar recordatorio">
-            <i class="ti ti-bell" aria-hidden="true"></i>
-          </button>
-        </div>
 
-        <div class="slbl">Proyectos activos</div>
-        <div id="proj-list"></div>
-
-        <div class="slbl">Tablero kanban</div>
-        <div class="kb-grid">
-          <div class="kb-col">
-            <div class="kb-hd"><div class="kb-dot" style="background:#f59e0b"></div>Pendiente</div>
-            <div id="kb-pend"></div>
-          </div>
-          <div class="kb-col">
-            <div class="kb-hd"><div class="kb-dot" style="background:#3b82f6"></div>En curso</div>
-            <div id="kb-prog"></div>
-          </div>
-        </div>
-        <div class="kb-grid">
-          <div class="kb-col">
-            <div class="kb-hd"><div class="kb-dot" style="background:#8b5cf6"></div>Revisión</div>
-            <div id="kb-rev"></div>
-          </div>
-          <div class="kb-col">
-            <div class="kb-hd"><div class="kb-dot" style="background:#10b981"></div>Listo</div>
-            <div id="kb-done"></div>
-          </div>
-        </div>
-
-        <div class="slbl">Lista de tareas</div>
-        <div id="emp-list"></div>
-        <div class="add-wrap">
-          <input class="add-inp" id="emp-inp" placeholder="Nueva tarea de empresa…">
-          <select class="add-sel" id="emp-pri">
-            <option value="alta">Alta</option>
-            <option value="media" selected>Media</option>
-            <option value="baja">Baja</option>
-          </select>
-          <button class="add-go" onclick="addEmp()" aria-label="Agregar tarea">
-            <i class="ti ti-plus" aria-hidden="true"></i>
-          </button>
-        </div>
-
-        <div class="slbl">Nuevo proyecto</div>
-        <div class="add-wrap">
-          <input class="add-inp" id="proj-inp" placeholder="Nombre del proyecto…">
-          <button class="add-go" onclick="addProj()" aria-label="Agregar proyecto">
-            <i class="ti ti-plus" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- RUTINA -->
-      <div id="s-rutina" class="sec" role="tabpanel">
-        <div class="ring-wrap">
-          <div class="ring-outer" aria-label="Progreso de rutina">
-            <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#f3f4f6" stroke-width="9"/>
-              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg2)" stroke-width="9"
-                stroke-linecap="round" stroke-dasharray="314.2" id="rut-circle"
-                style="stroke-dashoffset:314.2;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
-              <defs>
-                <linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#7c3aed"/>
-                  <stop offset="100%" stop-color="#11998e"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="ring-center">
-              <div class="ring-pct" id="rut-num">0%</div>
-              <div class="ring-sub">de tu rutina</div>
+        <!-- HEADER EMPRESA -->
+        <div style="margin:0 16px 16px;background:linear-gradient(135deg,#1e1b4b 0%,#4c1d95 50%,#2d1b69 100%);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(45,27,105,.35)">
+          <div style="position:absolute;top:-20px;right:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
+          <div style="display:flex;align-items:center;gap:12px;position:relative;z-index:1">
+            <div style="width:46px;height:46px;border-radius:14px;background:rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <i class="ti ti-building" style="font-size:22px;color:#a78bfa"></i>
+            </div>
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:2px">Mi Empresa</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.6)">Gestiona tareas, proyectos y recordatorios</div>
             </div>
           </div>
         </div>
 
-        <div class="rest-banner">
-          <i class="ti ti-coffee" aria-hidden="true"></i>
-          <div>
-            <div class="rest-title">Pausa activa cada 60 min</div>
-            <div class="rest-sub">«Estad quietos y conoced que yo soy Dios» — Salmos 46:10</div>
+        <!-- RECORDATORIOS -->
+        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(217,119,6,.25)">
+            <i class="ti ti-bell" style="font-size:14px;color:#d97706"></i>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Recordatorios</div>
+        </div>
+        <div id="rem-list" style="padding:0 16px"></div>
+        <div style="margin:0 16px 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <i class="ti ti-bell-plus" style="font-size:18px;color:#d97706;flex-shrink:0"></i>
+          <input class="add-inp" id="rem-inp" placeholder="Nombre del recordatorio…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
+          <input class="add-inp" id="rem-time" type="time" style="border:none;background:#f9fafb;border-radius:8px;padding:4px 8px;font-size:12px;color:#374151;outline:none">
+          <button onclick="addReminder()" style="background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <i class="ti ti-plus" style="font-size:16px"></i>
+          </button>
+        </div>
+
+        <!-- PROYECTOS -->
+        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(124,58,237,.2)">
+            <i class="ti ti-folder" style="font-size:14px;color:#7c3aed"></i>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Proyectos activos</div>
+        </div>
+        <div id="proj-list" style="padding:0 16px"></div>
+        <div style="margin:0 16px 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <i class="ti ti-folder-plus" style="font-size:18px;color:#7c3aed;flex-shrink:0"></i>
+          <input class="add-inp" id="proj-inp" placeholder="Nombre del proyecto…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
+          <button onclick="addProj()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <i class="ti ti-plus" style="font-size:16px"></i>
+          </button>
+        </div>
+
+        <!-- KANBAN -->
+        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(5,150,105,.2)">
+            <i class="ti ti-layout-kanban" style="font-size:14px;color:#059669"></i>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Tablero Kanban</div>
+        </div>
+        <div style="margin:0 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:#fff;border-radius:14px;padding:12px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+              <div style="font-size:10px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em">Pendiente</div>
+            </div>
+            <div id="kb-pend"></div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:12px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div>
+              <div style="font-size:10px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em">En curso</div>
+            </div>
+            <div id="kb-prog"></div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:12px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#8b5cf6;flex-shrink:0"></div>
+              <div style="font-size:10px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em">Revisión</div>
+            </div>
+            <div id="kb-rev"></div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:12px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0"></div>
+              <div style="font-size:10px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.06em">Listo</div>
+            </div>
+            <div id="kb-done"></div>
           </div>
         </div>
 
-        <div id="rut-list"></div>
-        <div class="add-wrap">
-          <input class="add-inp" id="rut-inp" placeholder="Nuevo hábito…">
-          <button class="add-go" onclick="addRut()" aria-label="Agregar hábito">
-            <i class="ti ti-plus" aria-hidden="true"></i>
+        <!-- TAREAS -->
+        <div style="margin:0 16px 8px;display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(37,99,235,.2)">
+            <i class="ti ti-checklist" style="font-size:14px;color:#2563eb"></i>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Lista de tareas</div>
+        </div>
+        <div id="emp-list" style="padding:0 16px"></div>
+        <div style="margin:0 16px 20px;background:#fff;border-radius:14px;padding:10px 12px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center">
+          <i class="ti ti-plus-circle" style="font-size:18px;color:#2563eb;flex-shrink:0"></i>
+          <input class="add-inp" id="emp-inp" placeholder="Nueva tarea…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
+          <select id="emp-pri" style="border:none;background:#f9fafb;border-radius:8px;padding:4px 8px;font-size:12px;color:#374151;outline:none;cursor:pointer">
+            <option value="alta">🔴 Alta</option>
+            <option value="media" selected>🟡 Media</option>
+            <option value="baja">🟢 Baja</option>
+          </select>
+          <button onclick="addEmp()" style="background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <i class="ti ti-plus" style="font-size:16px"></i>
           </button>
+        </div>
+
+      </div>
+
+      <!-- RUTINA -->
+      <div id="s-rutina" class="sec" role="tabpanel">
+
+        <!-- HEADER RUTINA -->
+        <div style="margin:0 16px 14px;background:linear-gradient(135deg,#4c1d95,#065f46);border-radius:20px;padding:20px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-25px;right:-25px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+          <div style="position:absolute;bottom:-20px;left:15px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+          <div style="display:flex;align-items:center;gap:16px;position:relative;z-index:1">
+            <!-- Ring -->
+            <div style="position:relative;flex-shrink:0">
+              <svg width="90" height="90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="10"/>
+                <circle cx="60" cy="60" r="50" fill="none" stroke="url(#rg2)" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="314.2" id="rut-circle"
+                  style="stroke-dashoffset:314.2;transition:stroke-dashoffset .8s ease"/>
+                <defs>
+                  <linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#a78bfa"/>
+                    <stop offset="100%" stop-color="#34d399"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <div id="rut-num" style="font-size:18px;font-weight:800;color:#fff">0%</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.6);font-weight:600">HOY</div>
+              </div>
+            </div>
+            <!-- Info -->
+            <div style="flex:1">
+              <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px">Mi Rutina</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.5">Construye hábitos que honren a Jehová y cuiden tu cuerpo y mente</div>
+              <div style="margin-top:8px;background:rgba(255,255,255,.1);border-radius:99px;height:5px;overflow:hidden">
+                <div id="rut-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#a78bfa,#34d399);border-radius:99px;transition:width .8s ease"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VERSÍCULO MOTIVACIONAL -->
+        <div style="margin:0 16px 12px;background:#fef3c7;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid #fde68a">
+          <div style="font-size:22px;flex-shrink:0">☕</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:2px">Pausa activa cada 60 min</div>
+            <div style="font-size:11px;color:#b45309;line-height:1.4">«Estad quietos y conoced que yo soy Dios» — Salmos 46:10</div>
+          </div>
+        </div>
+
+        <div id="rut-list" style="padding:0 16px"></div>
+
+        <div style="padding:0 16px;margin-top:8px">
+          <div style="display:flex;gap:8px;background:#f9fafb;border-radius:14px;padding:8px;border:1.5px solid #f3f4f6">
+            <input class="add-inp" id="rut-inp" placeholder="Nuevo hábito…" style="background:transparent;border:none;flex:1;outline:none">
+            <button onclick="addRut()" style="background:linear-gradient(135deg,#7c3aed,#11998e);border:none;border-radius:10px;color:#fff;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+              <i class="ti ti-plus" style="font-size:18px"></i>
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- BIBLIA -->
       <div id="s-biblia" class="sec" role="tabpanel">
 
-        <!-- JW.ORG BIBLE BUTTON -->
-        <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/" target="_blank" rel="noopener" class="jw-btn" aria-label="Abrir Biblia en jw.org">
-          <div class="jw-btn-inner">
-            <div class="jw-btn-left">
-              <div class="jw-btn-icon"><i class="ti ti-book-2" aria-hidden="true"></i></div>
-              <div>
-                <div class="jw-btn-title">Traducción del Nuevo Mundo</div>
-                <div class="jw-btn-sub">Abrir Biblia completa en jw.org</div>
-              </div>
+        <!-- HEADER BIBLIA -->
+        <div style="margin:0 16px 14px;background:linear-gradient(135deg,#064e3b,#065f46,#047857);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(6,79,59,.35)">
+          <div style="position:absolute;top:-25px;right:-25px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+          <div style="position:absolute;bottom:-15px;left:10px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+          <div style="display:flex;align-items:center;gap:14px;position:relative;z-index:1;margin-bottom:14px">
+            <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <i class="ti ti-book-2" style="font-size:24px;color:#fff"></i>
             </div>
-            <i class="ti ti-external-link" style="font-size:18px;color:#0a7a4b;flex-shrink:0" aria-hidden="true"></i>
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:2px">Mi Biblia</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.7)">Traducción del Nuevo Mundo · jw.org</div>
+            </div>
           </div>
-        </a>
+          <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;padding:10px;text-decoration:none;position:relative;z-index:1">
+            <i class="ti ti-book" style="font-size:16px;color:#fff"></i>
+            <span style="font-size:13px;font-weight:600;color:#fff">Abrir Biblia completa</span>
+            <i class="ti ti-external-link" style="font-size:14px;color:rgba(255,255,255,.7)"></i>
+          </a>
+        </div>
 
         <!-- QUICK LINKS -->
-        <div class="slbl">Acceso rápido</div>
+        <div style="margin:0 16px 6px;display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(5,150,105,.2)">
+            <i class="ti ti-bolt" style="font-size:14px;color:#059669"></i>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Acceso rápido</div>
+        </div>
         <div class="jw-links">
           <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/genesis/" target="_blank" rel="noopener" class="jw-link">Génesis</a>
           <a href="https://www.jw.org/es/biblioteca/biblia/biblia-estudio/libros/salmos/" target="_blank" rel="noopener" class="jw-link">Salmos</a>
@@ -1700,8 +1803,8 @@ function initHero() {
 
   const allV = Object.values(VERSES).flat();
   const v = allV[Math.floor(Math.random() * allV.length)];
-  document.getElementById('v-txt').textContent = '\u201C' + v.t + '\u201D';
-  document.getElementById('v-ref').textContent = v.r;
+  const vtx = document.getElementById('v-txt'); if(vtx) vtx.textContent = '\u201C' + v.t + '\u201D';
+  const vrx = document.getElementById('v-ref'); if(vrx) vrx.textContent = v.r;
 }
 
 /* ============================================================
@@ -1812,6 +1915,14 @@ function selectTrack(idx, el) {
 function nextTrack() {
   const next = (trackIdx + 1) % TRACKS.length;
   selectTrack(next, document.querySelectorAll('.mp-track')[next]);
+}
+
+function togglePlayer() {
+  const details = document.getElementById('mp-details');
+  if (!details) return;
+  const isHidden = details.style.display === 'none';
+  details.style.display = isHidden ? 'block' : 'none';
+  localStorage.setItem('mp_open', isHidden ? '1' : '0');
 }
 
 function prevTrack() {
@@ -2213,20 +2324,31 @@ function renderEmp() {
   document.getElementById('proj-list').innerHTML = proyectos.length
     ? proyectos.map((p,i) => {
         const pct = p.tasks > 0 ? Math.round((p.done / p.tasks) * 100) : 0;
-        return `<div class="proj">
-          <div class="proj-top">
-            <span class="proj-name">${p.n}</span>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span class="proj-pct">${pct}%</span>
-              <button onclick="projDone(${i})" style="background:linear-gradient(135deg,#2d1b69,#11998e);border:none;border-radius:6px;color:#fff;font-size:11px;padding:3px 8px;cursor:pointer">+1</button>
-              <button onclick="deleteProj(${i})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:16px"><i class="ti ti-trash"></i></button>
+        const colors = ['#7c3aed','#059669','#2563eb','#d97706','#dc2626'];
+        const color = colors[i % colors.length];
+        return `<div style="background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:10px;background:${color}18;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="ti ti-folder" style="font-size:18px;color:${color}"></i>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:#111827">${p.n}</div>
+                <div style="font-size:11px;color:#9ca3af;margin-top:1px">${p.done} de ${p.tasks} tareas completadas</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div style="font-size:15px;font-weight:800;color:${color}">${pct}%</div>
+              <button onclick="deleteProj(${i})" style="background:#f9fafb;border:none;border-radius:8px;color:#d1d5db;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center"><i class="ti ti-trash" style="font-size:14px"></i></button>
             </div>
           </div>
-          <div class="proj-bar"><div class="proj-fill" style="width:${pct}%"></div></div>
-          <div class="proj-sub">${p.done} de ${p.tasks} tareas · toca +1 al completar una</div>
+          <div style="height:6px;background:#f3f4f6;border-radius:99px;overflow:hidden;margin-bottom:8px">
+            <div style="height:100%;width:${pct}%;background:${color};border-radius:99px;transition:width .6s ease"></div>
+          </div>
+          <button onclick="projDone(${i})" style="width:100%;background:${color}12;border:1.5px solid ${color}30;border-radius:10px;color:${color};font-size:12px;font-weight:600;padding:7px;cursor:pointer">✓ Completé una tarea (+1)</button>
         </div>`;
       }).join('')
-    : '<div class="empty"><i class="ti ti-folder" style="font-size:24px;display:block;margin-bottom:6px"></i>Aún no tienes proyectos. Agrega uno abajo.</div>';
+    : '<div style="text-align:center;padding:16px 0"><div style="font-size:32px;margin-bottom:6px">📁</div><div style="font-size:12px;font-weight:500;color:#9ca3af">Sin proyectos aún</div><div style="font-size:11px;margin-top:2px;color:#d1d5db">Agrega uno abajo</div></div>';
 
   // Kanban
   const cols = {pend:'kb-pend',prog:'kb-prog',rev:'kb-rev',done:'kb-done'};
@@ -2303,16 +2425,20 @@ function renderRut() {
   const pct = rutina.length > 0 ? Math.round((done / rutina.length) * 100) : 0;
   document.getElementById('rut-num').textContent = pct + '%';
   setRing('rut-circle', pct);
+  const rb = document.getElementById('rut-bar');
+  if (rb) rb.style.width = pct + '%';
 
   document.getElementById('rut-list').innerHTML = rutina.length
     ? rutina.map((t, i) => `
-        <div class="task-card ${t.done?'done-card':''}" onclick="toggleRut(${i})">
-          <div class="chk ${t.done?'done':''}">${t.done?'<i class="ti ti-check" aria-hidden="true"></i>':''}</div>
-          <div class="task-body">
-            <div class="task-name ${t.done?'done':''}">${t.n}</div>
-            <div class="task-hint"><i class="ti ti-clock" aria-hidden="true"></i>${t.t}</div>
+        <div onclick="toggleRut(${i})" style="background:${t.done?'linear-gradient(135deg,#f0fdf4,#ecfdf5)':'#fff'};border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;border:1.5px solid ${t.done?'#86efac':'#f3f4f6'};cursor:pointer;transition:all .2s">
+          <div style="width:32px;height:32px;border-radius:10px;background:${t.done?'linear-gradient(135deg,#22c55e,#16a34a)':'#f3f4f6'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s">
+            ${t.done?'<i class="ti ti-check" style="color:#fff;font-size:16px"></i>':'<i class="ti ti-circle" style="color:#d1d5db;font-size:16px"></i>'}
           </div>
-          <i class="ti ${t.ic}" style="color:#d1d5db;font-size:20px" aria-hidden="true"></i>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:${t.done?'#16a34a':'#111827'};text-decoration:${t.done?'line-through':'none'}">${t.n}</div>
+            <div style="font-size:11px;color:#9ca3af;margin-top:2px"><i class="ti ti-clock" style="font-size:11px"></i> ${t.t}</div>
+          </div>
+          <i class="ti ${t.ic}" style="color:${t.done?'#86efac':'#e5e7eb'};font-size:20px"></i>
         </div>`).join('')
     : '<div class="empty"><i class="ti ti-plus-circle" style="font-size:28px;display:block;margin-bottom:8px;color:#a78bfa"></i>Aún no tienes hábitos.<br>Agrega el primero abajo.</div>';
 }
@@ -2339,6 +2465,25 @@ function addRut() {
 /* ============================================================
    BIBLIA
 ============================================================ */
+function renderHobbies() {
+  const el = document.getElementById('hobby-list');
+  if (!el) return;
+  el.innerHTML = hobbies.length
+    ? hobbies.map((h,i) => `
+        <div style="background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;border:1.5px solid #f3f4f6">
+          <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#ede9fe,#d1fae5);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🎯</div>
+          <div style="flex:1;font-size:13px;font-weight:600;color:#111827">${h.n}</div>
+          <button onclick="deleteHobby(${i})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:16px"><i class="ti ti-trash"></i></button>
+        </div>`).join('')
+    : '<div class="empty"><i class="ti ti-palette" style="font-size:24px;display:block;margin-bottom:6px"></i>Agrega tus hobbies y pasatiempos favoritos.</div>';
+}
+
+function deleteHobby(i) {
+  hobbies.splice(i, 1);
+  saveData();
+  renderHobbies();
+}
+
 function renderBiblia() {
   const cats = Object.keys(VERSES);
   document.getElementById('vcat-wrap').innerHTML = cats.map(c =>
@@ -2444,7 +2589,7 @@ function deleteReminder(id) {
 function renderReminders() {
   const el = document.getElementById('rem-list');
   if (!reminders.length) {
-    el.innerHTML = '<div class="empty"><i class="ti ti-bell" style="font-size:24px;display:block;margin-bottom:6px"></i>Sin recordatorios. Agrega uno arriba.</div>';
+    el.innerHTML = '<div style="text-align:center;padding:16px 0;color:#9ca3af"><div style="font-size:32px;margin-bottom:6px">🔔</div><div style="font-size:12px;font-weight:500">Sin recordatorios aún</div><div style="font-size:11px;margin-top:2px;color:#d1d5db">Agrega uno arriba</div></div>';
     return;
   }
   el.innerHTML = reminders.map(r => `
@@ -2691,28 +2836,36 @@ function scheduleOne(w, idx) {
   const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
   const delay = Math.max(10000, nextTime - now);
 
-  setTimeout(() => {
-    // Notificación nativa del sistema
+  setTimeout(async () => {
+    // Usar Service Worker para mostrar notificación en barra del sistema
     if (Notification.permission === 'granted') {
       try {
-        const n = new Notification('🕊️ ' + w.name, {
+        const reg = await navigator.serviceWorker.ready;
+        // showNotification del SW aparece en la barra de notificaciones del celular
+        await reg.showNotification('🕊️ ' + w.name, {
           body: w.sub,
           icon: '/paz-total/icons/icon-192.png',
           badge: '/paz-total/icons/icon-192.png',
-          vibrate: [300, 100, 300],
+          vibrate: [400, 100, 400, 100, 400],
           tag: 'wellness-' + idx,
-          renotify: true
+          renotify: true,
+          requireInteraction: false,
+          data: { idx: idx, url: '/paz-total/' }
         });
-        n.onclick = () => {
-          window.focus();
-          currentWellnessIdx = idx;
-          showWellnessPopup(w);
-          n.close();
-        };
-      } catch(e) {}
+      } catch(e) {
+        // Fallback
+        try {
+          new Notification('🕊️ ' + w.name, {
+            body: w.sub,
+            icon: '/paz-total/icons/icon-192.png',
+            tag: 'wellness-' + idx,
+            renotify: true
+          });
+        } catch(e2) {}
+      }
     }
 
-    // Popup dentro de la app si está abierta
+    // Popup dentro de la app si está visible
     if (document.visibilityState === 'visible') {
       currentWellnessIdx = idx;
       showWellnessPopup(w);
@@ -2722,24 +2875,29 @@ function scheduleOne(w, idx) {
     // Actualizar tiempo y reprogramar
     wellnessTimes[idx] = Date.now() + w.interval * 60000;
     saveWellnessTimes();
-    // Actualizar SW con nuevos tiempos
-    if (swRegistration?.active) {
-      swRegistration.active.postMessage({
-        type: 'SCHEDULE_NOTIFICATIONS',
-        times: wellnessTimes
-      });
-    }
     scheduleOne(w, idx);
   }, delay);
 }
 
 // Botón de prueba para verificar que las notificaciones funcionan
-function testNotification() {
+async function testNotification() {
   if (Notification.permission === 'granted') {
-    new Notification('✅ Paz Total - Prueba', {
-      body: 'Las notificaciones funcionan correctamente 🎉',
-      icon: '/paz-total/icons/icon-192.png'
-    });
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      await reg.showNotification('🕊️ Paz Total', {
+        body: '¡Las notificaciones funcionan! Llegará así cada recordatorio 🎉',
+        icon: '/paz-total/icons/icon-192.png',
+        badge: '/paz-total/icons/icon-192.png',
+        vibrate: [400, 100, 400],
+        tag: 'test-notif',
+        renotify: true
+      });
+    } catch(e) {
+      new Notification('🕊️ Paz Total', {
+        body: '¡Las notificaciones funcionan! 🎉',
+        icon: '/paz-total/icons/icon-192.png'
+      });
+    }
   } else {
     requestNotificationPermission();
   }
