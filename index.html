@@ -2571,12 +2571,25 @@ function addReminder() {
   addFollowup('reminder', n, remId);
   renderReminders();
   startAlarmCheck();
+
+  // Si estamos dentro de la app nativa (AlarmManager real), programa la
+  // alarma del sistema para que suene aunque la app esté cerrada.
+  if (window.AndroidBridge && window.AndroidBridge.scheduleReminder) {
+    const [hh, mm] = t.split(':').map(Number);
+    const trigger = new Date();
+    trigger.setHours(hh, mm, 0, 0);
+    if (trigger.getTime() <= Date.now()) trigger.setDate(trigger.getDate() + 1);
+    window.AndroidBridge.scheduleReminder(remId, n, trigger.getTime());
+  }
 }
 
 function deleteReminder(id) {
   reminders = reminders.filter(r => r.id !== id);
   saveData();
   renderReminders();
+  if (window.AndroidBridge && window.AndroidBridge.cancelReminder) {
+    window.AndroidBridge.cancelReminder(id);
+  }
 }
 
 function renderReminders() {
