@@ -560,21 +560,36 @@ body{background:#0f0c29;display:flex;justify-content:center;align-items:flex-sta
           </div>
         </div>
 
-        <!-- RECORDATORIOS -->
+        <!-- RECORDATORIOS / AGENDA -->
         <div style="margin:0 0 8px;display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(217,119,6,.25)">
             <i class="ti ti-bell" style="font-size:14px;color:#d97706"></i>
           </div>
-          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em">Recordatorios</div>
-        </div>
-        <div id="rem-list" style="padding:0 16px"></div>
-        <div style="margin:0 0 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)">
-          <i class="ti ti-bell-plus" style="font-size:18px;color:#d97706;flex-shrink:0"></i>
-          <input class="add-inp" id="rem-inp" placeholder="Nombre del recordatorio…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
-          <input class="add-inp" id="rem-time" type="time" style="border:none;background:#f9fafb;border-radius:8px;padding:4px 8px;font-size:12px;color:#374151;outline:none">
-          <button onclick="addReminder()" style="background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
-            <i class="ti ti-plus" style="font-size:16px"></i>
+          <div style="font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.08em;flex:1">Agenda y recordatorios</div>
+          <button onclick="toggleRemHistory()" id="rem-history-btn" style="background:#f3f4f6;border:none;border-radius:8px;padding:5px 10px;font-size:10px;font-weight:700;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:4px">
+            <i class="ti ti-history" style="font-size:12px"></i> Historial
           </button>
+        </div>
+        <div id="rem-assistant" style="margin:0 0 10px;padding:10px 14px;border-radius:12px;font-size:12px;font-weight:600;display:none"></div>
+        <div id="rem-list" style="padding:0 16px"></div>
+        <div id="rem-history-panel" style="display:none;padding:0 16px;margin-bottom:8px"></div>
+        <div style="margin:0 0 16px;background:#fff;border-radius:14px;padding:10px 14px;border:1.5px solid #f3f4f6;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+            <i class="ti ti-bell-plus" style="font-size:18px;color:#d97706;flex-shrink:0"></i>
+            <input class="add-inp" id="rem-inp" placeholder="Nombre del recordatorio…" style="flex:1;border:none;background:transparent;outline:none;font-size:13px">
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <input class="add-inp" id="rem-date" type="date" style="flex:1;border:none;background:#f9fafb;border-radius:8px;padding:6px 8px;font-size:11px;color:#374151;outline:none">
+            <input class="add-inp" id="rem-time" type="time" style="flex:1;border:none;background:#f9fafb;border-radius:8px;padding:6px 8px;font-size:11px;color:#374151;outline:none">
+            <select id="rem-recur" style="border:none;background:#f9fafb;border-radius:8px;padding:6px 6px;font-size:11px;color:#374151;outline:none">
+              <option value="once">Solo una vez</option>
+              <option value="daily">Todos los días</option>
+              <option value="weekly">Cada semana</option>
+            </select>
+            <button onclick="addReminder()" style="background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:10px;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+              <i class="ti ti-plus" style="font-size:16px"></i>
+            </button>
+          </div>
         </div>
 
         <!-- PROYECTOS -->
@@ -949,6 +964,7 @@ function saveData() {
     localStorage.setItem('pt_proyectos', JSON.stringify(proyectos));
     localStorage.setItem('pt_prayers',   JSON.stringify(prayers));
     localStorage.setItem('pt_reminders', JSON.stringify(reminders));
+    localStorage.setItem('pt_remindersHistory', JSON.stringify(remindersHistory));
     localStorage.setItem('pt_hobbies',   JSON.stringify(hobbies));
   } catch(e) { console.warn('saveData:', e); }
 }
@@ -960,6 +976,7 @@ function loadData() {
     proyectos  = JSON.parse(localStorage.getItem('pt_proyectos')) || [];
     prayers    = JSON.parse(localStorage.getItem('pt_prayers'))   || [];
     reminders  = JSON.parse(localStorage.getItem('pt_reminders')) || [];
+    remindersHistory = JSON.parse(localStorage.getItem('pt_remindersHistory')) || [];
     hobbies    = JSON.parse(localStorage.getItem('pt_hobbies'))    || [];
   } catch(e) { console.warn('loadData:', e); }
 }
@@ -2547,26 +2564,36 @@ window.addEventListener('appinstalled', () => {
    REMINDERS & ALARM
 ============================================================ */
 let reminders = [];
+let remindersHistory = [];
 let alarmInterval = null;
 let alarmAudio = null;
 
 function addReminder() {
   const nameInp = document.getElementById('rem-inp');
+  const dateInp = document.getElementById('rem-date');
   const timeInp = document.getElementById('rem-time');
+  const recurInp = document.getElementById('rem-recur');
   const n = nameInp.value.trim();
   const t = timeInp.value;
+  let d = dateInp.value;
+  const recur = recurInp ? recurInp.value : 'once';
+
   if (!n || !t) {
     alert('Escribe el nombre y la hora del recordatorio');
     return;
   }
-  // Request notification permission
+  if (!d) d = todayISO();
+
   if ('Notification' in window && Notification.permission === 'default') {
     Notification.requestPermission();
   }
+
   const remId = Date.now();
-  reminders.push({id: remId, n, t, fired: false});
+  const dueAt = dateTimeToMillis(d, t);
+  reminders.push({ id: remId, n, t, date: d, recur, dueAt, fired: false });
   nameInp.value = '';
   timeInp.value = '';
+  dateInp.value = '';
   saveData();
   addFollowup('reminder', n, remId);
   renderReminders();
@@ -2575,12 +2602,19 @@ function addReminder() {
   // Si estamos dentro de la app nativa (AlarmManager real), programa la
   // alarma del sistema para que suene aunque la app esté cerrada.
   if (window.AndroidBridge && window.AndroidBridge.scheduleReminder) {
-    const [hh, mm] = t.split(':').map(Number);
-    const trigger = new Date();
-    trigger.setHours(hh, mm, 0, 0);
-    if (trigger.getTime() <= Date.now()) trigger.setDate(trigger.getDate() + 1);
-    window.AndroidBridge.scheduleReminder(remId, n, trigger.getTime());
+    window.AndroidBridge.scheduleReminder(remId, n, dueAt, recur);
   }
+}
+
+function todayISO() {
+  const now = new Date();
+  return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+}
+
+function dateTimeToMillis(dateStr, timeStr) {
+  const [y, mo, da] = dateStr.split('-').map(Number);
+  const [hh, mm] = timeStr.split(':').map(Number);
+  return new Date(y, mo - 1, da, hh, mm, 0, 0).getTime();
 }
 
 function deleteReminder(id) {
@@ -2592,22 +2626,105 @@ function deleteReminder(id) {
   }
 }
 
+function recurLabel(recur) {
+  if (recur === 'daily') return 'Todos los días';
+  if (recur === 'weekly') return 'Cada semana';
+  return '';
+}
+
+function fmtReminderDate(dateStr) {
+  const today = todayISO();
+  if (dateStr === today) return 'Hoy';
+  const [y, mo, da] = dateStr.split('-').map(Number);
+  const d = new Date(y, mo - 1, da);
+  const tmr = new Date(); tmr.setDate(tmr.getDate() + 1);
+  const tomorrowISO = tmr.getFullYear() + '-' + String(tmr.getMonth()+1).padStart(2,'0') + '-' + String(tmr.getDate()).padStart(2,'0');
+  if (dateStr === tomorrowISO) return 'Mañana';
+  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+}
+
 function renderReminders() {
   const el = document.getElementById('rem-list');
-  if (!reminders.length) {
-    el.innerHTML = '<div style="text-align:center;padding:16px 0;color:#9ca3af"><div style="font-size:32px;margin-bottom:6px">🔔</div><div style="font-size:12px;font-weight:500">Sin recordatorios aún</div><div style="font-size:11px;margin-top:2px;color:#d1d5db">Agrega uno arriba</div></div>';
+  const active = reminders.filter(r => !r.fired || r.recur !== 'once');
+  if (!active.length) {
+    el.innerHTML = '<div style="text-align:center;padding:16px 0;color:#9ca3af"><div style="font-size:32px;margin-bottom:6px">🔔</div><div style="font-size:12px;font-weight:500">Sin recordatorios aún</div><div style="font-size:11px;margin-top:2px;color:#d1d5db">Agrega uno abajo</div></div>';
+  } else {
+    const sorted = [...active].sort((a,b) => (a.dueAt||0) - (b.dueAt||0));
+    el.innerHTML = sorted.map(r => {
+      const overdue = !r.fired && r.dueAt && r.dueAt < Date.now() && r.date === todayISO();
+      return `
+      <div class="rem-item ${overdue?'fired':''}">
+        <div class="rem-bell ${overdue?'fired':''}"><i class="ti ti-bell" aria-hidden="true"></i></div>
+        <div class="rem-body">
+          <div class="rem-name">${r.n}</div>
+          <div class="rem-time"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px"></i> ${fmtReminderDate(r.date)} · ${r.t}${r.recur && r.recur!=='once' ? ' · ' + recurLabel(r.recur) : ''}</div>
+        </div>
+        <button class="rem-del" onclick="deleteReminder(${r.id})" aria-label="Eliminar">
+          <i class="ti ti-trash" aria-hidden="true"></i>
+        </button>
+      </div>`;
+    }).join('');
+  }
+  renderReminderAssistant(active);
+}
+
+function renderReminderAssistant(active) {
+  const box = document.getElementById('rem-assistant');
+  if (!box) return;
+  const today = todayISO();
+  const now = Date.now();
+  const pendingToday = active.filter(r => r.date === today && !r.fired).length;
+  const overdue = active.filter(r => r.date === today && r.dueAt < now && !r.fired).length;
+  const upcoming = active.filter(r => r.date > today).length;
+
+  if (!active.length) { box.style.display = 'none'; return; }
+
+  let msg = '';
+  let bg = '#eff6ff', color = '#1e40af';
+  if (overdue > 0) {
+    msg = `⚠️ Tienes ${overdue} recordatorio${overdue>1?'s':''} atrasado${overdue>1?'s':''} hoy`;
+    bg = '#fef2f2'; color = '#b91c1c';
+  } else if (pendingToday > 0) {
+    msg = `📋 Tienes ${pendingToday} pendiente${pendingToday>1?'s':''} para hoy`;
+    bg = '#fffbeb'; color = '#92400e';
+  } else if (upcoming > 0) {
+    msg = `✅ Nada pendiente hoy. ${upcoming} próximo${upcoming>1?'s':''} en camino`;
+    bg = '#f0fdf4'; color = '#166534';
+  } else {
+    box.style.display = 'none';
     return;
   }
-  el.innerHTML = reminders.map(r => `
-    <div class="rem-item ${r.fired?'fired':''}">
-      <div class="rem-bell ${r.fired?'fired':''}"><i class="ti ti-bell${r.fired?'':''}" aria-hidden="true"></i></div>
-      <div class="rem-body">
-        <div class="rem-name">${r.n}</div>
-        <div class="rem-time"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px"></i> ${r.t} ${r.fired?'✓ Completado':''}</div>
+  box.style.display = 'block';
+  box.style.background = bg;
+  box.style.color = color;
+  box.textContent = msg;
+}
+
+function toggleRemHistory() {
+  const panel = document.getElementById('rem-history-panel');
+  const btn = document.getElementById('rem-history-btn');
+  const showing = panel.style.display !== 'none';
+  panel.style.display = showing ? 'none' : 'block';
+  btn.innerHTML = showing
+    ? '<i class="ti ti-history" style="font-size:12px"></i> Historial'
+    : '<i class="ti ti-x" style="font-size:12px"></i> Ocultar';
+  if (!showing) renderReminderHistory();
+}
+
+function renderReminderHistory() {
+  const el = document.getElementById('rem-history-panel');
+  if (!remindersHistory.length) {
+    el.innerHTML = '<div style="text-align:center;padding:12px 0;color:#9ca3af;font-size:12px">Aún no hay recordatorios completados</div>';
+    return;
+  }
+  const sorted = [...remindersHistory].sort((a,b) => b.firedAt - a.firedAt).slice(0, 30);
+  el.innerHTML = sorted.map(h => `
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6">
+      <i class="ti ti-check" style="font-size:14px;color:#059669;flex-shrink:0"></i>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600;color:#374151">${h.n}</div>
+        <div style="font-size:10px;color:#9ca3af">${new Date(h.firedAt).toLocaleDateString('es-ES',{day:'numeric',month:'short'})} · ${h.t}</div>
       </div>
-      <button class="rem-del" onclick="deleteReminder(${r.id})" aria-label="Eliminar">
-        <i class="ti ti-trash" aria-hidden="true"></i>
-      </button>
     </div>`).join('');
 }
 
@@ -2618,16 +2735,33 @@ function startAlarmCheck() {
 }
 
 function checkAlarms() {
-  const now = new Date();
-  const hhmm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  const now = Date.now();
+  let changed = false;
   reminders.forEach(r => {
-    if (!r.fired && r.t === hhmm) {
-      r.fired = true;
-      saveData();
+    if (!r.fired && r.dueAt && r.dueAt <= now) {
+      remindersHistory.push({ n: r.n, t: r.t, firedAt: now });
       triggerAlarm(r.n, r.t);
-      renderReminders();
+      changed = true;
+
+      if (r.recur === 'daily') {
+        r.dueAt += 24 * 60 * 60 * 1000;
+        const nd = new Date(r.dueAt);
+        r.date = nd.getFullYear() + '-' + String(nd.getMonth()+1).padStart(2,'0') + '-' + String(nd.getDate()).padStart(2,'0');
+        r.fired = false;
+      } else if (r.recur === 'weekly') {
+        r.dueAt += 7 * 24 * 60 * 60 * 1000;
+        const nd = new Date(r.dueAt);
+        r.date = nd.getFullYear() + '-' + String(nd.getMonth()+1).padStart(2,'0') + '-' + String(nd.getDate()).padStart(2,'0');
+        r.fired = false;
+      } else {
+        r.fired = true;
+      }
     }
   });
+  if (changed) {
+    saveData();
+    renderReminders();
+  }
 }
 
 function triggerAlarm(name, time) {
@@ -2674,6 +2808,7 @@ function dismissAlarm() {
 }
 
 // (reminders init handled in main init)
+
 
 /* ============================================================
    SISTEMA DE BIENESTAR (WELLNESS) - recordatorios recurrentes
@@ -2823,13 +2958,42 @@ async function initFirebase(reg) {
 ============================================================ */
 let swRegistration = null;
 
+const QUIET_START_HOUR = 22; // 10pm
+const QUIET_END_HOUR = 7;    // 7am
+
+function isQuietHour(ms) {
+  const h = new Date(ms).getHours();
+  return h >= QUIET_START_HOUR || h < QUIET_END_HOUR;
+}
+
+// Si el momento cae en horario de silencio, lo mueve a la mañana
+// siguiente (7:00-7:30, con un pequeño margen aleatorio por ítem).
+function pushPastQuietHours(ms, idx) {
+  if (!isQuietHour(ms)) return ms;
+  const d = new Date(ms);
+  if (d.getHours() < QUIET_END_HOUR) {
+    d.setHours(QUIET_END_HOUR, 0, 0, 0);
+  } else {
+    d.setDate(d.getDate() + 1);
+    d.setHours(QUIET_END_HOUR, 0, 0, 0);
+  }
+  d.setMinutes(d.getMinutes() + (idx * 6)); // separa los que se reagendan juntos
+  return d.getTime();
+}
+
 function startLocalNotifications() {
   WELLNESS.forEach((w, idx) => scheduleOne(w, idx));
 }
 
 function scheduleOne(w, idx) {
   const now = Date.now();
-  const nextTime = wellnessTimes[idx] || (now + w.interval * 60000);
+  let nextTime = wellnessTimes[idx];
+  if (!nextTime) {
+    // Primera vez: desfasa cada recordatorio unos minutos entre sí para
+    // que no terminen sonando todos juntos por compartir múltiplos.
+    nextTime = now + w.interval * 60000 + idx * 5 * 60000;
+  }
+  nextTime = pushPastQuietHours(nextTime, idx);
   const delay = Math.max(10000, nextTime - now);
 
   setTimeout(async () => {
@@ -2859,7 +3023,11 @@ function scheduleOne(w, idx) {
       playWellnessSound();
     }
 
-    wellnessTimes[idx] = Date.now() + w.interval * 60000;
+    // pequeño jitter en cada ciclo para que no se re-sincronicen con el tiempo
+    const jitter = (Math.random() * 6 - 3) * 60000; // ±3 min
+    let next = Date.now() + w.interval * 60000 + jitter;
+    next = pushPastQuietHours(next, idx);
+    wellnessTimes[idx] = next;
     saveWellnessTimes();
     scheduleOne(w, idx);
   }, delay);
@@ -2927,6 +3095,12 @@ requestNotificationPermission();
 renderBiblia();
 renderReminders();
 startAlarmCheck();
+
+const remDateEl = document.getElementById('rem-date');
+if (remDateEl) {
+  remDateEl.min = todayISO();
+  remDateEl.value = todayISO();
+}
 </script>
 </body>
 </html>
